@@ -13,20 +13,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-
-		<!-- LaTeX con MathJax V2.7-->
-		<script type='text/x-mathjax-config'>
-			MathJax.Hub.Config({
-			extensions: [&quot;tex2jax.js&quot;],
-			jax: [&quot;input/TeX&quot;, &quot;output/HTML-CSS&quot;],
-			tex2jax: {
-				inlineMath: [ [&#39;$&#39;,&#39;$&#39;], [&quot;\\(&quot;,&quot;\\)&quot;] ],
-				displayMath: [ [&#39;$$&#39;,&#39;$$&#39;], [&quot;\\[&quot;,&quot;\\]&quot;] ],
-				processEscapes: true
-			},
-			&quot;HTML-CSS&quot;: { availableFonts: [&quot;TeX&quot;] }
-			});</script>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML' type='text/javascript'/>	
+	
 	</head>
 
 	<body class="is-preload">
@@ -67,9 +54,16 @@
 										<p>
 											Scene flow is the three-dimensional motion field of points in the world, 
 											just as optical flow is the two- dimensional motion field of points in an image. 
+										
+										<math>
+											Se pueden insertar matrices: $\begin{pmatrix}element1&element2 \\element3&element4\end{pmatrix}$
+											se pueden poner fracciones, como: ${1\over z}$, ${1\over\displaystyle 1+{1\over x}}$
+											utilizar letras griegas: $\alpha$, $\beta$, $\gamma$, $\Gamma$, $\varphi$
+											centrar fórmulas complejas:
+											$$\left|{1\over N}\sum_{n=1}^N \gamma(u_n)-{1\over 2\pi}\int_0^{2\pi}\gamma(t){\rm d}t\right| \le {\varepsilon\over 3}.$$
+										</math>
 
-											$x_{(1,2)} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$
-											
+
 										</p>
 
 										<div align="center"><a href="#" class="image"><img src="images/grafo_par.png" style="width: 60vw"  /></a></div>
