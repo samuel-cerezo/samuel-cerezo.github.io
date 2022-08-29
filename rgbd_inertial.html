@@ -6,17 +6,6 @@
 -->
 <html>
 	<head>
-		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js">
-			MathJax.Hub.Config({
-			 extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
-			 jax: ["input/TeX", "output/HTML-CSS"],
-			 tex2jax: {
-				 inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-				 displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-			 },
-			 "HTML-CSS": { availableFonts: ["TeX"] }
-			});
-		</script>
 
 		<title>Samuel Adrian Cerezo</title>
 		
@@ -24,7 +13,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script>
+		MathJax = {
+		  tex: {
+			tags: 'ams'  // should be 'ams', 'none', or 'all'
+		  }
+		};
+		</script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 	</head>
 
 	<body class="is-preload">
@@ -66,15 +63,19 @@
 											Scene flow is the three-dimensional motion field of points in the world, 
 											just as optical flow is the two- dimensional motion field of points in an image. 
 										</p>
-
+										
 										<div align="center"><a href="#" class="image"><img src="images/grafo_par.png" style="width: 60vw"  /></a></div>
 
 										<h3>Optimization problem</h3>
 										<p>We want to optimize the following functional:</p>
-										$$min_{x}\quad {E_{visual} + E_{inertial}}$$
-										
-										Where:
-										$$E_{visual} = r_{v1}^T{\Sigma}_{V1}^{-1}r_{v1}$$ $$E_{inertial} = r_{\Delta V}^{T}{\Sigma}_{\Delta V}^{-1}r_{\Delta V}$$
+				
+										Equation:
+										\begin{equation}
+										E = mc^2
+										\end{equation}
+
+
+
 
 										<ul>
 											<li>1)</li>
