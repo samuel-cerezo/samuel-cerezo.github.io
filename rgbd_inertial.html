@@ -1,18 +1,15 @@
 <!DOCTYPE HTML>
-<!--
-	Landed by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+
 <html>
 	<head>
-
 		<title>Samuel Adrian Cerezo</title>
 		
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+		<!--------------------------------------------- LaTex Scripts --------------------------------------------------------->
 		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 		<script>
 		MathJax = {
@@ -22,6 +19,8 @@
 		};
 		</script>
 		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+		<!--------------------------------------------------------------------------------------------------------------------->
+
 	</head>
 
 	<body class="is-preload">
@@ -69,13 +68,18 @@
 										<h3>Optimization problem</h3>
 										<p>We want to optimize the following functional:</p>
 				
-										Equation:
 										\begin{equation}
-										E = mc^2
+												min_{x}\quad {E_{visual} + E_{inertial}}
 										\end{equation}
+										
+										Where:
 
-
-
+										\begin{equation*}
+										E_{visual} = r_{v1}^T{\Sigma}_{V1}^{-1}r_{v1}
+										\end{equation*}
+										\begin{equation*}
+										E_{inertial} = r_{\Delta V}^{T}{\Sigma}_{\Delta V}^{-1}r_{\Delta V} 
+										\end{equation*}
 
 										<ul>
 											<li>1)</li>
