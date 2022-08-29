@@ -65,16 +65,17 @@
 										<p>
 											Scene flow is the three-dimensional motion field of points in the world, 
 											just as optical flow is the two- dimensional motion field of points in an image. 
-											$$x_{(1,2)} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
-
-
 										</p>
 
 										<div align="center"><a href="#" class="image"><img src="images/grafo_par.png" style="width: 60vw"  /></a></div>
 
 										<h3>Optimization problem</h3>
 										<p>We want to optimize the following functional:</p>
-										<div align="center"><a href="#" class="image"><img src="images/functional.png" style="width: 60vw"  /></a></div>
+										$$min_{x}\quad {E_{visual} + E_{inertial}}$$
+										
+										Where:
+										$$E_{visual} = r_{v1}^T{\Sigma}_{V1}^{-1}r_{v1}$$ $$E_{inertial} = r_{\Delta V}^{T}{\Sigma}_{\Delta V}^{-1}r_{\Delta V}$$
+
 										<ul>
 											<li>1)</li>
 											<li>2)</li>
