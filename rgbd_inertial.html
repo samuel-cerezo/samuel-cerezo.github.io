@@ -7,16 +7,6 @@
 <html>
 	<head>
 
-	<!--Formulas en LaTex-->		
-		<script type="text/x-mathjax-config">
-			MathJax.Hub.Config({tex2jax:(inlineMath:[["$','$']],
-			['\\(','\\)']]}});
-		</script>
-		<script type="text/javascript"
-		src="http://cdn.mathjax.org/mathjax/latest/
-		MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-		</script>
-
 		<title>Samuel Adrian Cerezo</title>
 		
 		<meta charset="utf-8" />
@@ -24,7 +14,21 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
+		<!-- LaTeX con MathJax V2.7-->
+		<script type='text/x-mathjax-config'>
+			MathJax.Hub.Config({
+			extensions: [&quot;tex2jax.js&quot;],
+			jax: [&quot;input/TeX&quot;, &quot;output/HTML-CSS&quot;],
+			tex2jax: {
+				inlineMath: [ [&#39;$&#39;,&#39;$&#39;], [&quot;\\(&quot;,&quot;\\)&quot;] ],
+				displayMath: [ [&#39;$$&#39;,&#39;$$&#39;], [&quot;\\[&quot;,&quot;\\]&quot;] ],
+				processEscapes: true
+			},
+			&quot;HTML-CSS&quot;: { availableFonts: [&quot;TeX&quot;] }
+			});</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML' type='text/javascript'/>	
 	</head>
+
 	<body class="is-preload">
 
 		<div id="page-wrapper">
@@ -64,8 +68,8 @@
 											Scene flow is the three-dimensional motion field of points in the world, 
 											just as optical flow is the two- dimensional motion field of points in an image. 
 
-											$\sum_ {k=0}^23 a_k$
-
+											$x_{(1,2)} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$
+											
 										</p>
 
 										<div align="center"><a href="#" class="image"><img src="images/grafo_par.png" style="width: 60vw"  /></a></div>
