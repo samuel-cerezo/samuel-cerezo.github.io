@@ -11,7 +11,21 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+		<!--------------------------------------------- LaTex Scripts --------------------------------------------------------->
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script>
+		MathJax = {
+		  tex: {
+			tags: 'ams'  // should be 'ams', 'none', or 'all'
+		  }
+		};
+		</script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+		<!--------------------------------------------------------------------------------------------------------------------->
+
 	</head>
+
 	<body class="is-preload">
 		<div id="page-wrapper">
 
@@ -75,7 +89,7 @@
 										<h3>Other projects: RGBD Inertial Flow</h3>
 										<p>...</p>
 										
-										<a href="#" class="image fit"><img src="images/grafo_par.png" alt="" /></a>
+										<a href="rgbd_inertial.html" class="image fit"><img src="images/grafo_par.png" alt="" /></a>
 										<footer>
 											<ul class="actions">
 												<li><a href="rgbd_inertial.html" class="button">Learn More</a></li>
