@@ -6,6 +6,17 @@
 -->
 <html>
 	<head>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js">
+			MathJax.Hub.Config({
+			 extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+			 jax: ["input/TeX", "output/HTML-CSS"],
+			 tex2jax: {
+				 inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+				 displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+			 },
+			 "HTML-CSS": { availableFonts: ["TeX"] }
+			});
+		</script>
 
 		<title>Samuel Adrian Cerezo</title>
 		
@@ -54,14 +65,7 @@
 										<p>
 											Scene flow is the three-dimensional motion field of points in the world, 
 											just as optical flow is the two- dimensional motion field of points in an image. 
-										
-										<math>
-											Se pueden insertar matrices: $\begin{pmatrix}element1&element2 \\element3&element4\end{pmatrix}$
-											se pueden poner fracciones, como: ${1\over z}$, ${1\over\displaystyle 1+{1\over x}}$
-											utilizar letras griegas: $\alpha$, $\beta$, $\gamma$, $\Gamma$, $\varphi$
-											centrar fórmulas complejas:
-											$$\left|{1\over N}\sum_{n=1}^N \gamma(u_n)-{1\over 2\pi}\int_0^{2\pi}\gamma(t){\rm d}t\right| \le {\varepsilon\over 3}.$$
-										</math>
+											$$x_{(1,2)} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
 
 
 										</p>
