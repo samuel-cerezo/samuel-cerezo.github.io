@@ -59,16 +59,37 @@
 
 								<!-- Content -->
 									<section id="content">
-										<div align="center"><a href="#" class="image"><img src="images/pic05.jpg" style="width: 60vw"  /></a></div>
+										<div align="center"><a href="#" class="image"><img src="images/primer_resultado.jpg" style="width: 30vw"  /></a></div>
 
-										<h3>Why?</h3>
-										<p>Photocurrent mapping (PM) is a non-destructive characterization method of solar cells and panels. It is used in the industry for quality control in the production of cells, in scientific laboratories to characterize methods of preparation and newly materials, and in photovoltaic facilities to find module failures. The photocurrent mapping consists of applying a laser light beam perpendicularly on a photovoltaic device, scanning the surface point by point, and measuring the induced current as a function of the position of the beam. These systems systems requires a high degree of mechanical stability, which leads to an increase in the characterization times when the area is large. </p>
+										<h3>Abstract</h3>
+										<p> Photocurrent mapping (PM) is a non-destructive characterization method of solar cells and panels. 
+											It is used in the industry for quality control in the production of photovoltaic devices, in scientific laboratories to characterize new materials, and in photovoltaic facilities to find module failures. 
+											The PM consists of applying a laser light beam perpendicularly on a photovoltaic device, scanning the surface point by point, and measuring the induced current as a function of the position of the beam (Figure A). 
+											These systems require a high degree of mechanical stability, which leads to an increase in the characterization times when the area is large. 
+											In recent years, it has been made progress in the use of compressive sensing algorithms applied in PM tests (Figure B) in order to reduce moving parts and the measuring times. 
+											In this work we apply the compressive sensing technique to obtain a photocurrent map of Si photovoltaic devices. 
+											Results are compared with the ones obtained by the conventional technique.
 
-										<div align="center"><a href="#" class="image"><img src="images/lbic_vs_cs.jpg" style="width: 60vw"  /></a></div>
+										<div align="center"><a href="#" class="image"><img src="images/lbic_cs_system.jpg" style="width: 50vw"  /></a></div>
 
-										<p>In recent years, it has been made progress in the use of compressive sensing algorithms applied in PM tests in order to delimit the use of moving parts and reduce the measuring times. The objective of this project was to design and implement a compressive photocurrent mapping system for photovoltaic devices based on a projector and the use of compression sensing algorithms.</p>
+										<p>In recent years, it has been made progress in the use of compressive sensing algorithms applied in PM tests in order to delimit the use of moving parts and reduce the measuring times. 
+											The objective of this project was to design and implement a compressive photocurrent mapping system for photovoltaic devices based on a projector and the use of compression sensing algorithms.</p>
+										
+										<h3>Problem formulation</h3>
+											The current map for a photovoltaic device with a standard
+											<i>N</i>-point test area corresponds to a vector <i>x</i>
+											
+													$$  x=\sum_{i=1}^N \psi_i s_i = \Psi s $$
+
+										<p>The signal $x$ is called K-sparse in the $\Psi$ basis if only $K$ components of the vector $s$ are non-zero and the others, i.e. $N-K$ components, are zero. 
+											If one could know in advance in which base the signal to be measured is sparse, it would be sufficient to measure the $K \ll N$ values corresponding to the coefficients of the signal in that base, i.e. it would be sufficient to make K measurements.
+										</p>
+
+										<h3>CS System layout</h3>
+											working on it...
+
 										<h3>Some results</h3>
-										<p>The MFs obtained by the SC system are shown in the following figure. In each case, the reconstruction of the MF is performed by minimizing the Total Variation (TV) and using the DCT as the mathematical basis. The percentage on each figure is a measure of the number of patterns used in that measurement with respect to the total number of pixels (4096 pixels).</p>
+										<p>The PMs obtained by the CS system are shown in the following figure. In each case, the reconstruction of the MF is performed by minimizing the Total Variation (TV) and using the DCT as the mathematical basis. The percentage on each figure is a measure of the number of patterns used in that measurement with respect to the total number of pixels (4096 pixels).</p>
 										<div align="center"><a href="#" class="image"><img src="images/reconstruction_si.jpg" style="width: 60vw"  /></a></div>
 
 										<p>C) shows that with 20% of patterns, it is possible to clearly identify the boundary between the silicon and the mask. It is also possible to visualize the widest section of the contact grid. When measuring with 40 %, 50 % and 70 % of the patterns, it is possible to define the location and shape of the five defects. There are no significant differences between these three MFs, but beyond 70 %, the sharpness decreases. This effect is observed in (G) corresponding to 95%, where it is no longer possible to identify the smallest defects.</p>
@@ -77,6 +98,9 @@
 										<li>The main advantage of this SC system is the fact that it does not use moving parts to obtain the MF of a sample. In addition, it is easier to adapt for in-situ operation, whereas with the LBIC method the user would encounter greater complications. In contrast, the disadvantage of the SC system is that it requires a large computational capacity if results with resolutions higher than 64x64 pixels are to be achieved.</li>
 										<li>A graphical interface was programmed, so that it is easy for the user to perform the process of measuring and obtaining the MF of solar cells. Through it, it is possible to configure different measurement parameters, including the size and color of the patterns to be projected, the number of patterns for the measurement and parameters related to the communication between the PC and the SMU.</li>
 										
+										<h3>Acknowledgment</h3>
+										<p>	This work was supported by a grant from Universidad Nacional del Comahue (UNCo): PIN 2018 04/I24.</p>
+
 									</section>
 							</div>
 
