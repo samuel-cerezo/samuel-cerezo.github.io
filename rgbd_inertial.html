@@ -96,7 +96,7 @@
 										<p>
 										The Hessian $\mathbf{H}$ contains the second derivatives of the cost function with respect to the state variables, that encodes how every state variable affects the others. 
 										We denote as $\alpha$ the block of variables we would like to marginalize, and $\beta$ the block of variables we would like to keep.
-										When marginalizing a set $\alpha$ of variables, we gather all factors dependent on them as well as the connected variables $\beta$. This is done by means of the \textit{Schur Complement}, which is defined in Equation (\ref{eq:schur-complement}). 
+										When marginalizing a set $\alpha$ of variables, we gather all factors dependent on them as well as the connected variables $\beta$. This is done by means of the $\textit{Schur Complement}$, which is defined as follows. 
 											\begin{equation}
 													\mathbf{H}^* = \mathbf{H}_{\beta\beta} 
 																 - \mathbf{H}_{\alpha\beta}^\top\mathbf{H}_{\alpha\alpha}^{-1}\mathbf{H}_{\alpha\beta}   
