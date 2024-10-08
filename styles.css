@@ -1,0 +1,13 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    color: #007bff;
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
