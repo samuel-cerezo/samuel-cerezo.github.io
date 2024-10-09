@@ -79,3 +79,18 @@ section {
         padding: 20px;
     }
 }
+
+/* Style to limit image sizes */
+img {
+    max-width: 100%; /* Ensures images do not exceed the width of their container */
+    height: auto; /* Maintains the aspect ratio */
+}
+
+/* Optionally, apply specific styles to certain sections */
+#banner .image img {
+    max-width: 80%; /* Adjust based on your preference */
+}
+
+.spotlight .image img {
+    max-width: 100%; /* Ensure they fit within their respective sections */
+}
