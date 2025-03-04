@@ -35,7 +35,7 @@
 								<ul>
 									<li><a href="dataset.html">[2025] iisyFusion</a></li>
 									<li><a href="rgbd_inertial.html">[2023] Camera Motion Estimation</a></li>
-									<li><a href="compressive.html">[2020] Compressive Sensing System</a></li>	
+									<li><a href="compressive.html">[2020] Compressive Sensing System</a></li>		
 								</ul>
 							</li>
 							<li><a href="contact.html">Contact me</a></li>
@@ -49,7 +49,7 @@
 				<div id="main" class="wrapper style1">
 					<div class="container">
 						<header class="major">
-							<h2>Camera Motion Estimation from RGB-D-Inertial Scene Flow</h2>
+							<h2>iisyFusion3D </h2>
 							            <h1 class="is-size-5 publication-authors">
 							              <span class="author-block">
 							                <a href="https://scholar.google.com/citations?user=9zhUnGkAAAAJ&hl=en">Samuel Cerezo</a><sup>1</sup>,</span>
@@ -61,7 +61,7 @@
 							              <span class="author-block"><sup>1</sup>Universidad de Zaragoza</span>
 							            </h1>
 						
-							<h0> 2024 IEEE Computer Society Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)</h1> <p></p>
+							<h0> 2025 Conference - Journal </h1> <p></p>
 							        <div class="publication-links">
 							                <span class="link-block">
 							                  <a href="https://ieeexplore.ieee.org/document/10677884" class="external-link button is-normal is-rounded is-dark">
@@ -89,13 +89,7 @@
 										
 										<h3>Abstract</h3>
 										<p>
-											In this paper, we introduce a novel formulation for camera motion estimation that integrates RGB-D images and inertial data through scene flow. Our goal is to accurately estimate the camera motion in a rigid 3D environment, along
-											with the state of the inertial measurement unit (IMU). Our
-											proposed method offers the flexibility to operate as a multiframe optimization or to marginalize older data, thus effectively utilizing past measurements. To assess the performance of our method, we conducted evaluations using both
-											synthetic data from the ICL-NUIM dataset and real data
-											sequences from the OpenLORIS-Scene dataset. Our results
-											show that the fusion of these two sensors enhances the accuracy of camera motion estimation when compared to using
-											only visual data.
+											In this paper, we introduce... 
 										</p>
 										
 										<div align="center"><a href="#" class="image"><img src="images/motion-representation-3D.png" style="width: 40vw"  /></a></div>
@@ -110,45 +104,12 @@
 										\begin{align}
 												\hat{\mathbf{x}} = min_{\mathbf{x}}  J(\mathbf{x}) = min_{\mathbf{x}}  \left(  J_{c}(\mathbf{x}) + J_{i}(\mathbf{x}) \right)
 										\end{align}
-										<p>
-										As we add more frames, the result is a sliding window of $N$ frames moving along the camera trajectory.
-										In the general case, the cost function $J(\mathbf{x})$ can be expressed compactly using as follows:
-												\begin{equation}
-														J(\mathbf{x})= 
-															\sum_{p=i}^{i+N-1}\left(\mathbf{r}_{c_{p}}^\top{\boldsymbol\Sigma}_{c_{p}}^{-1}\mathbf{r}_{c_{p}} +  \mathbf{r}_{\Delta \mathbf{v}_{p}}^\top{\boldsymbol\Sigma}_{\Delta \mathbf{v}_{p}}^{-1} \mathbf{r}_{\Delta \mathbf{v}_{p}}\right)
-															+ \mathbf{r}_{bg}^\top{\boldsymbol\Sigma}_{\boldsymbol\omega}^{-1} \mathbf{r}_{bg}
-															+ \mathbf{r}_{ba}^\top{\boldsymbol\Sigma}_{\mathbf{a}}^{-1} \mathbf{r}_{ba}   
-															+ \sum_{l=i}^{i+N}\mathbf{r}_{\omega_l }^\top{\boldsymbol\Sigma}_{\boldsymbol\omega}^{-1}\mathbf{r}_{\omega_l}
-												\end{equation}
-										and the state $\mathbf{x} \in \mathbb{R}^{6N+8}$ is defined as:
-										\begin{equation}
-												\mathbf{x} = \left[ {\mathbf{v}}_i^\top,{\boldsymbol\omega}_i^\top,\dots,{\mathbf{v}}_{i+N-1}^\top,{\boldsymbol\omega}_{i+N-1}^\top,{\mathbf{g}}^\top,{\mathbf{b}^g}^\top, {\mathbf{b}^a}^\top \right]^\top
-										\end{equation}
-										</p>
 
-										<h3>Marginalization</h3>
-										<p>Consider the case in following figure, using a 3-frames-sliding-window. When the $l$-frame comes, the optimization is done. 
-										However, in order to keep a 3-frame window, when the next frame $l+1$ comes, we need to marginalize out $\mathbf{v}_i$ and $\boldsymbol{\omega}_i$.</p>
-										<div align="center"><a href="#" class="image"><img src="images/grafo_marginalizacion.png" style="width: 40vw"  /></a></div>
-										<p>
-										The Hessian $\mathbf{H}$ contains the second derivatives of the cost function with respect to the state variables, that encodes how every state variable affects the others. 
-										We denote as $\alpha$ the block of variables we would like to marginalize, and $\beta$ the block of variables we would like to keep.
-										When marginalizing a set $\alpha$ of variables, we gather all factors dependent on them as well as the connected variables $\beta$. This is done by means of the $\textit{Schur Complement}$, which is defined as follows. 
-											\begin{equation}
-													\mathbf{H}^* = \mathbf{H}_{\beta\beta} 
-																 - \mathbf{H}_{\alpha\beta}^\top\mathbf{H}_{\alpha\alpha}^{-1}\mathbf{H}_{\alpha\beta}   
-											\end{equation}
-										</p>
+										<h3>Subtitle1</h3>
 
 										<h3>Experiments</h3>
 										<p>
-											We chose to evaluate our proposal on an extended version of the living room sequences in the ICL-NUIM dataset. 
-											ICL-NUIM is a synthetic photorealistic dataset that provides ground truth poses as well as 3D scene models to benchmark reconstruction and/or localization approaches. 
-											As ICL-NUIM does not provide IMU data, we fit splines to the ground truth poses to simulate continuous trajectories and simulated IMU measurements from them. 
-											We also evaluated our RGB-D-inertial flow in the OpenLORIS-Scene datasets, in which data are collected in real-world indoor scenes, 
-											for multiple times in each place to include natural scene changes in everyday scenarios. 
-											RGB-D images and IMU measurements from a RealSense D435i are provided. 
-											The ground truth trajectory was recorded by an OptiTrack MCS, that tracked artificial markers deployed on the Segway robot used to record the data.
+											We chose to evaluate our ...
 										</p>
 										<!---- Additional options: 
 										<ul>
@@ -160,8 +121,7 @@
 										<h3>Conclusions</h3>
 										
 										<p>
-										In this work we present a novel camera motion estimation based on RGB-D-I scene flow. Specifically, we formulate the fusion of RGB-D and inertial data as a joint optimization using scene flow residuals and pre-integrated IMU residuals, weighted by their corresponding covariances. We also consider the marginalization of old states in order to keep a compact optimization. 
-										We evaluated our approach on a synthetic dataset, ICL-NUIM, and on a real dataset, OpenLORIS, both publicly available. Our results quantify the improvement that inertial fusion can offer to RGB-D scene flow techniques. We evaluated our approach on a synthetic dataset, ICL-NUIM, and on a real dataset, OpenLORIS, both publicly available. Our results quantify the improvement that inertial fusion can offer to RGB-D scene flow. 
+										In this ...  
 										</p>
 				
 									</section>
@@ -176,13 +136,13 @@
 
 										<hr />
 										<section>
-											<h3>Other projects: Compressive Sensing System</h3>
+											<h3>Other projects: RGBD Inertial Flow</h3>
 											<p>...</p>
 											
-											<a href="compressive.html" class="image fit"><img src="images/primer_resultado.jpg" alt="" /></a>
+											<a href="rgbd_inertial.html" class="image fit"><img src="images/grafo_par.png" alt="" /></a>
 											<footer>
 												<ul class="actions">
-													<li><a href="compressive.html" class="button">Learn More</a></li>
+													<li><a href="rgbd_inertial.html" class="button">Learn More</a></li>
 												</ul>
 											</footer>
 											<hr />
