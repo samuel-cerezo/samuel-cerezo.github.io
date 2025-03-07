@@ -46,10 +46,14 @@
                     });
                     document.getElementById("splat-viewer").appendChild(viewer.canvas);
 
-                    viewer.loadUrl("https://samuel-cerezo.github.io/assets/gs-pointclouds/4-natural.splat").then(() => {
-                        viewer.setSize(window.innerWidth, 500);
-                    });
-						
+                    viewer.loadUrl("https://samuel-cerezo.github.io/assets/gs-pointclouds/4-natural.splat")
+						.then(() => {
+							viewer.setSize(window.innerWidth, 500);
+						})
+						.catch((error) => {
+							console.error("Error al cargar el archivo SPLAT:", error);
+						});
+					
                     window.addEventListener("resize", () => {
                         viewer.setSize(window.innerWidth, 500);
                     });
