@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -9,15 +8,14 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-    <!--------------------------------------------- LaTex Scripts --------------------------------------------------------->
+    <!--------------------------------------------- LaTex Scripts ---------------------------------------------------------> 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script>
     MathJax = {
-      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
-    };
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}}
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-    <!--------------------------------------------- LaTex Scripts --------------------------------------------------------->
+    <!--------------------------------------------- LaTex Scripts ---------------------------------------------------------> 
 </head>
 
 <body class="is-preload">
@@ -81,6 +79,42 @@
                         <li><b>robot_data/</b>: Joint positions and flange poses.</li>
                     </ul>
                     <p>All sequences are also available as ROS2 bag files.</p>
+                </section>
+
+                <!-- Download Section -->
+                <section id="downloads">
+                    <header class="major">
+                        <h3>Dataset Downloads</h3>
+                    </header>
+                    <p>Click the links below to download the dataset files:</p>
+                    <div class="downloads-list">
+                        <ul>
+                            <li>
+                                <a href="datasets/rgbd-dataset.zip" class="button">Download RGB-D Data</a>
+                                <span class="file-description">Contains RGB and depth images (PNG, 8-bit per channel, 16-bit for depth).</span>
+                            </li>
+                            <li>
+                                <a href="datasets/imu-data.zip" class="button">Download IMU Data</a>
+                                <span class="file-description">IMU data including accelerometer and gyroscope readings.</span>
+                            </li>
+                            <li>
+                                <a href="datasets/groundtruth.zip" class="button">Download Groundtruth Data</a>
+                                <span class="file-description">Ground truth trajectory in world coordinates.</span>
+                            </li>
+                            <li>
+                                <a href="datasets/robot-data.zip" class="button">Download Robot Data</a>
+                                <span class="file-description">Joint positions and flange poses in robot data format.</span>
+                            </li>
+                            <li>
+                                <a href="datasets/extrinsics.zip" class="button">Download Calibration Data</a>
+                                <span class="file-description">Calibration files: extrinsics.yaml and intrinsics.yaml.</span>
+                            </li>
+                            <li>
+                                <a href="datasets/ros2_bag.zip" class="button">Download ROS2 Bag Files</a>
+                                <span class="file-description">All sequences available as ROS2 bag files.</span>
+                            </li>
+                        </ul>
+                    </div>
                 </section>
             </div>
         </div>
