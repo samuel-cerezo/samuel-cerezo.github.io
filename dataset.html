@@ -1,65 +1,62 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
 <head>
-    <title>Samuel Cerezo</title>
-    
+    <title>Gaussian Splatting SLAM</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-
-    <script type="module" src="https://unpkg.com/@antimatter15/splat"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="description" content="Gaussian Splatting SLAM" />
+    <meta name="keywords" content="Gaussian Splatting, SLAM, Monocular, RGB-D" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="./css/style.css" />
 </head>
-<body class="is-preload">
-    <div id="page-wrapper">
-        <header id="header">
-            <h1 id="logo"><a href="index.html">Home</a></h1>
-            <nav id="nav">
-                <ul>
-                    <li>
-                        <a href="#">Projects</a>
-                        <ul>
-                            <li><a href="dataset.html">[2025] iisyFusion</a></li>
-                            <li><a href="rgbd_inertial.html">[2023] Camera Motion Estimation</a></li>
-                            <li><a href="compressive.html">[2020] Compressive Sensing System</a></li>      
-                        </ul>
-                    </li>
-                    <li><a href="contact.html">Contact me</a></li>
-                    <li><a href="cv.html">My CV</a></li>
-                </ul>
-            </nav>
-        </header>
-
-        <div id="main" class="wrapper style1">
-            <div class="container">
-                <header class="major">
-                    <h2>iisyFusion3D - visor</h2>
-                </header>
-                
-                <div id="splat-viewer" style="width: 100%; height: 500px; background: #000;"></div>
-                
-                <script type="module">
-                    import { SplatLoader } from "https://unpkg.com/@antimatter15/splat";
-
-                    const viewer = new SplatLoader({
-                        canvas: document.createElement("canvas"),
-                    });
-                    document.getElementById("splat-viewer").appendChild(viewer.canvas);
-
-                    viewer.loadUrl("https://samuel-cerezo.github.io/assets/gs-pointclouds/4-natural.splat")
-						.then(() => {
-							viewer.setSize(window.innerWidth, 500);
-						})
-						.catch((error) => {
-							console.error("Error al cargar el archivo SPLAT:", error);
-						});
-					
-                    window.addEventListener("resize", () => {
-                        viewer.setSize(window.innerWidth, 500);
-                    });
-                </script>
-            </div>
+<body>
+    <div class="header" id="demo">
+        <div class="info">
+            <h1>Gaussian Splatting SLAM</h1>
+            <h2>CVPR 2024 <span class="notice">(Highlight & Best Demo Award)</span></h2>
+            <h3><div class="emphasis">Monocular</div> Reconstruction of TUM fr1/desk</h3>
+            <details>
+                <summary>Use mouse to navigate</summary>
+                <div id="instructions">
+                    trackpad<br />
+                    - click and drag to orbit<br />
+                    - click with two fingers and drag to move<br />
+                    - hold ctrl/cmd key and scroll/pinch to move forward/back
+                </div>
+            </details>
         </div>
     </div>
+
+    <!-- 3D Visualization Container -->
+    <div id="splat-viewer" style="width: 100%; height: 500px;"></div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <a href="https://arxiv.org/abs/2312.06741">[arXiv]</a>
+        <a href="https://github.com/muskie82/MonoGS">[code]</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three-splat@latest"></script>
+
+    <script>
+        // Cargar y visualizar la nube de puntos
+        const viewer = new THREE.SplatViewer({
+            container: document.getElementById("splat-viewer"),
+            url: "https://samuel-cerezo.github.io/assets/gs-pointclouds/4-natural.splat",
+        });
+
+        // Configuración básica para la visualización
+        viewer.init().then(() => {
+            viewer.start();
+        });
+
+        // Hacer que la visualización sea sensible al redimensionar
+        window.addEventListener("resize", () => {
+            viewer.resize(window.innerWidth, 500);
+        });
+    </script>
 </body>
 </html>
