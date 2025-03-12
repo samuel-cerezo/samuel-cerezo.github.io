@@ -4,63 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gaussian Splatting Viewer</title>
-    <script type="module">
-        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js';
-        import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/controls/OrbitControls.js';
-        import { PLYLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/loaders/PLYLoader.js';
 
-        let scene, camera, renderer, controls;
+    <!-- Cargar Three.js y PLYLoader -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/PLYLoader.js"></script>
 
-        function init() {
-            // Crear la escena
-            scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x000000);
-
-            // Configurar la cámara
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
-            camera.position.set(0, 1, 2); // Ajustar la posición para mejor visualización
-
-            // Configurar el renderizador
-            renderer = new THREE.WebGLRenderer({ antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.body.appendChild(renderer.domElement);
-
-            // Controles de la cámara
-            controls = new OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
-            controls.dampingFactor = 0.05;
-            controls.rotateSpeed = 0.5;
-
-            // Cargar el archivo PLY
-            const loader = new PLYLoader();
-            loader.load('https://cdn.jsdelivr.net/gh/samuel-cerezo/samuel-cerezo.github.io@main/assets/PLY/4-natural.ply', function (geometry) {
-                const material = new THREE.PointsMaterial({ color: 0xffffff, size: 0.01 });
-                const pointCloud = new THREE.Points(geometry, material);
-                scene.add(pointCloud);
-            });
-
-            window.addEventListener('resize', onWindowResize, false);
-            animate();
-        }
-
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-            controls.update();
-            renderer.render(scene, camera);
-        }
-
-        init();
-    </script>
     <style>
         body { margin: 0; overflow: hidden; }
         canvas { display: block; }
     </style>
 </head>
-<body></body>
+<body>
+
+<script>
+    let scene, camera, renderer, controls;
+
+    function init() {
+        // Crear la escena
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xffffff);
+
+        // Configurar la cámara
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 1, 2);
+
+        // Configurar el renderizador
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Controles de la cámara
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.rotateSpeed = 0.5;
+
+        // Cargar el archivo PLY
+        const loader = new THREE.PLYLoader();
+        loader.load('https://samuel-cerezo.github.io/assets/PLY/4-natural.ply', function (geometry) {
+            geometry.computeVertexNormals();
+            const material = new THREE.PointsMaterial({ color: 0x000000, size: 0.01 });
+            const pointCloud = new THREE.Points(geometry, material);
+            scene.add(pointCloud);
+        });
+
+        window.addEventListener('resize', onWindowResize, false);
+        animate();
+    }
+
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+    }
+
+    init();
+</script>
+
+</body>
 </html>
