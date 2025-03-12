@@ -30,7 +30,7 @@
 
             // Cargar archivo PLY desde GitHub (reemplaza con tu enlace real)
             const loader = new THREE.PLYLoader();
-            loader.load('https://raw.githubusercontent.com/samuel-cerezo/tu-repo/main/tu-archivo.ply', function (geometry) {
+            loader.load('https://raw.githubusercontent.com/samuel-cerezo/samuel-cerezo.github.io/main/assets/PLY/4-natural.ply', function (geometry) {
                 const material = new THREE.PointsMaterial({ color: 0xffffff, size: 0.01 });
                 const pointCloud = new THREE.Points(geometry, material);
                 scene.add(pointCloud);
