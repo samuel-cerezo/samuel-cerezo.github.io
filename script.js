@@ -9,7 +9,7 @@ document.getElementById('3d-container').appendChild(renderer.domElement);
 const light = new THREE.AmbientLight(0x404040); // Luz ambiental suave
 scene.add(light);
 
-import { GaussianSplats3D } from './assets/js/gaussian-splats-3d.module.min.js';
+import { GaussianSplats3D } from '. gaussian-splats-3d.module.min.js';
 
 // Crear el objeto para manejar los Gaussian Splats
 const gaussianSplats = new GaussianSplats3D(scene);
