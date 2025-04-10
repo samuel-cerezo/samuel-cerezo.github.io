@@ -48,7 +48,6 @@
         <div id="main" class="wrapper style1">
             <div class="container">
                 <header class="major">
-                    <h3>(-web under development-)</h3> 
                     <h2>SLAM&Render: A Benchmark for the Intersection Between Neural
                         Rendering, Gaussian Splatting and SLAM</h2>
                         <h1 class="is-size-5 publication-authors">
@@ -69,7 +68,7 @@
                             <span class="author-block"><sup>2</sup>KUKA Deutschland GmbH</span>
                           </h1>
 
-                          <h0> 2025 - under submission</h1> <p></p>
+                          <h0> 2025 </h1> <p></p>
                             <div class="publication-links">
                                     <span class="link-block">
                                       <a href="https://ieeexplore.ieee.org" class="external-link button is-normal is-rounded is-dark">
@@ -131,16 +130,18 @@
                     <h3>Dataset Structure</h3>
                     <p>Every sequence is structured as follows:</p>
                     <div align="center"><a href="#" class="image"><img src="images/SLAMdataset/structure.png" style="width: 20vw"  /></a></div>        
-                    <p>Where each file/folder is detailed below:</p>
+                    <p>The abovementioned folders and files are here detailed:</p>
                     <ul>
-                        <li><b>rgb/</b>: Folder with color images (PNG, 8-bit per channel).</li>
-                        <li><b>depth/</b>: Folder with depth images (PNG, 16-bit, scaled by 1000).</li>
-                        <li><b>associations.txt</b>: Temporal associations of RGB and depth images.</li>
-                        <li><b>imu.txt</b>: IMU data (accelerometer and gyroscope readings).</li>
-                        <li><b>groundtruth.txt</b>: Ground-truth trajectory expressed in world coordinates.</li>
-                        <li><b>extrinsics.yaml</b>: Calibration parameters defining spatial relationships.</li>
-                        <li><b>intrinsics.yaml</b>: Internal parameters of the camera.</li>
-                        <li><b>robot_data/</b>: Folder containing joint data and flange poses, expressed w.r.t robot base.</li>
+                        <li><code>rgb/</code>: Folder containing the color images (<code>PNG</code> format, 3 channels, 8 bits per channel), whose names are the corresponding Unix Epoch timestamp.</li>
+                        <li><code>depth/</code>: Folder containing the depth images (<code>PNG</code> format, 1 channel, 16 bits per channel, distance scaled by a factor of 1000), whose names are the corresponding Unix Epoch timestamp. The depth images are already aligned with the RGB sensor.</li>
+                        <li><code>associations.txt</code>: File listing all the temporal associations between the RGB and depth images (format: <code>rgb_timestamp rgb_file depth_timestamp depth_file</code>).</li>
+                        <li><code>imu.txt</code>: File with accelerometer and gyroscope readings, each paired with the corresponding Unix Epoch timestamp (format: <code>timestamp ax ay az gx gy gz</code>).</li>
+                        <li><code>groundtruth.txt</code>: File containing the ground-truth of the camera poses w.r.t. world reference frame, expressed as a sequence of quaternions and translation vectors with the corresponding Unix Epoch timestamp (format: <code>timestamp qx qy qz qw tx ty tz</code>).</li>
+                        <li><code>groundtruth_raw.csv</code>: File provided by the motion capture system containing the raw ground-truth data of the flange-marker-ring trajectory.</li>
+                        <li><code>extrinsics.yaml</code>: File containing the transformation matrices of the reference frames involved in the data collection process.</li>
+                        <li><code>intrinsics.yaml</code>: File containing the intrinsic calibration parameters of the camera.</li>
+                        <li><code>robot_data/flange_poses.txt</code>: File containing the poses of the robot flange with the corresponding Unix Epoch timestamp. Each pose is expressed w.r.t. the robot base as a quaternion and translation vector (format: <code>timestamp qx qy qz qw tx ty tz</code>).</li>
+                        <li><code>robot_data/joint_positions.txt</code>: File reporting the angles of each robot joint along with the corresponding Unix Epoch timestamp (format: <code>timestamp q1 q2 q3 q4 q5 q6</code>).</li>
                     </ul>
                 </section>
                 <section id="Tools">
