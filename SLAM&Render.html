@@ -57,7 +57,7 @@
                               <span class="author-block">
                                 <a href="https://ieeexplore.ieee.org/author/37089864171">Gaetano Meli</a><sup>12</sup>,</span>
                               <span class="author-block">
-                                <a href="https://scholar.google.com/citations?hl=es&user=atn2bkAAAAAJ">Tomás Berriel</a><sup>1</sup>,</span>
+                                <a href="https://scholar.google.com/citations?hl=es&user=atn2bkAAAAAJ">Tomás BM</a><sup>1</sup>,</span>
                                 <span class="author-block">
                                     <a href="https://ieeexplore.ieee.org/author/37086885012">Kirill Safronov</a><sup>2</sup>,</span>
                             <span class="author-block">
@@ -93,45 +93,54 @@
                 </header>
 
                 <section id="content">
-                    <p>Existing datasets fail to include the specific challenges of both fields--such as multi-modality and sequentiality in SLAM, or generalization across viewpoints and illumination in neural rendering. 
+                    <p>Existing datasets fail to include the specific challenges of two fields: multi-modality and sequentiality in SLAM or generalization across viewpoints and illumination in neural rendering. 
                         To bridge this gap, we introduce SLAM&Render, a novel dataset designed to explore the intersection of both domains. 
-                        It comprises 40 sequences with synchronized RGB, depth, IMU, robot encoder data, and ground truth pose streams. 
+                        It comprises 40 sequences with synchronized RGB, depth, IMU and kinematic-related data. 
                         These sequences capture five distinct setups featuring consumer and industrial goods under four different lighting conditions, 
                         with separate training and test trajectories per scene, as well as object rearrangements. </p>
-                    <div align="center"><a href="#" class="image"><img src="images/SLAMdataset/light-conditions.png" style="width: 40vw"  /></a></div>
+                    <div align="center"><a href="#" class="image"><img src="images/SLAMdataset/light-conditions.png" style="width: 60vw; z-index: 10; position: relative;"  /></a></div>
                     <p>Illustration of our SLAM&Render dataset, captured from a Intel
-                        Real Sense in the end effector of a robotic arm, that moves around a set of
+                        RealSense in the end effector of a robotic arm, that moves around a set of
                         objects on a table. See four different light conditions present in our dataset:
-                        (a) Natural (b) Cold (c) Warm (d) Darkmed-in areas.</p>
-                    
+                        (a)Natural (b)Cold (c)Warm (d)Dark.</p>
+                
+                    <h3>Trajectories & Setups</h3>
+                    <div align="center">
+                            <iframe 
+                              style="width: 60vw; aspect-ratio: 16 / 9;" 
+                              src="https://www.youtube.com/embed/_s-tQMSZHXU?autoplay=1&mute=1&loop=1&playlist=_s-tQMSZHXU&vq=hd720" 
+                              frameborder="0" 
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                              allowfullscreen>
+                            </iframe>
+                    </div>
+
+                    <h3>Illumination comparison</h3>
+                    <div align="center">
+                             <iframe 
+                               style="width: 55vw; aspect-ratio: 16 / 9;" 
+                               src="https://www.youtube.com/embed/kWE6cfSivaY?autoplay=1&mute=1&loop=1&playlist=kWE6cfSivaY&vq=hd720" 
+                               frameborder="0" 
+                               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                               allowfullscreen>
+                             </iframe>
+                    <a href="#" class="image"><img src="images/SLAMdataset/illumination-comparison2.jpg" style="width: 55vw; z-index: 10; position: relative;"  /></a> 
+                    </div>
+
+
                     <h3>Dataset Structure</h3>
                     <p>Every sequence is structured as follows:</p>
-                    <pre>
-                       ├── rgb/
-                       │   ├── 1739371345.939813614.png
-                       │   ├── ...
-                       ├── depth/
-                       │   ├── 1739371345.939813614.png
-                       │   ├── ...
-                       ├── robot_data/
-                       │   ├── joint_positions.txt
-                       │   ├── flange_poses.txt
-                       ├── associations.txt
-                       ├── imu.txt
-                       ├── groundtruth_raw.csv
-                       ├── groundtruth.txt
-                       
-                    </pre>
+                    <div align="center"><a href="#" class="image"><img src="images/SLAMdataset/structure.png" style="width: 20vw"  /></a></div>        
                     <p>Where each file/folder is detailed below:</p>
                     <ul>
                         <li><b>rgb/</b>: Folder with color images (PNG, 8-bit per channel).</li>
                         <li><b>depth/</b>: Folder with depth images (PNG, 16-bit, scaled by 1000).</li>
                         <li><b>associations.txt</b>: Temporal associations of RGB and depth images.</li>
                         <li><b>imu.txt</b>: IMU data (accelerometer and gyroscope readings).</li>
-                        <li><b>groundtruth.txt</b>: Ground truth trajectory in world coordinates.</li>
+                        <li><b>groundtruth.txt</b>: Ground-truth trajectory expressed in world coordinates.</li>
                         <li><b>extrinsics.yaml</b>: Calibration parameters defining spatial relationships.</li>
                         <li><b>intrinsics.yaml</b>: Internal parameters of the camera.</li>
-                        <li><b>robot_data/</b>: Includes joint angles values and flange poses.</li>
+                        <li><b>robot_data/</b>: Folder containing joint data and flange poses, expressed w.r.t robot base.</li>
                     </ul>
                 </section>
                 <section id="Tools">
