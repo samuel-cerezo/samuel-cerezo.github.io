@@ -56,11 +56,11 @@
                               <span class="author-block">
                                 <a href="https://ieeexplore.ieee.org/author/37089864171">Gaetano Meli</a><sup>12</sup>,</span>
                               <span class="author-block">
-                                <a href="https://scholar.google.com/citations?hl=es&user=atn2bkAAAAAJ">Tomás BM</a><sup>1</sup>,</span>
+                                <a href="https://scholar.google.com/citations?hl=es&user=atn2bkAAAAAJ">Tomás Berriel M</a><sup>1</sup>,</span>
                                 <span class="author-block">
-                                    <a href="https://ieeexplore.ieee.org/author/37086885012">Kirill Safronov</a><sup>2</sup>,</span>
+                                    <a href="https://ieeexplore.ieee.org/author/37086885012">Kirill Safronov</a><sup>2</sup></span>
                             <span class="author-block">
-                              <a href="https://scholar.google.com/citations?user=j_sMzokAAAAJ&hl=en">Javier Civera</a><sup>1</sup></span>
+                              <a href="https://scholar.google.com/citations?user=j_sMzokAAAAJ&hl=en">and Javier Civera</a><sup>1</sup></span>
                             </span>
                           </h1>
                           <h1 class="is-size-5 publication-authors">
@@ -93,20 +93,31 @@
 
                 <section id="content">
                     <p>Existing datasets fail to include the specific challenges of two fields: multi-modality and sequentiality in SLAM or generalization across viewpoints and illumination in neural rendering. 
-                        To bridge this gap, we introduce SLAM&Render, a novel dataset designed to explore the intersection of both domains. 
+                        To bridge this gap, we introduce <strong>SLAM&amp;Render</strong>, a novel dataset designed to explore the intersection of both domains. 
                         It comprises 40 sequences with synchronized RGB, depth, IMU and kinematic-related data. 
                         These sequences capture five distinct setups featuring consumer and industrial goods under four different lighting conditions, 
                         with separate training and test trajectories per scene, as well as object rearrangements. </p>
-                    <div align="center"><a href="#" class="image"><img src="images/SLAMdataset/light-conditions.png" style="width: 60vw; z-index: 10; position: relative;"  /></a></div>
-                    <p>Illustration of our SLAM&Render dataset, captured from a Intel
-                        RealSense in the end effector of a robotic arm, that moves around a set of
+                    <div align="center"><a href="#" class="image"><img src="images/SLAMdataset/light-conditions.png" style="width: 80vw; z-index: 10; position: relative;"  /></a></div>
+                    <p>Illustration of our <strong>SLAM&amp;Render</strong> dataset, captured from a camera in the end effector of a robotic arm, that moves around a set of
                         objects on a table. See four different light conditions present in our dataset:
                         (a)Natural (b)Cold (c)Warm (d)Dark.</p>
-                
-                    <h3>Trajectories & Setups</h3>
+                    
+                    <h2>Dataset Scenes</h2>
+                    <p>Our <strong>SLAM&amp;Render</strong> dataset includes five distinct scenes, each designed to reflect different types of real-world environments:</p>
+                        
+                        <ul>
+                          <li><strong>Setup 1</strong> and <strong>Setup 2</strong> feature common supermarket goods, including <em>transparent objects</em>.</li>
+                          <li><strong>Setup 3</strong> includes a different selection of supermarket goods (only <em>opaque objects</em> are present).</li>
+                          <li><strong>Setup 4</strong> consists of various <em>industrial objects</em>.</li>
+                          <li><strong>Setup 5</strong> presents <em>industrial objects in a cluttered arrangement</em>.</li>
+                        </ul>
+                        
+                    <p>You can refer to the visual overview of all setups in the image below.</p>
+                    <div align="center"><a href="#" class="image"><img src="images/SLAMdataset/objets_and_setups.png" style="width: 80vw; z-index: 10; position: relative;"  /></a></div>
+
                     <div align="center">
                             <iframe 
-                              style="width: 60vw; aspect-ratio: 16 / 9;" 
+                              style="width: 61vw; aspect-ratio: 16 / 9;" 
                               src="https://www.youtube.com/embed/_s-tQMSZHXU?autoplay=1&mute=1&loop=1&playlist=_s-tQMSZHXU&vq=hd720" 
                               frameborder="0" 
                               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -115,6 +126,7 @@
                     </div>
 
                     <h3>Illumination comparison</h3>
+                    <p>Below you can see four different light conditions present in our dataset: <strong>Natural</strong> - <strong>Cold</strong> - <strong>Warm</strong> - <strong>Dark</strong>.</p>
                     <div align="center">
                              <iframe 
                                style="width: 55vw; aspect-ratio: 16 / 9;" 
@@ -123,14 +135,16 @@
                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                allowfullscreen>
                              </iframe>
-                    <a href="#" class="image"><img src="images/SLAMdataset/illumination-comparison2.jpg" style="width: 55vw; z-index: 10; position: relative;"  /></a> 
+                    </div>
+                    
+                    <p>Below you can better appreciate the difference between <strong>Cold</strong> and <strong>Warm</strong> lighting conditions. 
+                        The tonality of the color that represents the <em>sponge</em>  and the <em>mate argentino</em> varies depending on the lighting condition.</p>
+                    <div align="center"><a href="#" class="image"><img src="images/SLAMdataset/illumination-comparison2.jpg" style="width: 55vw; z-index: 10; position: relative;"  /></a> 
                     </div>
 
-
                     <h3>Dataset Structure</h3>
-                    <p>Every sequence is structured as follows:</p>
-                    <div align="center"><a href="#" class="image"><img src="images/SLAMdataset/structure.png" style="width: 40vw"  /></a></div>        
-                    <p>The abovementioned folders and files are here detailed:</p>
+                    <p>Every sequence contains the following:</p>
+
                     <ul>
                         <li><code>rgb/</code>: Folder containing the color images (<code>PNG</code> format, 3 channels, 8 bits per channel), whose names are the corresponding Unix Epoch timestamp.</li>
                         <li><code>depth/</code>: Folder containing the depth images (<code>PNG</code> format, 1 channel, 16 bits per channel, distance scaled by a factor of 1000), whose names are the corresponding Unix Epoch timestamp. The depth images are already aligned with the RGB sensor.</li>
