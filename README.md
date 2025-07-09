@@ -1,5 +1,3 @@
-# javrtg.github.io
-
 This website is adapted from the awesome website: [keunhong.github.io](https://keunhong.com/) ([repository](https://github.com/keunhong/keunhong.github.io)).
 
 # License
