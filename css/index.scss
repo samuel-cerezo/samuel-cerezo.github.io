@@ -1,18 +1,13 @@
 ---
 ---
 
-@import "base";
-
 .title {
     font-family: 'Google Sans';
     font-weight: 700;
 }
 
 .portrait {
-    border-radius: 2%;
     overflow: hidden;
-
-    img { transform: scale(1.2); }
 }
 
 .footer .footer-links a {
@@ -80,17 +75,16 @@
     .publication-mousecell {
         position: relative;
         font-size: 0;
+    }
+
+    .publication-mousecell {
         width: 100%;
         height: 100%;
         display: inline-block;
         overflow: hidden;
 
-        video, .mouseover-image {
+        video {
             display: none;
-        }
-
-        .publication-mousecell img {
-            width: 100%;
         }
     }
 

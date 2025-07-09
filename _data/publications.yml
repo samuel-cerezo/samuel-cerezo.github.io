@@ -1,54 +1,136 @@
-- id: anycalib
-  title: "AnyCalib: On-Manifold Learning for Model-Agnostic Single-View Camera Calibration"
-  venue: ICCV, 2025
-  description: "Camera calibration from a single perspective/distorted/edited image with closed-form solutions for a wide range of camera models."
-  # project_page:
-  github: javrtg/AnyCalib
-  arxiv: 2503.12701
-  # poster:
-  # video:
-  image: anycalib.png
-  # image_mouseover:
+- id: illuminerf
+  title: "IllumiNeRF 3D Relighting without Inverse Rendering"
+  venue: NeurIPS, 2024
+  description: "3D relighting by distilling samples from a 2D image relighting diffusion model into a latent-variable NeRF."
+  project_page: https://illuminerf.github.io
+  arxiv: 2406.06527
+  image: illuminerf_before.jpg
+  image_mouseover: illuminerf_after.mp4
   authors:
-    - javi
-    - jcivera
-
-- id: c2p
-  title: "From Correspondences to Pose: Non-minimal Certifiably Optimal Relative Pose without Disambiguation"
+    - xiaomingzhao
+    - pratuls
+    - dorverbin
+    - keunhong
+    - rmbrualla
+    - phenzler
+- id: reconfusion
+  title: "ReconFusion: 3D Reconstruction with Diffusion Priors"
   venue: CVPR, 2024
-  description: "An algorithm that avoids the 4-fold ambiguity of calibrated epipolar geometry and directly estimates the globally optimal relative pose from 2D correspondences."
-  project_page: https://javrtg.github.io/C2P/
-  github: javrtg/C2P
-  arxiv: 2312.05995
-  poster: "poster_c2p.pdf"
-  video: "t2FP0CfgPSA"
-  image: c2p.png
-  image_mouseover: c2p_hover.png
+  description: "Using an multi-view image conditioned diffusion model to regularize a NeRF enabled few-view reconstruction."
+  project_page: https://reconfusion.github.io
+  arxiv: 2312.02981
+  image: reconfusion_before.png
+  image_mouseover: reconfusion_after.mp4
   authors:
-    - javi
-    - jcivera
+    - rundiwu
+    - bmild
+    - phenzler
+    - keunhong
+    - ruiqigao
+    - danielwatson
+    - pratuls
+    - dorverbin
+    - barron
+    - pooleb
+    - holynski
+- id: hypernerf
+  title: "CamP: Camera Preconditioning for Neural Radiance Fields"
+  venue: SIGGRAPH Asia, 2023
+  description: "Preconditioning camera optimization during NeRF training significantly improves their ability to jointly recover the scene and camera parameters."
+  project_page: "https://camp-nerf.github.io"
+  github: jonbarron/camp_zipnerf
+  arxiv: 2308.10902
+  image: camp_before.jpg
+  image_mouseover: camp_after.mp4
+  authors:
+    - keunhong
+    - phenzler
+    - bmild
+    - barron
+    - rmbrualla
   awards:
-    - "Highlight (top 2.8%)"
+    - "Journal Paper"
 
-- id: dac
-  title: "DAC: Detector-Agnostic Spatial Covariances for Deep Local Features"
-  venue: 3DV, 2024
-  description: "Quantification of spatial (2D) uncertainty for the location of deep local features in an image and their inclusion in geometric tasks such as PnP and camera localization."
-  github: javrtg/DAC
-  arxiv: "2305.12250"
-  poster: "poster_dac.pdf"
-  image: "dac.png"
+- id: hypernerf
+  title: "HyperNeRF: A Higher-Dimensional Representation for Topologically Varying Neural Radiance Fields"
+  venue: SIGGRAPH Asia, 2021
+  description: "By applying ideas from level set methods, we can represent topologically changing scenes with NeRFs."
+  project_page: "https://hypernerf.github.io"
+  github: google/hypernerf
+  arxiv: 2106.13228
+  image: hypernerf_before.jpg
+  image_mouseover: hypernerf_after.mp4
   authors:
-    - javi
-    - frederik
-    - jcivera
+    - keunhong
+    - utsinh
+    - hedman
+    - barron
+    - sofien
+    - dgo
+    - rmbrualla
+    - smseitz
 
-- id: bsplines
-  title: "Jacobian Computation for Cumulative B-Splines on SE(3) and Application to Continuous-Time Object Tracking"
-  venue: RA-L, 2022 and IROS, 2022
-  description: "Continuous-time rigid object tracking using cumulative B-Splines on SE(3) with novel analytic Jacobians for speeding-up optimization."
-  arxiv: 2201.10602
-  image: bsplines.svg
+- id: fignerf
+  title: "FiG-NeRF: Figure Ground Neural Radiance Fields for 3D Object Category Modelling "
+  venue: 3DV, 2021
+  description: "Given a lot of images of an object category, you can train a NeRF to render them from novel views and interpolate between different instances."
+  project_page: "https://fig-nerf.github.io"
+  arxiv: 2104.08418
+  image: fignerf_before.jpg
+  image_mouseover: fignerf_after.mp4
   authors:
-    - javi
-    - jcivera
+    - chrisxie
+    - keunhong
+    - rmbrualla
+    - mtbr
+
+- id: nerfies
+  title: "Nerfies: Deformable Neural Radiance Fields"
+  venue: ICCV, 2021
+  description: "Learning deformation fields with a NeRF let's you reconstruct non-rigid scenes with high fidelity."
+  project_page: "https://nerfies.github.io"
+  github: google/nerfies
+  arxiv: 2011.12948
+  image: nerfies_before.jpg
+  image_mouseover: nerfies_after.mp4
+  authors:
+    - keunhong
+    - utsinh
+    - barron
+    - sofien
+    - dgo
+    - smseitz
+    - rmbrualla
+  awards:
+    - "Oral Presentation"
+
+- id: latentfusion
+  title: "LatentFusion: End-to-End Differentiable Reconstruction and Rendering for Unseen Object Pose Estimation "
+  venue: CVPR, 2020
+  description: "By learning to predict geometry from images, you can do zero-shot pose estimation with a single network."
+  project_page: "https://latentfusion.github.io"
+  github: NVlabs/latentfusion
+  arxiv: 1912.00416
+  image: latentfusion_before.jpg
+  image_mouseover: latentfusion_after.mp4
+  authors:
+    - keunhong
+    - amousavian
+    - yux
+    - fox
+
+- id: photoshape
+  title: "PhotoShape: Photorealistic Materials for Large-Scale Shape Collections"
+  venue: SIGGRAPH Asia, 2018
+  description: "By pairing large collections of images, 3D models, and materials, you can create thousands of photorealistic 3D models fully automatically."
+  project_page: "https://photoshape.github.io"
+  github: keunhong/photoshape
+  arxiv: 1809.09761
+  image: photoshape.jpg
+  authors:
+    - keunhong
+    - krematas
+    - ali
+    - smseitz
+  awards:
+    - "Journal Cover"
