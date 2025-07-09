@@ -117,7 +117,7 @@
 										<p>We formulate a nonlinear optimization problem over the state variables $\mathbf{x}$, incorporating constraints from inertial preintegration and GNSS measurements. The objective is to find the optimal estimate $\hat{\mathbf{x}}$ that minimizes a joint cost function $J(\mathbf{x})$:
 											\begin{equation}
 											\label{eq:optimizacion_problem}
-											\hat{\mathbf{x}} = \argmin_{\mathbf{x}} J(\mathbf{x})
+											\hat{\mathbf{x}} = min_{\mathbf{x}} J(\mathbf{x})
 											\end{equation}
 										<p>
 										This cost function aggregates several residual terms, each encoding information from a different sensor modality or physical constraint. More details about this formulation are included in the article.
