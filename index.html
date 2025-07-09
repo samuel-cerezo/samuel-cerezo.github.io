@@ -1,157 +1,225 @@
-<!DOCTYPE HTML>
-<!--
-	Landed by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en-US">
 
-<html>
-	<head>
-		<title>Samuel Cerezo</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload landing">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 
-		<div id="page-wrapper">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>{{ site.name }}</title>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
 
-			<!-- Header -->
-				<header id="header">
-					<h1 id="logo"><a href="index.html">Home</a></h1>
-					<nav id="nav">
-						<ul>
-							<li>
-								<a href="#">Research</a>
-								<ul>
-									<li><a href="SLAM&Render.html">[2025] SLAM&Render</a></li>
-									<li><a href="gpsi.html">[2025] GPSi initialization</a></li>
-									<li><a href="rgbd_inertial.html">[2023] Camera Motion Estimation</a></li>
-									<li><a href="compressive.html">[2020] Compressive Sensing System</a></li>			
-								</ul>
-							</li>
-							<li><a href="contact.html">Contact me</a></li>
-							<li><a href="cv.html">My CV</a></li>
-						</ul>
-					</nav>
-				</header>
+    function gtag() {
+      dataLayer.push(arguments);
+    }
 
-			<!-- Banner -->
-				<section id="banner">
-					<div class="content">
+    gtag('js', new Date());
 
-						<span class="image"><img src="images/perfil.jpg" alt="" /></span>
-						<header>
-							<h2>Samuel Cerezo</h2>
-							<h1>Software Engineer</h1><br/>
-						</header>
-					</div>
-					<a href="#one" class="goto-next scrolly">Next</a>
-				</section>
+    gtag('config', '{{ site.google_analytics }}');
+  </script>
 
-			<!-- One -->
-				<section id="one" class="spotlight style1 bottom">
-					<span class="image fit main"><img src="images/pic02.jpg" alt="" /></span>
-					<div class="content">
-						<div class="container">
-							<div class="row">
-								<div class="col-4 col-12-medium">
-									<header>
-										<h2>Short bio</h2>
-									</header>
-								</div>
-								<div class="col-4 col-12-medium">
-									<p>I was born in 1994 in a city called San Juan, Argentina. When I was one year old, I went to live to Rincon de los Sauces, a small town in the province of Neuquen, with my 3 siblings and my parents. </p>
-								</div>
-								<div class="col-4 col-12-medium">
-									<p>In 2007 I moved with my family to the capital of the province, with the intention of attending high school with an electronics orientation. So it was that in 2013 I obtained the title of Electronic Technician by Instituto Tecnológico del Comahue (<a href="https://colegioitc.edu.ar/" target="_blank"><span></span>ITC</a>)</li>. 
-										The following year I started my Electronic Engineering career at Universidad Nacional del Comahue (<a href="https://www.uncoma.edu.ar" target="_blank"><span></span>UNCo</a>). In 2020 and in the middle of the pandemic, I obtained Electronic Engineer title with the final project called <i><a href="compressive.html">Compressive Sensing Mapping System</a></i>. </p>
-								</div>
-								<div class="col-4 col-12-medium">
-									<p>In 2021 I started my <i>PhD in Computer and Systems Engineering</i> at Universidad de Zaragoza (<a href="https://www.unizar.es" target="_blank"><span></span>UNIZAR</a>), so I moved to the city of Zaragoza, Spain. I am currently in the second year of my doctorate.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<a href="#two" class="goto-next scrolly">Next</a>
-				</section>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="{{ '/css/fontawesome.all.min.css' | relative_url }}" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" rel="stylesheet">
+  <link href="{{ '/css/bulma.min.css' | relative_url }}" rel="stylesheet">
+  <link href="{{ '/css/index.css' | relative_url }}" rel="stylesheet">
 
-			<!-- Two -->
-				<section id="two" class="spotlight style2 right">
-					<span class="image fit main"><img src="images/pic.jpg" alt="" /></span>
-					<div class="content">
-						<header>
-							<h2>About me</h2>
-									<!-- <p>-.-</p> -->
-						</header>
-						<p>I love my country, where there are huge variety of landscapes and awesome places for spending time and relaxing. I enjoy doing hiking and always better if it is done with good company :).</p>
-						<div class="col-4 col-12-medium">
-							<p>During my free time, I usually play soccer in a local tournament in Zaragoza, besides tennis and going to the gym. I also like to play the guitar and every sunday I play it in the mass of my parish.  </p>
-						</div>
-					</div>
-					<a href="#three" class="goto-next scrolly">Next</a>
-				</section>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script defer src="{{ '/js/fontawesome.all.min.js' | relative_url }}"></script>
+  <script src="{{ '/js/index.js' | relative_url }}"></script>
+</head>
 
-			<!-- Three -->			
-			<section id="three" class="spotlight style2 left">
-				<span class="image fit main"><img src="images/alhambra.jpeg" alt="" /></span>
-				<div class="content">
-					<header>
-						<h2>Some distinctions</h2>
-								<!-- <p>-.-</p> -->
-					</header>
-					<li>During my High School, i was the highest score student in my class.</li>
-					<li>[2013] i got an award by INTEL for my science project <i>temperature control of a greenhouse via internet</i>.</li>
-					<li>[2018] I got a scholarship to do an academic exchange in Granada, Spain for 6 months.</li>
-					<li>[2018] I got a scholarship to do an research project awarded by the Ministry of Education of Argentina.</li>
-					
-				</div>
-				<a href="#four" class="goto-next scrolly">Next</a>
-			</section>
+<body>
 
-			<!-- Four -->
-			<section id="four" class="spotlight style2 right">
-				<span class="image fit main"><img src="images/pilar.jpg" alt="" /></span>
-				<div class="content">
-					<header>
-						<h2>My Actual Research</h2>
-								<!-- <p>-.-</p> -->
-					</header>
-					The objective of my doctoral thesis is to address the localization and construction of maps in highly dynamic and deformable environments. 
-					As a fundamental novelty of the proposed research, my main objective is to jointly formulate the location of a mobile RGB-D sensor and the estimation of a map of the scene, understanding as a map the estimation of the position of static objects, the movement of dynamic objects and deformation of deformable objects.
-					
-				</div>
-				<a href="#footer" class="goto-next scrolly">Next</a>
-			</section>
+  <section class="hero">
+    <div class="hero-body container is-max-desktop">
+      <div class="columns is-vcentered">
 
-			<!-- Footer -->
+        <div class="column is-4">
+          <div class="portrait">
+            <img src="{{ '/images/portrait.jpg' | relative_url }}" />
+          </div>
+        </div>
 
-			<footer id="footer">
-				<ul class="icons">
-					<li><a href="https://twitter.com/SamuelCerezoo/" target="_blank" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="https://www.linkedin.com/in/samuel-cerezo/" target="_blank" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-					<li><a href="https://www.instagram.com/samucerezo/" target="_blank" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-					<li><a href="https://github.com/samuel-cerezo/" target="_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-					<li><a href="mailto: samueladriancerezo@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-				</ul>
-				<ul class="copyright">
-					<li>&copy; Samuel Cerezo. All rights reserved.</li><li></a></li>
-				</ul>
-			</footer>
+        <div class="column">
+          <h1 class="title">
+            <b>Hello, I'm {{ site.name }}</b>
+          </h1>
+          <div class="content has-text-justified">
+            {{ site.description | markdownify }}
+            <div class="buttons">
+              <!-- <a class="external-link button is-light" href="cv.html"> -->
+              <a class="external-link button is-light" href="{{ '/pdfs/cv.pdf' | relative_url }}">
+                <span class="icon"><i class="fas fa-file"></i></span>
+                <span>CV</span>
+              </a>
 
-		</div>
+              <a class="external-link button is-light"
+                href="https://scholar.google.com/citations?user={{ site.google_scholar }}">
+                <span class="icon"><i class="ai ai-google-scholar"></i></span>
+                <span>Scholar</span>
+              </a>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+              <a class="external-link button is-light" href="https://github.com/{{ site.github_username }}">
+                <span class="icon"><i class="fab fa-github"></i></span>
+                <span>Github</span>
+              </a>
 
-	</body>
+              {% if site.twitter_username %}
+              <a class="external-link button is-light" href="https://twitter.com/{{ site.twitter_username }}">
+                <span class="icon"><i class="fab fa-twitter"></i></span>
+                <span>Twitter</span>
+              </a>
+              {% endif %}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- News. -->
+  <div class="hr">
+    <div class="container">
+      <hr>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+
+      <!-- <h2 class="title is-3">News</h2>
+      <div class="content">
+        <ul>
+          {% for news in site.data.news %}
+          <li>
+            <b>{{ news.date }}</b>: {{ news.description | markdownify | remove: '<p>' | remove: '</p>' }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div> -->
+
+      <h2 class="title is-3">Publications</h2>
+
+      {% for publication in site.data.publications %}
+      <div class="publication-block columns">
+
+        <div class="column is-3">
+          <div class="publication-image {% if publication.image_mouseover %}publication-mousecell{% endif %}">
+            {% if publication.image_mouseover contains "mp4" %}
+            <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
+              <source src="./images/{{ publication.image_mouseover }}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            {% else %}
+              {% if publication.image_mouseover contains "jpg" or publication.image_mouseover contains "png" %}
+                <img class="mouseover-image" alt="{{ publication.title }}" src="./images/{{ publication.image_mouseover }}" style="display: none;" />
+              {% endif %}
+            {% endif %}
+            <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" />
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="content">
+            <h3 class="publication-title"><a href="{{ publication.project_page }}">{{ publication.title }}</a></h3>
+            <div class="publication-authors">
+              {% for author_id in publication.authors %}
+              {% assign author = site.data.authors[author_id] %}
+              <span class="author-block {% if author.is_me %}author-me{% endif %}">
+                {% if author.is_me %}
+                {{ author.first_name }} {{author.middle_name}} {{ author.last_name }}{% if forloop.last == false %},{%
+                endif %}
+                {% else %}
+                <a href="{{ author.website }}">{{ author.first_name }} {{ author.middle_name }} {{ author.last_name
+                  }}</a>{% if forloop.last == false %},{% endif %}
+                {% endif %}
+              </span>
+              {% endfor %}
+            </div>
+            <div class="publication-venue">
+              <span>{{ publication.venue }}</span>
+              {% for award in publication.awards %}
+                <span class="publication-venue-emph">{{ award }}<span>
+              {% endfor %}
+            </div>
+            <p class="publication-description">{{ publication.description }}</p>
+            <!-- Publication Links. -->
+            <div class="publication-links buttons field has-addons">
+              {% if publication.project_page %}
+              <a class="external-link button is-small is-ghost" href="{{ publication.project_page }}">
+                <span class="icon"><i class="fas fa-globe-asia"></i></span>
+                <span>Project Page</span>
+              </a>
+              {% endif %}
+              <a class="external-link button is-small is-ghost" href="https://arxiv.org/pdf/{{ publication.arxiv }}.pdf">
+                <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                <span>PDF</span>
+              </a>
+              <a class="external-link button is-small is-ghost" href="https://arxiv.org/abs/{{ publication.arxiv }}">
+                <span class="icon"><i class="ai ai-arxiv"></i></span>
+                <span>arXiv</span>
+              </a>
+              {% if publication.github %}
+              <a class="external-link button is-small is-ghost" href="https://github.com/{{ publication.github }}">
+                <span class="icon"><i class="fa fab fa-github"></i></span>
+                <span>Code</span>
+              </a>
+              {% endif %}
+              {% if publication.poster %}
+              <a class="external-link button is-small is-ghost" href="{{ '/pdfs/' | relative_url }}{{ publication.poster }}">
+                <span class="icon"><i class="fa fas fa-sticky-note"></i></span>
+                <span>Poster</span>
+              </a>
+              {% endif %}
+              {% if publication.video %}
+              <a class="external-link button is-small is-ghost" href="https://www.youtube.com/watch?v={{ publication.video }}">
+                <span class="icon"><i class="fa fab fa-youtube"></i></span>
+                <span>Video</span>
+              </a>
+              {% endif %}
+            </div>
+            <!--/ Publication Links. -->
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content footer-links has-text-centered">
+        <a href="mailto:{{ site.email }}">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a class="external-link" href="https://github.com/{{ site.github_username }}">
+          <i class="fab fa-github"></i>
+        </a>
+        <a class="external-link" href="https://scholar.google.com/citations?user={{ site.google_scholar }}">
+          <i class="ai ai-google-scholar"></i>
+        </a>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              Template borrowed from this <a href="https://keunhong.com/">website</a>.
+              Thanks to <a href="https://keunhong.com/">Keunhong Park</a> for creating and open-sourcing it.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
 </html>
-

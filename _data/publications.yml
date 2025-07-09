@@ -1,0 +1,54 @@
+- id: anycalib
+  title: "AnyCalib: On-Manifold Learning for Model-Agnostic Single-View Camera Calibration"
+  venue: ICCV, 2025
+  description: "Camera calibration from a single perspective/distorted/edited image with closed-form solutions for a wide range of camera models."
+  # project_page:
+  github: javrtg/AnyCalib
+  arxiv: 2503.12701
+  # poster:
+  # video:
+  image: anycalib.png
+  # image_mouseover:
+  authors:
+    - javi
+    - jcivera
+
+- id: c2p
+  title: "From Correspondences to Pose: Non-minimal Certifiably Optimal Relative Pose without Disambiguation"
+  venue: CVPR, 2024
+  description: "An algorithm that avoids the 4-fold ambiguity of calibrated epipolar geometry and directly estimates the globally optimal relative pose from 2D correspondences."
+  project_page: https://javrtg.github.io/C2P/
+  github: javrtg/C2P
+  arxiv: 2312.05995
+  poster: "poster_c2p.pdf"
+  video: "t2FP0CfgPSA"
+  image: c2p.png
+  image_mouseover: c2p_hover.png
+  authors:
+    - javi
+    - jcivera
+  awards:
+    - "Highlight (top 2.8%)"
+
+- id: dac
+  title: "DAC: Detector-Agnostic Spatial Covariances for Deep Local Features"
+  venue: 3DV, 2024
+  description: "Quantification of spatial (2D) uncertainty for the location of deep local features in an image and their inclusion in geometric tasks such as PnP and camera localization."
+  github: javrtg/DAC
+  arxiv: "2305.12250"
+  poster: "poster_dac.pdf"
+  image: "dac.png"
+  authors:
+    - javi
+    - frederik
+    - jcivera
+
+- id: bsplines
+  title: "Jacobian Computation for Cumulative B-Splines on SE(3) and Application to Continuous-Time Object Tracking"
+  venue: RA-L, 2022 and IROS, 2022
+  description: "Continuous-time rigid object tracking using cumulative B-Splines on SE(3) with novel analytic Jacobians for speeding-up optimization."
+  arxiv: 2201.10602
+  image: bsplines.svg
+  authors:
+    - javi
+    - jcivera
