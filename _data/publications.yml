@@ -1,3 +1,17 @@
+- id: SlamAndRender
+  title: "SLAM&Render: A Benchmark for the Intersection Between Neural Rendering, Gaussian Splatting and SLAM"
+  venue: Under submission
+  description: "a novel dataset designed to benchmark methods in the intersection between SLAM and novel view rendering. It consists of 40 sequences with synchronized RGB, depth, IMU, robot kinematic data, and ground-truth pose streams"
+  project_page: https://samuel-cerezo.github.io/SLAM&Render
+  arxiv: 2312.02981
+  image: light-conditions.png
+  image_mouseover: slamrender_portrait.mp4
+  authors:
+    - samu
+    - gaetano
+    - tomasb
+    - kirill
+    - jcivera
 - id: rgbd-sf
   title: "Camera Motion Estimation from RGB-D-inertial Scene Flow"
   venue: CVPR Workshop, 2024
@@ -8,18 +22,4 @@
   image_mouseover: rgbd_portrait.mp4
   authors:
     - samu
-    - jcivera
-- id: SlamAndRender
-  title: "SLAM&Render: A Benchmark for the Intersection Between Neural Rendering, Gaussian Splatting and SLAM"
-  venue: Under submission
-  description: "a novel dataset designed to benchmark methods in the intersection between SLAM and novel view rendering. It consists of 40 sequences with synchronized RGB, depth, IMU, robot kinematic data, and ground-truth pose streams"
-  project_page: https://samuel-cerezo.github.io/SLAM&Render.html
-  arxiv: 2312.02981
-  image: light-conditions.png
-  image_mouseover: slamrender_portrait.mp4
-  authors:
-    - samu
-    - gaetano
-    - tomasb
-    - kirill
     - jcivera
