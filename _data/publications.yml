@@ -1,9 +1,8 @@
 - id: rgbd-sf
   title: "Camera motion estimation from rgb-d-inertial scene flow"
   venue: CVPR Workshop, 2024
-  description: "estimate the camera motion in a rigid 3D environment, along
-with the state of an IMU while offering the flexibility to operate as a multiframe optimization or to marginalize older data"
-  project_page: https://samuel-cerezo.github.io/rgbd_inertial.html
+  description: "estimate the camera motion in a rigid 3D environment, along with the state of an IMU while offering the flexibility to operate as a multiframe optimization or to marginalize older data"
+  project_page: www.google.com
   arxiv: 2404.17251
   image: rgbd_portrait.png
   image_mouseover: rgbd_mouseover.png
