@@ -32,8 +32,8 @@ description: >-
   -->
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://samuel-cerezo.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: SamuelCerezoo/
-github_username: Samuel-cerezo
+twitter_username: SsamuelCerezoo/
+github_username: samuel-cerezo
 google_scholar: 9zhUnGkAAAAJ
 #google_analytics: todo
 
