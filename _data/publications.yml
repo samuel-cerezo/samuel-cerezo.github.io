@@ -4,7 +4,6 @@
   description: "Estimate the camera motion in a rigid 3D environment, along with the state of an IMU while offering the flexibility to operate as a multiframe optimization or to marginalize older data"
   project_page: https://samuel-cerezo.github.io/rgbd_inertial.html
   arxiv: 2404.17251
-  image_mouseover: rgbd_portrait.png
   image: rgbd_mouseover.png
   authors:
     - samu
@@ -15,8 +14,8 @@
   description: "a novel dataset designed to benchmark methods in the intersection between SLAM and novel view rendering. It consists of 40 sequences with synchronized RGB, depth, IMU, robot kinematic data, and ground-truth pose streams"
   project_page: https://samuel-cerezo.github.io/SLAM&Render.html
   arxiv: 2312.02981
-  image: slamrender_portrait.mp4
-  image_mouseover: setups.mp4
+  image: light-conditions.png
+  image_mouseover: slamrender_portrait.mp4
   authors:
     - samu
     - gaetano
