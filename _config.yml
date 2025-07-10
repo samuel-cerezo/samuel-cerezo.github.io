@@ -30,7 +30,7 @@ description: >-
   <br>
   I obtained my Electronic Engineering degree in Universidad Nacional del Comahue, Argentina.
   -->
-baseurl: "https://samuel-cerezo.github.io/" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://samuel-cerezo.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: SsamuelCerezoo/
 github_username: samuel-cerezo
