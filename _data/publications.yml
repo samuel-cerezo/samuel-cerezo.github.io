@@ -1,18 +1,15 @@
-- id: illuminerf
-  title: "IllumiNeRF 3D Relighting without Inverse Rendering"
-  venue: NeurIPS, 2024
-  description: "3D relighting by distilling samples from a 2D image relighting diffusion model into a latent-variable NeRF."
-  project_page: https://illuminerf.github.io
-  arxiv: 2406.06527
-  image: illuminerf_before.jpg
-  image_mouseover: illuminerf_after.mp4
+- id: rgbd-sf
+  title: "Camera motion estimation from rgb-d-inertial scene flow"
+  venue: CVPR Workshop, 2024
+  description: "estimate the camera motion in a rigid 3D environment, along
+with the state of an IMU while offering the flexibility to operate as a multiframe optimization or to marginalize older data"
+  project_page: https://samuel-cerezo.github.io/rgbd_inertial.html
+  arxiv: 2404.17251
+  image: rgbd_portrait.png
+  image_mouseover: rgbd_mouseover.png
   authors:
-    - xiaomingzhao
-    - pratuls
-    - dorverbin
-    - keunhong
-    - rmbrualla
-    - phenzler
+    - samu
+    - jcivera
 - id: reconfusion
   title: "ReconFusion: 3D Reconstruction with Diffusion Priors"
   venue: CVPR, 2024

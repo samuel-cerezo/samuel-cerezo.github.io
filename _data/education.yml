@@ -1,11 +1,12 @@
-- name: University of Washington 
+- name: Universidad de Zaragoza
   description: >-
-    Ph. D in Computer Science, advised by <a href="https://smseitz.com">Steven M. Seitz</a> and
-    <a href="https://homes.cs.washington.edu/~ali/">Ali Farhadi</a>.<br />
-    Supported by Samsung Scholarship 2015-2020 ($50,000/year for 5 years)
-  dates: Fall 2015 - Spring 2022
+    Ph.D in Computer Science, advised by <a href="https://scholar.google.com/citations?user=j_sMzokAAAAJ&hl=es">Javier Civera</a>.<br />
+    Supported by competitive research FPI Grant. 
+  dates: 2021 - now
 
-- name: University of Illinois at Urbana-Champaign
+- name: Universidad Nacional del Comahue
   description: >-
-    B.S. in Computer Science, advised by <a href="https://dhoiem.cs.illinois.edu/">Derek Hoiem</a>.
-  dates: Fall 2009 - Spring 2013
+    Electronic Engineering, advised by <a href="https://scholar.google.com/citations?hl=es&user=IWr-CcwAAAAJ">Matias Córdoba</a>.
+  dates: 2014 - Spring 2020
+    Supported by YPF scholarship ($5000/y for 5 years). 
+  dates: 2014 - 2020
