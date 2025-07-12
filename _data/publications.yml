@@ -3,7 +3,7 @@
   venue: Under submission
   description: "a novel dataset designed to benchmark methods in the intersection between SLAM and novel view rendering. It consists of 40 sequences with synchronized RGB, depth, IMU, robot kinematic data, and ground-truth pose streams"
   project_page: https://samuel-cerezo.github.io/SLAM&Render
-  arxiv: 2312.02981
+  arxiv: 2504.13713
   image: light-conditions.png
   image_mouseover: slamrender_portrait.mp4
   authors:
