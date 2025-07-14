@@ -242,12 +242,16 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
-										<p>
-                      In this work we apply the compressive sensing technique to obtain a photocurrent map of Si photovoltaic devices. 
-											Results are compared with the ones obtained by the conventional technique. </p>
-        							<div align="center"><a href="#" class="image"><img src="images/lbic_cs_system.jpg" style="width: 50vw; z-index: 10; position: relative;"  /></a></div>
+										<p> Photocurrent mapping (PM) is a non-destructive characterization method of solar cells and panels. 
+											It is used in the industry for quality control in the production of photovoltaic devices, in scientific laboratories to characterize new materials, and in photovoltaic facilities to find module failures. 
+											The PM consists of applying a laser light beam perpendicularly on a photovoltaic device, scanning the surface point by point, and measuring the induced current as a function of the position of the beam (Figure A). 
+											These systems require a high degree of mechanical stability, which leads to an increase in the characterization times when the area is large. 
+											In recent years, it has been made progress in the use of compressive sensing algorithms applied in PM tests (Figure B) in order to reduce moving parts and the measuring times. 
+											In this work we apply the compressive sensing technique to obtain a photocurrent map of Si photovoltaic devices. 
+											Results are compared with the ones obtained by the conventional technique.
 
-                    </div>  
+										<div align="center"><a href="#" class="image"><img src="images/lbic_cs_system.jpg" style="width: 50vw; z-index: 10; position: relative;"  /></a></div>
+
       </div>
     </div>
     <!--/ Abstract. -->
@@ -412,6 +416,27 @@
 										therefore it still fulfills the necessary conditions for the compressive sensing process. 
 										Now, it remains to know which is the proper basis $\Psi$ where the PM representation is sparse.
 										</p>
+                    
+                    <strong>Result on a Si-solar cell</strong>
+										Next figure A shows a real photo of the solar cell with a 3 $mm^2$ rectangular defect placed on the surface, 
+										in order to observe if the CS system is able to detect it.
+										The PM obtained by the CS system is shown in B. 
+										For this measurement, 64x64 pixel patterns are projected, so that each pixel has an area of 310x310 $\mu m^2$.
+										The reconstruction of the PM is performed by minimizing the Total Variation (TV) and using the DCT as the mathematical basis. 
+										For this reconstruction, 50% of the patterns were used.
+										This value is determined as follows:
+
+										\begin{equation}
+										percentage [\%] = \frac{M}{N}*100%.
+										\end{equation}
+
+										<ul>
+											<li>$M$ is the number of patterns projected during the measurement process.</li>
+											<li>$N$ is the number of pixels each pattern has. For example, a 64x64 pattern has $N$ = 64*64 = 4096 pixels.</li>
+										</ul>
+
+										<div align="center"><a href="#" class="image"><img src="images/primer_resultado.jpg" style="width: 60vw; z-index: 10; position: relative;"  /></a></div>
+
       </div>
     </div>
 
@@ -504,18 +529,20 @@
 </section>
 
 
-
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
     <pre><code>
-@inproceedings{cerezo2024camera,
-  title={Camera Motion Estimation from RGB-D-Inertial Scene Flow},
-  author={Cerezo, Samuel and Civera, Javier},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  pages={841--849},
-  year={2024}
+@INPROCEEDINGS{cerezo-compressive,
+  author={Cerezo, Samuel and Córdoba, Matías Andrés and Quintián, Fernando Pérez},
+  booktitle={2023 Argentine Conference on Electronics (CAE)}, 
+  title={Compressive Sensing Mapping System for Spatial Characterization of Photovoltaic Devices}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={1-6},
 }
+
 </code></pre>
   </div>
 </section>
