@@ -112,7 +112,12 @@ layout: null
       <div class="publication-block columns">
 
         <div class="column is-3">
-          <div class="publication-image {% if publication.image_mouseover %}publication-mousecell{% endif %}">
+          <div class="publication-video">
+             {% if publication.video contains "mp4" %}
+            <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
+              <source src="./images/{{ publication.video }}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>           
             {% if publication.image_mouseover contains "mp4" %}
             <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
               <source src="./images/{{ publication.image_mouseover }}" type="video/mp4">
