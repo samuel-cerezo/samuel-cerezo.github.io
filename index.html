@@ -112,7 +112,8 @@ layout: null
       {% for publication in site.data.publications %}
       <div class="publication-block columns">
 
-        <div class="column is-3">        
+        <div class="column is-3">
+          <!--    
           <div class="publication-image {% if publication.image_mouseover %}publication-mousecell{% endif %}">        
             {% if publication.image_mouseover contains "mp4" %}
             <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
@@ -126,6 +127,32 @@ layout: null
             {% endif %}
             <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" />
           </div>
+          -->
+          {% if publication.video %}
+            <div class="publication-image"> 
+              <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
+                <source src="./images/{{ publication.video }}" type="video/mp4">
+              </video>
+            </div>
+
+          {% else %}
+
+            <div class="publication-image {% if publication.image_mouseover %}publication-mousecell{% endif %}">        
+              {% if publication.image_mouseover contains "mp4" %}
+              <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
+                <source src="./images/{{ publication.image_mouseover }}" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              {% else %}
+                {% if publication.image_mouseover contains "jpg" or publication.image_mouseover contains "png" %}
+                  <img class="mouseover-image" alt="{{ publication.title }}" src="./images/{{ publication.image_mouseover }}" style="display: none;" />
+                {% endif %}
+              {% endif %}
+              <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" />
+            </div>
+
+          {% endif %}
+
         </div>
 
         <div class="column">
