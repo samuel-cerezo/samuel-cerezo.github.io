@@ -13,6 +13,7 @@
     - jcivera
   awards:
     - "New"
+
 - id: GPSi
   title: "GNSS-inertial state initialization by distance residuals"
   venue: Submitted to RA-L, 2025
@@ -25,6 +26,7 @@
     - jcivera
   awards:
     - "New"
+
 - id: rgbd-sf
   title: "Camera Motion Estimation from RGB-D-inertial Scene Flow"
   venue: CVPR Workshop, 2024
@@ -35,6 +37,7 @@
   authors:
     - samu
     - jcivera
+
 - id: rgbd-sf2
   title: "Camera Motion Estimation from RGB-D-inertial Scene Flow"
   venue: CVPR Workshop, 2024
@@ -45,6 +48,7 @@
   authors:
     - samu
     - jcivera
+
 - id: compressive
   title: "Compressive Sensing Mapping System for Spatial Characterization of Photovoltaic Devices
   description: "In this work we apply a new technique called compressive sensing to obtain the photocurrent map of Si photovoltaic devices"
