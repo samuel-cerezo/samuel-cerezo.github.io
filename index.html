@@ -115,10 +115,10 @@ layout: null
 
           <div class="column is-3">
 
-            {% if publication.video_web %}
+            {% if publication.video %}
               <div class="publication-image"> 
                 <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
-                  <source src="./images/{{ publication.video_web }}" type="video/mp4">
+                  <source src="./images/{{ publication.video }}" type="video/mp4">
                 </video>
               </div>
 
@@ -206,8 +206,8 @@ layout: null
                   <span>Poster</span>
                 </a>
                 {% endif %}
-                {% if publication.video %}
-                <a class="external-link button is-small is-ghost" href="https://www.youtube.com/watch?v={{ publication.video }}">
+                {% if publication.video_web %}
+                <a class="external-link button is-small is-ghost" href="https://www.youtube.com/watch?v={{ publication.video_web }}">
                   <span class="icon"><i class="fa fab fa-youtube"></i></span>
                   <span>Video</span>
                 </a>
