@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compressive Sensing System</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script> -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+		<!--------------------------------------------- LaTex Scripts --------------------------------------------------------->
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script>
+		MathJax = {
+		  tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+		};
+		</script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+		<!--------------------------------------------- LaTex Scripts --------------------------------------------------------->
+
+
+
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://samuel-cerezo.github.io/">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+    <!-- 
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div> -->
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Compressive Sensing Mapping System for Spatial Characterization of Photovoltaic Devices</h1>
+          <div class="is-size-5 publication-authors">
+                         <span class="is-size-5 publication-authors">
+							              <span class="author-block">
+							                <a href="https://scholar.google.com/citations?user=9zhUnGkAAAAJ&hl=en">Samuel Cerezo</a><sup>1</sup>,</span>
+							              <span class="author-block">
+							                <a href="https://scholar.google.com/citations?user=IWr-CcwAAAAJ&hl=es&oi=ao">Matias Córdoba</a><sup>1</sup>,</span>
+                            <span class="author-block">
+                              <a href="https://scholar.google.com.ar/citations?user=3NkMFpgAAAAJ&hl=en">Fernando P Quintián</a><sup>1</sup></span>
+                            </span>
+                          </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+							              <span class="author-block"><sup>1</sup>Universidad Nacional del Comahue</span>
+          </div>
+          <h0> 2023 Argentine Conference on Electronics (CAE) </h0>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://ieeexplore.ieee.org/document/10677884"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Video Link.
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span> -->
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <!-- Dataset Link. 
+              <span class="link-block">
+                <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span> -->
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/teaser.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">Nerfies</span> turns selfie videos from your phone into
+        free-viewpoint
+        portraits.
+      </h2>
+    </div>
+  </div>
+</section>
+-->
+<!-- 
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/steve.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/chair-tp.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/shiba.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/fullbody.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-blueshirt">
+          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/blueshirt.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-mask">
+          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/mask.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-coffee">
+          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/coffee.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-toby">
+          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/toby2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+-->
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+										<p>
+                      In this work we apply the compressive sensing technique to obtain a photocurrent map of Si photovoltaic devices. 
+											Results are compared with the ones obtained by the conventional technique. </p>
+        							<div align="center"><a href="#" class="image"><img src="images/lbic_cs_system.jpg" style="width: 50vw; z-index: 10; position: relative;"  /></a></div>
+
+                    </div>  
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <!--
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    
+    <div class="columns is-centered">
+
+      <!-- Visual Effects. -->
+       <!--
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-3">Visual Effects</h2>
+          <p>
+            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
+            would be impossible without nerfies since it would require going through a wall.
+          </p>
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/dollyzoom-stacked.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      -->
+      <!--/ Visual Effects. -->
+      
+      <!-- Matting. -->
+       <!--
+      <div class="column">
+        <h2 class="title is-3">Matting</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <p>
+              As a byproduct of our method, we can also solve the matting problem by ignoring
+              samples that fall outside of a bounding box during rendering.
+            </p>
+            <video id="matting-video" controls playsinline height="100%">
+              <source src="./static/videos/matting.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+
+        </div>
+      </div>
+      -->
+    </div>
+  
+    <!--/ Matting. -->
+    
+    <!-- Animation. -->
+     
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Formulation</h2>
+    
+											The current map for a photovoltaic device with a standard
+											$N$point test area corresponds to a vector $x$ represented in a given basis $\Psi$: 
+				
+											\begin{equation}
+												x=\sum_{i=1}^N \psi_i s_i = \Psi s 
+											\end{equation}
+
+											<p>
+											The signal $x$ is called K-sparse in $\Psi$ basis if only $K$ components of the vector $s$ are non-zero and the others, i.e. $N-K$ components, are zero. 
+											If one could know in advance in which base the signal to be measured is sparse, it would be sufficient to measure the $K \ll N$ values corresponding to the coefficients of the signal in that base, i.e. it would be sufficient to make $K$ measurements.
+			
+											We denote $y_j$ ($j=1,\dots,M$) as each of the measurements of the signal $x$. Each measurement will be a linear combination of the values of $x$, 
+											so it can be thought of as an inner product between $x$ and a vector $\phi_j$ ($j=1,\dots,M$). 
+											Rearranging the vectors $\phi_j$ in the rows $\phi_j^T$ forms a matrix $\Phi \in \mathbb{R}^{M\mathrm{x}N}$ 
+											called measurement matrix. Substituting, we obtain:
+											
+											\begin{equation}
+												y=\Phi x = \Phi\Psi s=\Theta s 
+											\end{equation}
+
+											The matrix $\Theta \in \mathbb{R}^{M\mathrm{x}N}$ must satisfy two conditions: the principle of <i>restricted isometry</i> and the <i>incoherence property</i>. 
+											The direct construction of the matrix $\Phi$ such that $\Theta=\Phi\Psi $ fulfills both conditions is very difficult to achieve, 
+											however both can be achieved with high probability by means of a random $\Phi$ matrix of Bernouli type.
+											</p>
+
+											<p>
+											Once $\Phi$ has been defined and the $M$ measurements have been made, 
+											the algorithm should be able to obtain the values of the vector $s$ by solving the 
+											inverse problem $y = \Theta s$. 
+											This is an ill-conditioned problem, i.e., there are many and significantly different solutions, 
+											so the algorithm is asked to impose some constraint on $s$. 
+											Two alternatives are examined next: minimizing the $l_1$ norm and minimizing the Total Variation (TV). 
+											After the minimization process, the map corresponding to the photovoltaic device $x$ is obtained by $x = \Psi s$.
+											</p>
+      </div>
+    </div>
+    
+    <div class="columns is-centered">
+      <div class="column is-full-width">                    
+										<p>
+										The scheme of experimental set-up is shown in the next figure, where the three stages are displayed in different colors. 
+										</p>
+
+										<div align="center"><a href="#" class="image"><img src="images/diagrama_gral.png" style="width: 45vw; z-index: 10; position: relative;"  /></a></div>
+
+										<p>
+											The user starts a measurement using the graphical interface stored in the computer (PC). 
+											The projector is used for imaging the patterns on the cell. A lens is used to modify the size of projected patterns. 
+											Finally, the current values are obtained by a SMU (Source Meter Unit) Keithley 2400 and stored in the PC. 
+											After this process, an optimization algorithm returns the photocurrent map throw a minimization function.
+										</p>
+										
+										<strong>a) Measurement process</strong>
+										<p>
+										The measurement process consist of obtaining $M$ measurements of a signal $x$, 
+										which in this case represents the photocurrent map of the cell. 
+										Each measurement is obtained by performing the product between the signal $x$ and a matrix $\phi_j$ ($j=1,\dots,M$).
+										Each one of these $M$ matrices has 64 rows by 64 columns and is randomly generated with values 1 and 0. 
+										In turn, this matrix is equivalent to an image called \emph{pattern} that consists of small squares called \emph{pixels}. 
+										A black pixel corresponds to the value 0, and similarly a white pixel corresponds to 1.
+										
+										The randomly generated pattern is projected onto the solar cell.
+										</p>
+										<p>
+										Next figure shows the measurement process represented in mathematical form, in order to visualize the relationship between 
+										the measurement process and the mathematical problem to be solved. 
+										In this figure the process is carried out as an example taking $M=4$ measurements by means of four 3x3 patterns. 
+										In the following section the results are shown in real samples using 64x64 patterns.
+										</p>
+
+										<div align="center"><a href="#" class="image"><img src="images/celda-y-matriz.jpg" style="width: 50vw; z-index: 10; position: relative;"  /></a></div>
+										<p>
+											The purple square represents the actual PM of cell $x$ which is rearranged as a column vector. 
+											The projected patterns, or equivalently the $\phi_j$ matrices, are rearranged as rows to form the measurement matrix $\Phi$.
+											By projecting the $M$ patterns onto the cell and acquiring the $M$ photocurrent values, 
+											what is being done mathematically is a multiplication between the measurement matrix $\Phi$ and the actual PM of the cell $x$, 
+											to obtain the measurement vector $y$. 
+											Therefore, the aforementioned inverse problem $\Phi x=y$ is expressed. 
+											The latter is solved in the reconstruction process, to find the photocurrent map of the cell.
+										</p>
+
+
+										<strong>b) Reconstruction process</strong>
+										<p>
+										The mathematics involved in compressive sensing ensures that a good representation of the photocurrent map $x$ is achieved, 
+										without knowing in advance the basis on which this representation is sparse.
+										As we saw, the inverse problem $\Phi x = y$ is reformulated as $\Phi x= \Phi \Psi s = \Theta s = y $. 
+										This new matrix $\Theta$ results from the multiplication between $\Phi$ and $\Psi$, 
+										therefore it still fulfills the necessary conditions for the compressive sensing process. 
+										Now, it remains to know which is the proper basis $\Psi$ where the PM representation is sparse.
+										</p>
+      </div>
+    </div>
+
+
+
+      <!--
+        <div class="columns is-vcentered interpolation-panel">
+          <div class="column is-3 has-text-centered">
+            <img src="./static/images/interpolate_start.jpg"
+                 class="interpolation-image"
+                 alt="Interpolate start reference image."/>
+            <p>Start Frame</p>
+          </div>
+          <div class="column interpolation-video-column">
+            <div id="interpolation-image-wrapper">
+              Loading...
+            </div>
+            <input class="slider is-fullwidth is-large is-info"
+                   id="interpolation-slider"
+                   step="1" min="0" max="100" value="0" type="range">
+          </div
+          <div class="column is-3 has-text-centered">
+            <img src="./static/images/interpolate_end.jpg"
+                 class="interpolation-image"
+                 alt="Interpolation end reference image."/>
+            <p class="is-bold">End Frame</p>
+          </div>
+        </div>
+        <br/>
+      -->
+        <!--/ Interpolating. -->
+
+        <!-- Re-rendering. -->
+         <!--
+        <h3 class="title is-4">Re-rendering the input video</h3>
+        <div class="content has-text-justified">
+          <p>
+            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
+            viewpoint such as a stabilized camera by playing back the training deformations.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="75%">
+            <source src="./static/videos/replay.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        -->
+        <!--/ Re-rendering. -->
+      
+
+    <!--/ Animation. -->
+
+
+    <!-- Concurrent Work. -->
+    <!--
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Related Links</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            There's a lot of excellent work that was introduced around the same time as ours.
+          </p>
+          <p>
+            <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.
+          </p>
+          <p>
+            <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
+            both use deformation fields to model non-rigid scenes.
+          </p>
+          <p>
+            Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>
+          </p>
+          <p>
+            There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+    -->
+    <!--/ Concurrent Work. -->
+
+  </div>
+</section>
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>
+@inproceedings{cerezo2024camera,
+  title={Camera Motion Estimation from RGB-D-Inertial Scene Flow},
+  author={Cerezo, Samuel and Civera, Javier},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={841--849},
+  year={2024}
+}
+</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="https://samuel-cerezo.github.io/" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
