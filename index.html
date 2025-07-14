@@ -111,8 +111,8 @@ layout: null
       {% for publication in site.data.publications %}
       <div class="publication-block columns">
 
-        <div class="column is-3">
-          <div class="publication-video">
+        <div class="column is-3">        
+          <div class="publication-image {% if publication.image_mouseover %}publication-mousecell{% endif %}">
              {% if publication.video contains "mp4" %}
             <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
               <source src="./images/{{ publication.video }}" type="video/mp4">
