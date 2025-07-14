@@ -2,7 +2,7 @@ samu:
   first_name: Samuel
   last_name: Cerezo
   website: https://samuel-cerezo.github.io/
-  is_me: true
+  is_me: false
 jcivera:
   first_name: Javier
   last_name: Civera
