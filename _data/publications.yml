@@ -16,7 +16,7 @@
 - id: GPSi
   title: "GNSS-inertial state initialization by distance residuals"
   venue: Submitted to RA-L, 2025
-  description: "A new strategy that delays the use of global GNSS measurements until sufficient information is available. For this, the evolution of the Hessian matrix singular values is used."
+  description: "A novel GNSS-inertial initialization strategy that delays the use of global GNSS measurements until sufficient information is available to accurately estimate the state of a sensorized device. To determine the optimal moment for switching from relative to global measurements, we introduce a criterion based on the evolution of the Hessian matrix singular values"
   project_page: https://samuel-cerezo.github.io/GPSi
   arxiv: 2506.11534
   image: /GPSi/grafo_gpsi.png
@@ -35,11 +35,13 @@
   authors:
     - samu
     - jcivera
-- id: compressive
-  title: "Compressive Sensing Mapping System for Spatial Characterization of Photovoltaic Devices
+- id: cs-photo
+  title: "Compressive Sensing Mapping System for Spatial Characterization of Photovoltaic Devices"
+  venue: Argentine Conference on Electronics, 2023
   description: "In this work we apply a new technique called compressive sensing to obtain the photocurrent map of Si photovoltaic devices"
-  project_page: https://samuel-cerezo.github.io/compressive_sensing.html
-  arxiv: 2404.17251
+  project_page: https://samuel-cerezo.github.io/compressive_sensing
   image: primer_resultado.jpg
   authors:
     - samu
+    - mc
+    - fpq
