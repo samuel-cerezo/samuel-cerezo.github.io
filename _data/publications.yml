@@ -38,7 +38,7 @@
 - id: cs-photo
   title: "Compressive Sensing Mapping System for Spatial Characterization of Photovoltaic Devices"
   venue: Argentine Conference on Electronics, 2023
-  description: "In this work we apply a new technique called compressive sensing to obtain the photocurrent map of Si photovoltaic devices"
+  description: "In this work we apply a new technique called compressive sensing to obtain the photocurrent map of photovoltaic devices"
   project_page: https://samuel-cerezo.github.io/compressive_sensing
   image: primer_resultado.jpg
   authors:
