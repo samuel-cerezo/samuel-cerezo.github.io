@@ -339,7 +339,7 @@
     <div class="columns is-centered">
       <div class="column is-full-width">
         <h2 class="title is-3">Formulation</h2>
-    										<p>Our goal is estimating the state $\mathbf{x}$ of a sensing platform equipped with GNSS and inertial sensors. 
+    								<p>Our goal is estimating the state $\mathbf{x}$ of a sensing platform equipped with GNSS and inertial sensors. 
 										The state consists of the device's rotation, position, linear velocity, IMU gyroscope bias, and gravity direction at different time steps.
 										We define the general state $\mathbf{x}$ as
 
@@ -383,7 +383,12 @@
 											To handle this underconstrained initialization, we fix the initial pose (position, velocity, and orientation), reducing the number of estimated variables to 14. In this setup, \( \mathcal{O} \) achieves a numerical rank of 11, with remaining ambiguities linked to the second pose, gyroscope bias, and gravity direction. Rather than relying on external priors, our method exploits the coupling between IMU preintegration and GNSS data, progressively enhancing observability as the trajectory evolves. 
 											To ensure robustness, we delay the activation of global GPS terms until sufficient motion renders the system observable, thereby avoiding early noise sensitivity.
 										</p>
-										<h3>Triggering criterion</h3>
+      </div>
+    </div>
+    
+    <div class="columns is-centered">
+      <div class="column is-full-width">                    
+										<h2>Triggering criterion</h2>
 										<p>To determine the triggering time index \( k^* \), we analyze the observability of the extrinsic transformation \( \mathbf{T}_{W}^{B} \) by inspecting the singular values of an approximate Hessian matrix constructed from GNSS-only residuals. These include one relative and two absolute position terms. The Hessian is built by linearizing the residuals with respect to the six parameters of \( \mathbf{T}_{W}^{B} \), and its conditioning is evaluated via singular value decomposition. We define the singular value ratio \( \rho_k = \sigma_{\max} / \sigma_{\min} \) and track its relative variation:
 										\[
 										\Delta \rho_k = \left| \frac{\rho_k - \rho_{k-1}}{\rho_{k-1}} \right|.
@@ -393,23 +398,6 @@
 										<div align="center"><a href="#" class="image"><img src="images/GPSi/different-activation-obs.png" style="width: 40vw; z-index: 10; position: relative;"  /></a></div>
 										<p>Example of our activation criterion for two EuRoc sequences. a) On the MH05 sequence, the criterion results in $k^*=9$ GPS measurements; b) on the MH03 sequence, it suggests $k^*=15$ GPS measurements. The dashed blue line represents the observability threshold $ \Delta \rho_{{th}}$.</p>
 
-      </div>
-    </div>
-    
-    <div class="columns is-centered">
-      <div class="column is-full-width">                    
-										<p>Consider the case in following figure, using a 3-frames-sliding-window. When the $l$-frame comes, the optimization is done. 
-										However, in order to keep a 3-frame window, when the next frame $l+1$ comes, we need to marginalize out $\mathbf{v}_i$ and $\boldsymbol{\omega}_i$.</p>
-										<div align="center"><a href="#" class="image"><img src="images/grafo_marginalizacion.png" style="width: 40vw; z-index: 10; position: relative;"  /></a></div>
-										<p>
-										The Hessian $\mathbf{H}$ contains the second derivatives of the cost function with respect to the state variables, that encodes how every state variable affects the others. 
-										We denote as $\alpha$ the block of variables we would like to marginalize, and $\beta$ the block of variables we would like to keep.
-										When marginalizing a set $\alpha$ of variables, we gather all factors dependent on them as well as the connected variables $\beta$. This is done by means of the $\textit{Schur Complement}$, which is defined as follows. 
-											\begin{equation}
-													\mathbf{H}^* = \mathbf{H}_{\beta\beta} 
-																 - \mathbf{H}_{\alpha\beta}^\top\mathbf{H}_{\alpha\alpha}^{-1}\mathbf{H}_{\alpha\beta}   
-											\end{equation}
-										</p>
       </div>
     </div>
 
