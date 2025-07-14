@@ -35,12 +35,12 @@
   authors:
     - samu
     - jcivera
-- id: compressive_sensing
+- id: compressive
   title: "Compressive Sensing Mapping System for Spatial Characterization of Photovoltaic Devices
-  description: "..."
-  project_page: https://samuel-cerezo.github.io/compressive_sensing
+  description: "In this work we apply a new technique called compressive sensing to obtain the photocurrent map of Si photovoltaic devices"
+  project_page: https://samuel-cerezo.github.io/compressive_sensing.html
   image: primer_resultado.jpg
   authors:
     - samu
-    - mcordoba
-    - fpquintian
+    - mc
+    - fpq
