@@ -1,0 +1,234 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Samuel Cerezo</title>
+		
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+		<!--------------------------------------------- LaTex Scripts --------------------------------------------------------->
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script>
+		MathJax = {
+		  tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+		};
+		</script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+		<!--------------------------------------------- LaTex Scripts --------------------------------------------------------->
+
+	</head>
+
+	<body class="is-preload">
+
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header">
+					<h1 id="logo"><a href="index.html">Home</a></h1>
+					<nav id="nav">
+						<ul>
+							<li>
+								<a href="#">Research</a>
+								<ul>
+									<li><a href="SLAM&Render.html">[2025] SLAM&Render</a></li>
+									<li><a href="gpsi.html">[2025] GPSi initialization</a></li>
+									<li><a href="rgbd_inertial.html">[2023] Camera Motion Estimation</a></li>
+									<li><a href="compressive.html">[2020] Compressive Sensing System</a></li>	
+								</ul>
+							</li>
+							<li><a href="contact.html">Contact me</a></li>
+							<li><a href="cv.html">My CV</a></li>
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Main -->
+		
+				<div id="main" class="wrapper style1">
+					<div class="container">
+						<header class="major">
+							<h2>GNSS-inertial state initialization by distance residuals</h2>
+							            <h1 class="is-size-5 publication-authors">
+							              <span class="author-block">
+							                <a href="https://scholar.google.com/citations?user=9zhUnGkAAAAJ&hl=en">Samuel Cerezo</a><sup>1</sup>,</span>
+							              <span class="author-block">
+							                <a href="https://scholar.google.com/citations?user=j_sMzokAAAAJ&hl=en">Javier Civera</a><sup>1</sup></span>
+							              </span>
+							            </h1>
+							            <h1 class="is-size-5 publication-authors">
+							              <span class="author-block"><sup>1</sup>Universidad de Zaragoza</span>
+							            </h1>
+						
+							<h0> 2025 </h1> <p></p>
+							        <div class="publication-links">
+							                <span class="link-block">
+							                  <a href="https://ieeexplore.ieee.org" class="external-link button is-normal is-rounded is-dark">
+							                    <span>Paper</span>
+							                  </a>
+							                </span>
+							                <span class="link-block">
+							                  <a href="https://arxiv.org/abs/2506.11534" class="external-link button is-normal is-rounded is-dark">
+							                    <span>arXiv</span>
+							                  </a>
+							                </span>
+							                <span class="link-block">
+							                  <a href="https://github.com/samuel-cerezo/GPSi" class="external-link button is-normal is-rounded is-dark">
+							                    <span>Code</span>
+							                  </a>
+							                </span>
+									</div>
+
+						</header>
+
+							<div class="col-8 col-12-medium imp-medium">
+
+								<!-- Content -->
+									<section id="content">
+										
+										<h3>Abstract</h3>
+										<p>
+											This paper proposes a novel GNSS-inertial initialization strategy that delays the use of global GNSS measurements until sufficient information is available to accurately estimate the transformation between the GNSS and inertial frames. 
+											Instead, the method initially relies on GNSS relative distance residuals. To determine the optimal moment for switching to global measurements, we introduce a criterion based on the evolution of the Hessian matrix singular values. 
+											Experiments on the EuRoC and GVINS datasets show that our approach consistently outperforms the naive strategy of using global GNSS data from the start, yielding more accurate and robust initializations.
+										</p>
+										
+										<div align="center"><a href="#" class="image"><img src="images/GPSi/grafo_gpsi.png" style="width: 40vw; z-index: 10; position: relative;"  /></a></div>
+										<p>Illustration of our GNSS-IMU initialization approach. a) Global residuals remain inactive while the system lacks informative measurements. b) At time $k^*$, the GNSS-inertial measurements provide sufficient information to meet our criterion, enabling the inclusion of global constraints for accurate alignment.</p>
+										
+										<h3>Optimization problem</h3>
+										<p>Our goal is estimating the state $\mathbf{x}$ of a sensing platform equipped with GNSS and inertial sensors. 
+										The state consists of the device's rotation, position, linear velocity, IMU gyroscope bias, and gravity direction at different time steps.
+										We define the general state $\mathbf{x}$ as
+
+										\begin{equation}
+												\mathbf{x} = \left[\mathbf{x}_1^\top,\mathbf{x}_2^\top, \cdots, \mathbf{x}_k^\top, \cdots  ,\mathbf{x}_N^\top, {\mathbf{b}^g}^\top, {\hat{\mathbf{g}}}^\top\right]^\top~,
+										\end{equation}
+
+										where
+
+										\begin{equation}
+												\mathbf{x}_k = \left[\mathbf{R}_k^\top, 
+										{\mathbf{p}}_k^\top,{\boldsymbol{\omega}}_k^\top,{\mathbf{v}}_k^\top\right]^\top~,
+										\end{equation}
+										</p>
+										<p>We formulate a nonlinear optimization problem over the state variables $\mathbf{x}$, incorporating constraints from inertial preintegration and GNSS measurements. The objective is to find the optimal estimate $\hat{\mathbf{x}}$ that minimizes a joint cost function $J(\mathbf{x})$:
+											\begin{equation}
+											\label{eq:optimizacion_problem}
+											\hat{\mathbf{x}} = min_{\mathbf{x}} J(\mathbf{x})
+											\end{equation}
+										<p>
+										This cost function aggregates several residual terms, each encoding information from a different sensor modality or physical constraint. More details about this formulation are included in the article.
+										</p>
+
+										<h3>Observability Analysis</h3>
+										<p>To analyze the system’s observability, we construct the observability matrix $\mathcal{O}$ by stacking the Jacobians of all residuals in the cost function with respect to the state vector, as follows
+											\begin{align}
+											\mathcal{O} =
+											\begin{bmatrix}
+											\frac{\partial \mathbf{r}_{\Delta \mathbf{R}}}{\partial \mathbf{x}}^\top,
+											\frac{\partial \mathbf{r}_{\Delta \mathbf{v}}}{\partial \mathbf{x}}^\top,
+											\frac{\partial \mathbf{r}_{\Delta \mathbf{p}}}{\partial \mathbf{x}}^\top,
+											\frac{\partial \mathbf{r}_{\text{d}}}{\partial \mathbf{x}}^\top,
+											\frac{\partial \mathbf{r}_{\text{p}_i}}{\partial \mathbf{x}}^\top,
+											\frac{\partial \mathbf{r}_{\text{p}_j}}{\partial \mathbf{x}}^\top,
+											\frac{\partial \mathbf{r}_{\omega}}{\partial \mathbf{x}}^\top,
+											\frac{\partial \mathbf{r}_{\mathbf{g}}}{\partial \mathbf{x}}^\top
+											\end{bmatrix}^\top
+											\end{align}
+										</p>
+										<p>The explicit structure of the observability matrix \( \mathcal{O} \), derived from the defined residuals, reveals a maximum symbolic rank of 23 due to linear dependencies among GPS constraints. 
+											To handle this underconstrained initialization, we fix the initial pose (position, velocity, and orientation), reducing the number of estimated variables to 14. In this setup, \( \mathcal{O} \) achieves a numerical rank of 11, with remaining ambiguities linked to the second pose, gyroscope bias, and gravity direction. Rather than relying on external priors, our method exploits the coupling between IMU preintegration and GNSS data, progressively enhancing observability as the trajectory evolves. 
+											To ensure robustness, we delay the activation of global GPS terms until sufficient motion renders the system observable, thereby avoiding early noise sensitivity.
+										</p>
+										<h3>Triggering criterion</h3>
+										<p>To determine the triggering time index \( k^* \), we analyze the observability of the extrinsic transformation \( \mathbf{T}_{W}^{B} \) by inspecting the singular values of an approximate Hessian matrix constructed from GNSS-only residuals. These include one relative and two absolute position terms. The Hessian is built by linearizing the residuals with respect to the six parameters of \( \mathbf{T}_{W}^{B} \), and its conditioning is evaluated via singular value decomposition. We define the singular value ratio \( \rho_k = \sigma_{\max} / \sigma_{\min} \) and track its relative variation:
+										\[
+										\Delta \rho_k = \left| \frac{\rho_k - \rho_{k-1}}{\rho_{k-1}} \right|.
+										\]
+										A low and stable \( \Delta \rho_k \) indicates that the system has become sufficiently observable. We therefore activate global GPS constraints and begin estimating \( \mathbf{T}_{W}^{B} \) only when \( \Delta \rho_k < \Delta \rho_{\mathrm{th}} \), with \( k^* \) denoting the triggering index. This strategy provides a principled, data-driven criterion to safely incorporate global information while avoiding premature sensitivity to noise.
+										The Figure below shows the evolution of the relative change $\Delta \rho_k$ for two EuRoC sequences. When the curve drops below the observability threshold $\Delta \rho_{\mathrm{th}} = 10^{-2}$, the system is considered sufficiently constrained to support the inclusion of global position residuals in the estimation.
+										<div align="center"><a href="#" class="image"><img src="images/GPSi/different-activation-obs.png" style="width: 40vw; z-index: 10; position: relative;"  /></a></div>
+										<p>Example of our activation criterion for two EuRoc sequences. a) On the MH05 sequence, the criterion results in $k^*=9$ GPS measurements; b) on the MH03 sequence, it suggests $k^*=15$ GPS measurements. The dashed blue line represents the observability threshold $ \Delta \rho_{{th}}$.</p>
+
+										</p>
+										<h3>Experiments</h3>
+										<p>The aim of this experiment is to assess the impact of optimizing the rigid transformation matrix $\mathbf{T}_W^B$ between the GPS and IMU frames on the overall performance of the system. A series of experiments are conducted in which this transformation is optimized, but only after a predefined minimum number of GPS measurements have been accumulated. This threshold is varied across experiments and is represented on the x-axis.</p>
+										<div align="center"><a href="#" class="image"><img src="images/GPSi/euroc-ate-errors.png" style="width: 40vw; z-index: 10; position: relative;"  /></a></div>
+										<p>RMSE values for different EuRoc sequences. x-axis represent the number of GPS measurements accumulated before including global residuals in the optimization. </p>
+										<!---- Additional options: 
+										<ul>
+											<li>1)</li>
+											<li>2)</li>
+											<li>3)</li>
+										</ul>
+										-->
+										<p>The table below reports the estimated activation index $k^*$ and compares the position error using two strategies: including GPS residuals from the beginning, or activating them at the recommended index $k^*$.</p>
+										<div align="center"><a href="#" class="image"><img src="images/GPSi/table-results.png" style="width: 40vw; z-index: 10; position: relative;"  /></a></div>
+										<p>$k^*-$index obtained by our criterion and position error comparison for each sequence. 
+										"Pos. Error (Full)" refers to ATE RMSE [$\downarrow~{m}$] when using GPS residuals from the beginning, while 
+										"Pos. Error (from $k^*$)" shows the result when global residuals are introduced at  $k^*$.</p>
+										<p>As shown, these results validate the effectiveness of the proposed activation criterion, as it avoids premature inclusion of global residuals when the system is still underconstrained, thereby improving overall estimation accuracy.</p>							
+										<h3>Conclusions</h3>
+										<p>
+										We introduced a GNSS-inertial initialization method formulated through relative distance residuals. We also proposed a principled activation criterion that defers the inclusion of global residuals until the problem is sufficiently well-conditioned, as determined by an observability analysis. Experiments confirm that this strategy yields accurate and robust trajectory estimates under a variety of operating conditions.</p>
+				
+									</section>
+
+							</div>
+
+							<div class="row gtr-150">
+								<div class="col-6 col-12-medium">
+	
+								<!-- Sidebar -->
+									<section id="sidebar">
+
+										<hr />
+										<section>
+											<h3>See more: SLAM-Render</h3>
+											<p>...</p>
+											
+											<a href="SLAM&Render.html" class="image fit"><img src="images/SLAMdataset/light-conditions.png" alt="" /></a>
+											<footer>
+												<ul class="actions">
+													<li><a href="SLAM&Render.html" class="button">Learn More</a></li>
+												</ul>
+											</footer>
+											<hr />
+										</section>
+									</section>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			<!-- Footer -->
+			<footer id="footer">
+				<ul class="icons">
+					<li><a href="https://twitter.com/SamuelCerezoo/" target="_blank" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+					<li><a href="https://www.linkedin.com/in/samuel-cerezo/" target="_blank" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+					<li><a href="https://www.instagram.com/samucerezo/" target="_blank" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+					<li><a href="https://github.com/samuel-cerezo/" target="_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+					<li><a href="mailto: samueladriancerezo@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+				</ul>
+				<ul class="copyright">
+					<li>&copy; Samuel Cerezo. All rights reserved.</li><li></a></li>
+				</ul>
+			</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

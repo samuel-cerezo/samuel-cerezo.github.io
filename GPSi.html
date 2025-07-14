@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GPSi initialization</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script> -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+		<!--------------------------------------------- LaTex Scripts --------------------------------------------------------->
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script>
+		MathJax = {
+		  tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+		};
+		</script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+		<!--------------------------------------------- LaTex Scripts --------------------------------------------------------->
+
+
+
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://samuel-cerezo.github.io/">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+    <!-- 
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div> -->
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">GNSS-inertial state initialization by distance residuals</h1>
+          <div class="is-size-5 publication-authors">
+                         <span class="is-size-5 publication-authors">
+                            <span class="author-block">
+                              <a href="https://scholar.google.com/citations?user=9zhUnGkAAAAJ&hl=en">Samuel Cerezo</a><sup>1</sup>,</span>
+                            <span class="author-block">
+                              <a href="https://scholar.google.com/citations?user=j_sMzokAAAAJ&hl=en">Javier Civera</a><sup>1</sup></span>
+                            </span>
+                          </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+                            <span class="author-block"><sup>1</sup>Universidad de Zaragoza</span>
+          </div>
+          <h0> Submitted to RA-L, 2025 </h0>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://ieeexplore.ieee.org"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2506.11534"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link.
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span> -->
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/samuel-cerezo/GPSi"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. 
+              <span class="link-block">
+                <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span> -->
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/teaser.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">Nerfies</span> turns selfie videos from your phone into
+        free-viewpoint
+        portraits.
+      </h2>
+    </div>
+  </div>
+</section>
+-->
+<!-- 
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/steve.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/chair-tp.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/shiba.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/fullbody.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-blueshirt">
+          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/blueshirt.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-mask">
+          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/mask.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-coffee">
+          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/coffee.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-toby">
+          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/toby2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+-->
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+										<p>
+                      This paper proposes a novel GNSS-inertial initialization strategy that delays the use of global GNSS measurements until sufficient information is available to accurately estimate the transformation between the GNSS and inertial frames. 
+											Instead, the method initially relies on GNSS relative distance residuals. To determine the optimal moment for switching to global measurements, we introduce a criterion based on the evolution of the Hessian matrix singular values. 
+											Experiments on the EuRoC and GVINS datasets show that our approach consistently outperforms the naive strategy of using global GNSS data from the start, yielding more accurate and robust initializations.
+                    </p>
+                    <div align="center"><a href="#" class="image"><img src="images/GPSi/grafo_gpsi.png" style="width: 40vw; z-index: 10; position: relative;"  /></a></div>
+										<p>Illustration of our GNSS-IMU initialization approach. a) Global residuals remain inactive while the system lacks informative measurements. b) At time $k^*$, the GNSS-inertial measurements provide sufficient information to meet our criterion, enabling the inclusion of global constraints for accurate alignment.</p>
+										
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <!--
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    
+    <div class="columns is-centered">
+
+      <!-- Visual Effects. -->
+       <!--
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-3">Visual Effects</h2>
+          <p>
+            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
+            would be impossible without nerfies since it would require going through a wall.
+          </p>
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/dollyzoom-stacked.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      -->
+      <!--/ Visual Effects. -->
+      
+      <!-- Matting. -->
+       <!--
+      <div class="column">
+        <h2 class="title is-3">Matting</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <p>
+              As a byproduct of our method, we can also solve the matting problem by ignoring
+              samples that fall outside of a bounding box during rendering.
+            </p>
+            <video id="matting-video" controls playsinline height="100%">
+              <source src="./static/videos/matting.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+
+        </div>
+      </div>
+      -->
+    </div>
+  
+    <!--/ Matting. -->
+    
+    <!-- Animation. -->
+     
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Formulation</h2>
+    										<p>Our goal is estimating the state $\mathbf{x}$ of a sensing platform equipped with GNSS and inertial sensors. 
+										The state consists of the device's rotation, position, linear velocity, IMU gyroscope bias, and gravity direction at different time steps.
+										We define the general state $\mathbf{x}$ as
+
+										\begin{equation}
+												\mathbf{x} = \left[\mathbf{x}_1^\top,\mathbf{x}_2^\top, \cdots, \mathbf{x}_k^\top, \cdots  ,\mathbf{x}_N^\top, {\mathbf{b}^g}^\top, {\hat{\mathbf{g}}}^\top\right]^\top~,
+										\end{equation}
+
+										where
+
+										\begin{equation}
+												\mathbf{x}_k = \left[\mathbf{R}_k^\top, 
+										{\mathbf{p}}_k^\top,{\boldsymbol{\omega}}_k^\top,{\mathbf{v}}_k^\top\right]^\top~,
+										\end{equation}
+										</p>
+										<p>We formulate a nonlinear optimization problem over the state variables $\mathbf{x}$, incorporating constraints from inertial preintegration and GNSS measurements. The objective is to find the optimal estimate $\hat{\mathbf{x}}$ that minimizes a joint cost function $J(\mathbf{x})$:
+											\begin{equation}
+											\label{eq:optimizacion_problem}
+											\hat{\mathbf{x}} = min_{\mathbf{x}} J(\mathbf{x})
+											\end{equation}
+										<p>
+										This cost function aggregates several residual terms, each encoding information from a different sensor modality or physical constraint. More details about this formulation are included in the article.
+										</p>
+
+										<h3>Observability Analysis</h3>
+										<p>To analyze the system’s observability, we construct the observability matrix $\mathcal{O}$ by stacking the Jacobians of all residuals in the cost function with respect to the state vector, as follows
+											\begin{align}
+											\mathcal{O} =
+											\begin{bmatrix}
+											\frac{\partial \mathbf{r}_{\Delta \mathbf{R}}}{\partial \mathbf{x}}^\top,
+											\frac{\partial \mathbf{r}_{\Delta \mathbf{v}}}{\partial \mathbf{x}}^\top,
+											\frac{\partial \mathbf{r}_{\Delta \mathbf{p}}}{\partial \mathbf{x}}^\top,
+											\frac{\partial \mathbf{r}_{\text{d}}}{\partial \mathbf{x}}^\top,
+											\frac{\partial \mathbf{r}_{\text{p}_i}}{\partial \mathbf{x}}^\top,
+											\frac{\partial \mathbf{r}_{\text{p}_j}}{\partial \mathbf{x}}^\top,
+											\frac{\partial \mathbf{r}_{\omega}}{\partial \mathbf{x}}^\top,
+											\frac{\partial \mathbf{r}_{\mathbf{g}}}{\partial \mathbf{x}}^\top
+											\end{bmatrix}^\top
+											\end{align}
+										</p>
+										<p>The explicit structure of the observability matrix \( \mathcal{O} \), derived from the defined residuals, reveals a maximum symbolic rank of 23 due to linear dependencies among GPS constraints. 
+											To handle this underconstrained initialization, we fix the initial pose (position, velocity, and orientation), reducing the number of estimated variables to 14. In this setup, \( \mathcal{O} \) achieves a numerical rank of 11, with remaining ambiguities linked to the second pose, gyroscope bias, and gravity direction. Rather than relying on external priors, our method exploits the coupling between IMU preintegration and GNSS data, progressively enhancing observability as the trajectory evolves. 
+											To ensure robustness, we delay the activation of global GPS terms until sufficient motion renders the system observable, thereby avoiding early noise sensitivity.
+										</p>
+										<h3>Triggering criterion</h3>
+										<p>To determine the triggering time index \( k^* \), we analyze the observability of the extrinsic transformation \( \mathbf{T}_{W}^{B} \) by inspecting the singular values of an approximate Hessian matrix constructed from GNSS-only residuals. These include one relative and two absolute position terms. The Hessian is built by linearizing the residuals with respect to the six parameters of \( \mathbf{T}_{W}^{B} \), and its conditioning is evaluated via singular value decomposition. We define the singular value ratio \( \rho_k = \sigma_{\max} / \sigma_{\min} \) and track its relative variation:
+										\[
+										\Delta \rho_k = \left| \frac{\rho_k - \rho_{k-1}}{\rho_{k-1}} \right|.
+										\]
+										A low and stable \( \Delta \rho_k \) indicates that the system has become sufficiently observable. We therefore activate global GPS constraints and begin estimating \( \mathbf{T}_{W}^{B} \) only when \( \Delta \rho_k < \Delta \rho_{\mathrm{th}} \), with \( k^* \) denoting the triggering index. This strategy provides a principled, data-driven criterion to safely incorporate global information while avoiding premature sensitivity to noise.
+										The Figure below shows the evolution of the relative change $\Delta \rho_k$ for two EuRoC sequences. When the curve drops below the observability threshold $\Delta \rho_{\mathrm{th}} = 10^{-2}$, the system is considered sufficiently constrained to support the inclusion of global position residuals in the estimation.
+										<div align="center"><a href="#" class="image"><img src="images/GPSi/different-activation-obs.png" style="width: 40vw; z-index: 10; position: relative;"  /></a></div>
+										<p>Example of our activation criterion for two EuRoc sequences. a) On the MH05 sequence, the criterion results in $k^*=9$ GPS measurements; b) on the MH03 sequence, it suggests $k^*=15$ GPS measurements. The dashed blue line represents the observability threshold $ \Delta \rho_{{th}}$.</p>
+
+      </div>
+    </div>
+    
+    <div class="columns is-centered">
+      <div class="column is-full-width">                    
+										<p>Consider the case in following figure, using a 3-frames-sliding-window. When the $l$-frame comes, the optimization is done. 
+										However, in order to keep a 3-frame window, when the next frame $l+1$ comes, we need to marginalize out $\mathbf{v}_i$ and $\boldsymbol{\omega}_i$.</p>
+										<div align="center"><a href="#" class="image"><img src="images/grafo_marginalizacion.png" style="width: 40vw; z-index: 10; position: relative;"  /></a></div>
+										<p>
+										The Hessian $\mathbf{H}$ contains the second derivatives of the cost function with respect to the state variables, that encodes how every state variable affects the others. 
+										We denote as $\alpha$ the block of variables we would like to marginalize, and $\beta$ the block of variables we would like to keep.
+										When marginalizing a set $\alpha$ of variables, we gather all factors dependent on them as well as the connected variables $\beta$. This is done by means of the $\textit{Schur Complement}$, which is defined as follows. 
+											\begin{equation}
+													\mathbf{H}^* = \mathbf{H}_{\beta\beta} 
+																 - \mathbf{H}_{\alpha\beta}^\top\mathbf{H}_{\alpha\alpha}^{-1}\mathbf{H}_{\alpha\beta}   
+											\end{equation}
+										</p>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Experiments</h2>
+										<p>
+											We chose to evaluate our proposal on an extended version of the living room sequences in the ICL-NUIM dataset. 
+											ICL-NUIM is a synthetic photorealistic dataset that provides ground truth poses as well as 3D scene models to benchmark reconstruction and/or localization approaches. 
+											As ICL-NUIM does not provide IMU data, we fit splines to the ground truth poses to simulate continuous trajectories and simulated IMU measurements from them. 
+											We also evaluated our RGB-D-inertial flow in the OpenLORIS-Scene datasets, in which data are collected in real-world indoor scenes, 
+											for multiple times in each place to include natural scene changes in everyday scenarios. 
+											RGB-D images and IMU measurements from a RealSense D435i are provided. 
+											The ground truth trajectory was recorded by an OptiTrack MCS, that tracked artificial markers deployed on the Segway robot used to record the data.
+										</p>
+      </div>
+    </div>
+
+
+      <!--
+        <div class="columns is-vcentered interpolation-panel">
+          <div class="column is-3 has-text-centered">
+            <img src="./static/images/interpolate_start.jpg"
+                 class="interpolation-image"
+                 alt="Interpolate start reference image."/>
+            <p>Start Frame</p>
+          </div>
+          <div class="column interpolation-video-column">
+            <div id="interpolation-image-wrapper">
+              Loading...
+            </div>
+            <input class="slider is-fullwidth is-large is-info"
+                   id="interpolation-slider"
+                   step="1" min="0" max="100" value="0" type="range">
+          </div
+          <div class="column is-3 has-text-centered">
+            <img src="./static/images/interpolate_end.jpg"
+                 class="interpolation-image"
+                 alt="Interpolation end reference image."/>
+            <p class="is-bold">End Frame</p>
+          </div>
+        </div>
+        <br/>
+      -->
+        <!--/ Interpolating. -->
+
+        <!-- Re-rendering. -->
+         <!--
+        <h3 class="title is-4">Re-rendering the input video</h3>
+        <div class="content has-text-justified">
+          <p>
+            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
+            viewpoint such as a stabilized camera by playing back the training deformations.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="75%">
+            <source src="./static/videos/replay.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        -->
+        <!--/ Re-rendering. -->
+      
+
+    <!--/ Animation. -->
+
+
+    <!-- Concurrent Work. -->
+    <!--
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Related Links</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            There's a lot of excellent work that was introduced around the same time as ours.
+          </p>
+          <p>
+            <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.
+          </p>
+          <p>
+            <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
+            both use deformation fields to model non-rigid scenes.
+          </p>
+          <p>
+            Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>
+          </p>
+          <p>
+            There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+    -->
+    <!--/ Concurrent Work. -->
+
+  </div>
+</section>
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>
+@inproceedings{cerezo2024camera,
+  title={Camera Motion Estimation from RGB-D-Inertial Scene Flow},
+  author={Cerezo, Samuel and Civera, Javier},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={841--849},
+  year={2024}
+}
+</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="https://samuel-cerezo.github.io/" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
