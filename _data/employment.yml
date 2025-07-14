@@ -1,25 +1,41 @@
 - company: Universidad de Zaragoza
-  description: Predoctoral candidate
+  description: >-
+     Predoctoral candidate.
+     Research focused on odometry and improvement of SLAM algorithms through sensor's fusion. 
   dates: "2021 - (current)"
   location: Zaragoza, Spain
 
 - company: KUKA
   description: >-
      Research Intern.
-     Worked on 3D reconstruction of a industrial cell. 
+     Worked on 3D reconstruction using multi-sensor data, and developed ROS2 tools for trajectory generation, motion planning, and data verification on industrial robotic cell. 
   dates: "Apr 2024 - March 2025"
   location: Augsburg, Germany
+
+- company: Restaurante "El Chiringo"
+  description: >-
+     Waiter.
+     Provided efficient table service in busy hospitality settings. Gained experience in customer interaction, order coordination, and fast-paced teamwork.s 
+  dates: "2024 (weekends)"
+  location: Zaragoza, Spain
 
 - company: Hydroner
   description: >-
     Junior Engineer.
-    Worked on wireless communication between IoT devices for oil purposes.
+    Contributed to the development and deployment of wireless communication systems for IoT-based monitoring in oilfield environments. Gained hands-on experience in embedded systems, remote data acquisition, and field integration under industrial constraints.
   dates: "Jun 2020 - Feb 2021"
   location: Neuquén, Argentina
 
 - company: Matra SRL
   description: >-
    Junior Engineer.
-   Developing automation for oil companies. Allen Bradley and Siemens PLCs were used.
-  dates: "Jan 2020 - Jun 2020"
+   Designed and implemented automated control systems for clients in the oil industry. Worked with PLCs from Allen Bradley and Siemens to develop and deploy process automation solutions. Gained practical experience in industrial automation, system integration, and on-site commissioning.
+  dates: "2019 - 2020"
+  location: Neuquén, Argentina
+
+- company: Universidad Nacional del Comahue
+  description: >-
+   Assistant professor.
+   Taught undergraduate students in Control Systems I. Prepared lectures, guided lab sessions, and assisted students with theoretical and practical concepts in classical control, system modeling, and stability analysis.
+  dates: "2018 - 2020"
   location: Neuquén, Argentina
