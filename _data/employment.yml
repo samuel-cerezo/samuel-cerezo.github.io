@@ -1,41 +1,41 @@
 - company: Universidad de Zaragoza
   description: >-
      Predoctoral candidate.
-     Research focused on odometry and improvement of SLAM algorithms through sensor's fusion. 
+     Research focused on odometry, 3D reconstruction and SLAM algorithms using sensor's fusion. 
   dates: "2021 - (current)"
   location: Zaragoza, Spain
 
 - company: KUKA
   description: >-
      Research Intern.
-     Worked on 3D reconstruction using multi-sensor data, and developed ROS2 tools for trajectory generation, motion planning, and data verification on industrial robotic cell. 
+     Worked on 3D reconstruction with Gaussians. Use of Intel camera and KUKA LBR iisy Cobot for data adquisition. Developed ROS2 tools for data recording, sync and alignment. Gained experience in industrial research.
   dates: "Apr 2024 - March 2025"
   location: Augsburg, Germany
 
-- company: Restaurante "El Chiringo"
+- company: Restaurant "El Chiringo"
   description: >-
      Waiter.
-     Provided efficient table service in busy hospitality settings. Gained experience in customer interaction, order coordination, and fast-paced teamwork.s 
+     Provided efficient table service in busy hospitality settings. Gained experience in customer interaction and order coordination. 
   dates: "2024 (weekends)"
   location: Zaragoza, Spain
 
 - company: Hydroner
   description: >-
     Junior Engineer.
-    Contributed to the development and deployment of wireless communication systems for IoT-based monitoring in oilfield environments. Gained hands-on experience in embedded systems, remote data acquisition, and field integration under industrial constraints.
+    Contributed to the development and deployment of wireless communication systems for IoT-based monitoring in oilfield environments.
   dates: "Jun 2020 - Feb 2021"
   location: Neuquén, Argentina
 
 - company: Matra SRL
   description: >-
    Junior Engineer.
-   Designed and implemented automated control systems for clients in the oil industry. Worked with PLCs from Allen Bradley and Siemens to develop and deploy process automation solutions. Gained practical experience in industrial automation, system integration, and on-site commissioning.
+   Designed and implemented automated control systems for clients in the oil industry. Worked with PLCs from Allen Bradley and Siemens to develop and deploy process automation solutions.
   dates: "2019 - 2020"
   location: Neuquén, Argentina
 
 - company: Universidad Nacional del Comahue
   description: >-
    Assistant professor.
-   Taught undergraduate students in Control Systems I. Prepared lectures, guided lab sessions, and assisted students with theoretical and practical concepts in classical control, system modeling, and stability analysis.
+   Taught undergraduate students in Control Systems I. Prepared lectures, guided lab sessions, and assisted students with theoretical and practical concepts.
   dates: "2018 - 2020"
   location: Neuquén, Argentina
