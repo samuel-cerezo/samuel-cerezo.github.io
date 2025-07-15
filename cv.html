@@ -82,6 +82,18 @@ layout: null
         </div>
         {% endfor %}
 
+      <h2>Languages</h2>
+      
+        {% for language in site.data.languages %}
+        <div class="columns">
+          <div class="column is-four-fifths">
+            <b>{{ language.name }}</b><br />
+            {{ language.level }}
+          </div>
+        </div>
+        {% endfor %}  
+      </div>
+      
         <h2>Employment</h2>
 
         {% for job in site.data.employment %}
@@ -126,17 +138,6 @@ layout: null
         </div>
         {% endfor %}
 
-      <h2>Languages</h2>
-        {% for language in site.data.languages %}
-        <div class="columns">
-          <div class="column is-four-fifths">
-            <b>{{ language.name }}</b><br />
-            {{ language.level }}
-          
-          </div>
-        </div>
-        {% endfor %}  
-      </div>
     </div>
   </section>
 
