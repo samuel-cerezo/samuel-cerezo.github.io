@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="A Closed-Form Solution to Full Visual–Inertial State Initialization.">
+  <meta name="keywords" content="Visual-Inertial Initialization, Closed-Form, VIO, SLAM">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A Closed-Form Solution to Full Visual–Inertial State Initialization</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <!-- MathJax -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script>
+    MathJax = { tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]} };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow:1; justify-content:center;">
+      <a class="navbar-item" href="https://samuel-cerezo.github.io/">
+        <span class="icon"><i class="fas fa-home"></i></span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+      <h1 class="title is-1 publication-title">A Closed-Form Solution to Full Visual-Inertial State Initialization</h1>
+      <div class="is-size-5 publication-authors">
+        <span class="author-block">
+          <a href="https://scholar.google.com/citations?user=9zhUnGkAAAAJ&hl=en">Samuel Cerezo</a><sup>1</sup>,
+        </span>
+        <span class="author-block">
+          <a href="https://scholar.google.com/citations?user=j_sMzokAAAAJ&hl=en">H.L. Seong</a><sup>1</sup>
+        </span>
+        <span class="author-block">
+          <a href="https://scholar.google.com/citations?user=j_sMzokAAAAJ&hl=en">Javier Civera</a><sup>1</sup>
+        </span>
+      </div>
+      <div class="is-size-5 publication-authors">
+        <span class="author-block"><sup>1</sup>Universidad de Zaragoza</span>
+      </div>
+      <h0>Under develop</h0>
+      <div class="publication-links mt-4">
+        <span class="link-block">
+          <a href="https://ieeexplore.ieee.org" class="external-link button is-normal is-rounded is-dark">
+            <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span></a>
+        </span>
+        <span class="link-block">
+          <a href="https://arxiv.org/pdf/2506.11534" class="external-link button is-normal is-rounded is-dark">
+            <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span></a>
+        </span>
+        <span class="link-block">
+          <a href="https://github.com/samuel-cerezo/GPSi" class="external-link button is-normal is-rounded is-dark">
+            <span class="icon"><i class="fab fa-github"></i></span><span>Code</span></a>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABSTRACT -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We present a closed-form initialization method that estimates the complete visual–inertial state 
+            —including velocity, gravity, and IMU biases—without iterative optimization. 
+            Our formulation leverages <b>small-rotation</b> and <b>constant-velocity</b> approximations to make the problem analytically tractable 
+            while preserving the key coupling between motion and inertial measurements. 
+            Experiments on the EuRoC dataset demonstrate that this approach achieves accuracy comparable to optimization-based baselines 
+            while being several orders of magnitude faster.
+          </p>
+          <div align="center">
+            <img src="images/VIInit/pipeline.png" style="width:45vw;" alt="Pipeline overview">
+          </div>
+          <p class="has-text-centered">Pipeline of the proposed closed-form visual–inertial initialization.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METHOD -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Method</h2>
+    <div class="content has-text-justified">
+      <h3>Rotation and Gyroscope Bias</h3>
+      <p>
+        The method begins by estimating the gyroscope bias analytically under a <i>commutative rotation model</i>. 
+        Assuming small inter-frame rotations, Rodrigues’ formula allows linearization of IMU preintegration:
+      </p>
+      <p class="has-text-centered">
+        \( R_{ij} \approx \prod_{k=i}^{j-1} \mathrm{Exp}((\tilde{\omega}_k - \mathbf{b}_g)\Delta t) \)
+      </p>
+      <p>
+        This leads to a direct closed-form expression:
+      </p>
+      <p class="has-text-centered">
+        \( \mathbf{b}_g \approx -\frac{1}{L\Delta t}\mathrm{Log}\!\left[\!\!\left(\!\!\prod_{k=i}^{j-1}\mathrm{Exp}(\tilde{\omega}_k\Delta t)\!\!\right)^\top R_{ij}\!\!\right] \)
+      </p>
+      <p>
+        We further derive two constant-velocity models, with and without preintegration, 
+        enabling robust bias recovery even with noisy or short IMU segments.
+      </p>
+      <div align="center">
+        <img src="images/VIInit/rotation_bias.png" style="width:45vw;">
+      </div>
+      <p class="has-text-centered">Approximation error of the small-rotation model for varying IMU integration lengths.</p>
+
+      <h3>Closed-Form Initialization</h3>
+      <p>
+        Once the gyroscope bias is known, the remaining states (velocity, gravity, accelerometer bias) 
+        are estimated from linear constraints derived from IMU–camera relations. 
+        The stacked system can be written as:
+      </p>
+      <p class="has-text-centered">\( \Xi \mathbf{x} = \mathbf{s} \)</p>
+      <p>
+        where \(\Xi\) encodes integrated inertial terms and feature observations, 
+        and \(\mathbf{x}\) includes gravity, velocity, and accelerometer bias. 
+        The least-squares solution is obtained by SVD, monitoring rank changes to verify observability.
+      </p>
+
+      <h3>Observability-Driven Trigger</h3>
+      <p>
+        Initialization is activated once sufficient motion renders the system observable. 
+        A two-stage strategy combines a <i>parallax threshold</i> to detect translational excitation 
+        and a <i>Hessian-based test</i> monitoring the stability of singular values:
+      </p>
+      <p class="has-text-centered">
+        \( \Delta\rho_j = \left|\frac{\rho_j - \rho_{j-1}}{\rho_{j-1}}\right|, \quad \text{activate if } \Delta\rho_j < \Delta\rho_{\mathrm{th}} \)
+      </p>
+      <div align="center">
+        <img src="images/VIInit/observability.png" style="width:45vw;">
+      </div>
+      <p class="has-text-centered">Two-stage observability gate controlling the activation of the closed-form solver.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIMENTS -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Experiments</h2>
+    <div class="content has-text-justified">
+      <p>
+        The proposed method is evaluated on the <b>EuRoC MAV dataset</b>, which provides synchronized stereo and IMU data. 
+        We compare the closed-form estimator against optimization-based methods across 11 sequences, 
+        analyzing accuracy, robustness, and runtime.
+      </p>
+
+      <h3>Gyroscope Bias Estimation</h3>
+      <p>
+        Under synthetic and realistic conditions, the closed-form bias estimators perform on par with nonlinear optimization, 
+        even when image-derived rotations (from C2P) introduce measurement noise.
+      </p>
+      <div align="center">
+        <img src="images/VIInit/gyro_results.png" style="width:45vw;">
+      </div>
+      <p class="has-text-centered">Average gyroscope bias estimation errors on EuRoC dataset.</p>
+
+      <h3>Full-State Initialization</h3>
+      <p>
+        Activation strategies were evaluated under three policies: parallax-based, Hessian-based, and fixed 25-frame window. 
+        The observability-driven trigger yields the lowest velocity and gravity errors while maintaining robustness across sequences.
+      </p>
+      <div align="center">
+        <img src="images/VIInit/init_accuracy.png" style="width:45vw;">
+      </div>
+      <p class="has-text-centered">Initialization accuracy vs. activation policy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Results</h2>
+    <div class="content has-text-justified">
+      <p>
+        Across EuRoC, the closed-form initialization achieves the lowest average velocity error (0.09 m/s), 
+        gravity-direction error (0.9 deg), and accelerometer-bias error (0.084 m/s²).  
+        Runtime analysis confirms improvements of over two orders of magnitude compared with nonlinear baselines.
+      </p>
+      <div align="center">
+        <img src="images/VIInit/runtime.png" style="width:45vw;">
+      </div>
+      <p class="has-text-centered">Average runtime per module compared with state-of-the-art methods.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Conclusion</h2>
+    <div class="content has-text-justified">
+      <p>
+        We proposed the first fully analytical initialization that recovers the complete visual–inertial state 
+        without nonlinear solvers. Leveraging small-rotation and constant-velocity assumptions enables 
+        a tractable yet accurate solution that drastically reduces computation time.  
+        Our method provides a robust, lightweight initialization suitable for real-time VI-SLAM systems 
+        and resource-constrained platforms.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- BIBTEX -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>
+@article{cerezo2025closedform,
+  title={A Closed-Form Solution to Full Visual--Inertial State Initialization},
+  author={Cerezo, Samuel and Civera, Javier},
+  journal={IEEE Robotics and Automation Letters},
+  year={2025}
+}
+</code></pre>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="https://samuel-cerezo.github.io/">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a 
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+              Creative Commons Attribution-ShareAlike 4.0 International License
+            </a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
