@@ -2,7 +2,7 @@ samu:
   first_name: Samuel
   last_name: Cerezo
   website: https://scholar.google.com/citations?user=9zhUnGkAAAAJ&hl=es
-  is_me: false
+  is_me: true
 jcivera:
   first_name: Javier
   last_name: Civera
