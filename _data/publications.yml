@@ -1,6 +1,6 @@
 - id: vi-init
   title: " Closed-Form Solution to Full Visual-Inertial State Initialization"
-  venue: To be Submitted
+  venue: ()
   description: "A new analytical solution that is easy to implement and robust at initialization, thanks to the small-rotation and constant-velocity approximations, which simplify the problem while preserving the essential coupling between motion and inertial measurements."
   project_page: https://samuel-cerezo.github.io/vi-init
   arxiv: 999.99999
