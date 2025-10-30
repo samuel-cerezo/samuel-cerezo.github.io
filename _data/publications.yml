@@ -1,6 +1,6 @@
 - id: vi-init
   title: " Closed-Form Solution to Full Visual-Inertial State Initialization"
-  venue: ()
+  venue: Submitted to RA-L, 2025
   description: "A new analytical solution that is easy to implement and robust at initialization, thanks to the small-rotation and constant-velocity approximations, which simplify the problem while preserving the essential coupling between motion and inertial measurements."
   project_page: https://samuel-cerezo.github.io/vi-init
   arxiv: 999.99999
@@ -10,7 +10,7 @@
     - seong
     - jcivera
   awards:
-    - "Under develop"
+    - "New"
 
 - id: SlamAndRender
   title: "SLAM&Render: A Benchmark for the Intersection Between Neural Rendering, Gaussian Splatting and SLAM"
