@@ -17,7 +17,7 @@
   venue: Submitted to IJRR, 2025
   description: "A novel dataset designed to benchmark methods in the intersection between SLAM and novel view rendering. It consists of 40 sequences with synchronized RGB, depth, IMU, robot kinematic data, and ground-truth pose streams"
   project_page: https://samuel-cerezo.github.io/SLAM&Render
-  arxiv: 2504.13713
+  arxiv: 
   video: slamrender_portrait_short.mp4
   authors:
     - samu
