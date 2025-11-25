@@ -3,7 +3,7 @@
   venue: Submitted to RA-L, 2025
   description: "A new analytical solution that is easy to implement and robust at initialization, thanks to the small-rotation and constant-velocity approximations, which simplify the problem while preserving the essential coupling between motion and inertial measurements."
   project_page: https://samuel-cerezo.github.io/vi-init
-  arxiv: 2511.18910
+  arxiv: "2511.18910"
   image: vi-init-pipeline.png
   authors:
     - samu
@@ -17,7 +17,7 @@
   venue: Submitted to IJRR, 2025
   description: "A novel dataset designed to benchmark methods in the intersection between SLAM and novel view rendering. It consists of 40 sequences with synchronized RGB, depth, IMU, robot kinematic data, and ground-truth pose streams"
   project_page: https://samuel-cerezo.github.io/SLAM&Render
-  arxiv: 2504.13713
+  arxiv: "2504.13713"
   video: slamrender_portrait_short.mp4
   authors:
     - samu
@@ -32,7 +32,7 @@
   venue: Submitted to RA-L, 2025
   description: "A novel GNSS-inertial initialization strategy that delays the use of global GNSS measurements until sufficient information is available to accurately estimate the state of a sensorized device. To determine the optimal moment for switching from relative to global measurements, we introduce a criterion based on the evolution of the Hessian matrix singular values"
   project_page: https://samuel-cerezo.github.io/GPSi
-  arxiv: 2506.11534
+  arxiv: "2506.11534"
   image: /GPSi/grafo_gpsi.png
   authors:
     - samu
@@ -44,7 +44,7 @@
   venue: CVPR Workshop, 2024
   description: "Estimate the camera motion in a rigid 3D environment, along with the state of an IMU while offering the flexibility to operate as a multiframe optimization or to marginalize older data"
   project_page: https://samuel-cerezo.github.io/rgbd_inertial
-  arxiv: 2404.17251
+  arxiv: "2404.17251"
   image: rgbd_portrait.png
   authors:
     - samu
