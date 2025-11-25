@@ -1,3 +1,13 @@
+- id: defvins
+  title: "DefVINS: Robust Visual-Inertial Odometry for Deformable Scenes"
+  venue: Under develop
+  description: "A new  observability-gated deformable visual-inertial odometry framework that separates a rigid, IMU-anchored state from a non-rigid warp represented by an embedded deformation graph"
+  project_page: https://samuel-cerezo.github.io/defvins
+  arxiv: "999.9999"
+  image: defvins-pipeline.png
+  authors:
+    - samu
+    - jcivera
 - id: vi-init
   title: "An Efficient Closed-Form Solution to Full Visual-Inertial State Initialization"
   venue: Submitted to RA-L, 2025
@@ -37,8 +47,6 @@
   authors:
     - samu
     - jcivera
-  awards:
-    - "New"
 - id: rgbd-sf
   title: "Camera Motion Estimation from RGB-D-inertial Scene Flow"
   venue: CVPR Workshop, 2024
