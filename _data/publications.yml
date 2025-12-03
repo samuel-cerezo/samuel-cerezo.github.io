@@ -10,7 +10,7 @@
     - jcivera
 - id: GPSi
   title: "GNSS-Inertial State Initialization Using Inter-Epoch Baseline Residuals"
-  venue: RA-L, 2025
+  venue: IEEE Robotics and Automation Letters (RA-L), 2025
   description: "A novel GNSS-inertial initialization strategy that delays the use of global GNSS measurements until sufficient information is available to accurately estimate the state of a sensorized device. To determine the optimal moment for switching from relative to global measurements, we introduce a criterion based on the evolution of the Hessian matrix singular values"
   project_page: https://samuel-cerezo.github.io/GPSi
   arxiv: "2506.11534"
