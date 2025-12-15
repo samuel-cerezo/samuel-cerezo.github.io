@@ -12,12 +12,12 @@
   dates: "Apr 2024 - March 2025"
   location: Augsburg, Germany
 
-- company: Restaurant "El Chiringo"
-  description: >-
-     Waiter.
-     Provided efficient table service in busy hospitality settings. Gained experience in customer interaction and order coordination. 
-  dates: "2024 (weekends)"
-  location: Zaragoza, Spain
+#- company: Restaurant "El Chiringo"
+#  description: >-
+#     Waiter.
+#     Provided efficient table service in busy hospitality settings. Gained experience in customer interaction and order coordination. 
+#  dates: "2024 (weekends)"
+#  location: Zaragoza, Spain
 
 - company: Hydroner
   description: >-
