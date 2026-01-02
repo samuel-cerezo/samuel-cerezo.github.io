@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="A Closed-Form Solution to Full Visual–Inertial State Initialization.">
+  <meta name="description" content="DefVINS">
   <meta name="keywords" content="Visual-Inertial Initialization, Closed-Form, VIO, SLAM">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>A Closed-Form Solution to Full Visual-Inertial State Initialization</title>
@@ -54,7 +54,7 @@
 <section class="hero">
   <div class="hero-body">
     <div class="container is-max-desktop has-text-centered">
-      <h1 class="title is-1 publication-title">DefVINS: Robust Visual-Inertial Odometry for Deformable Scenes</h1>
+      <h1 class="title is-1 publication-title">DefVINS: Visual-Inertial Odometry for Deformable Scenes</h1>
       <div class="is-size-5 publication-authors">
         <span class="author-block">
           <a href="https://scholar.google.com/citations?user=9zhUnGkAAAAJ&hl=en">Samuel Cerezo</a><sup>1</sup>,
@@ -66,7 +66,7 @@
       <div class="is-size-5 publication-authors">
         <span class="author-block"><sup>1</sup>Universidad de Zaragoza</span>
       </div>
-      <h0>Under develop, 2025</h0>
+      <h0>Submitted to IEEE Robotics and Automation Letters (RA-L), 2026</h0>
       <div class="publication-links mt-4">
         <span class="link-block">
           <a href="https://ieeexplore.ieee.org" class="external-link button is-normal is-rounded is-dark">
@@ -95,29 +95,26 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Deformable scenes violate the rigidity assumptions
-underpinning classical visual-inertial odometry (VIO), often
-leading to early over-fitting of non-rigid models or catastrophic
-drift when deformation dominates parallax. We introduce
-DefVINS, an observability-gated deformable visual-inertial
-odometry framework that separates a rigid, IMU-anchored
-state from a non-rigid warp represented by an embedded defor-
-mation graph. DefVINS is seeded by a VIO initialization that
-fixes scale, gravity, velocity, and IMU biases, and then activates
-deformation degrees of freedom progressively only when the
-problem is well conditioned. The gating rule monitors the
-spectrum of the deformation block of the Hessian and enables
-new nodes once conditioning thresholds are met, preventing
-ill-posed updates under poor excitation. Ablations confirm the
-benefits of observability-aware activation and IMU anchoring.
+            Deformable scenes violate the rigidity assumptions underpinning classical
+visual--inertial odometry (VIO), often leading to over--fitting to local
+non--rigid motion or severe drift when deformation dominates visual parallax.
+We introduce DefVINS, a visual--inertial odometry framework that explicitly
+separates a rigid, IMU--anchored state from a non--rigid warp represented by an
+embedded deformation graph.
+The system is initialized using a standard VIO procedure that fixes gravity,
+velocity, and IMU biases, after which non--rigid degrees of freedom are activated
+progressively as the estimation becomes well conditioned.
+An observability analysis is included to characterize how inertial measurements
+constrain the rigid motion and render otherwise unobservable modes identifiable
+in the presence of deformation.
+This analysis motivates the use of IMU anchoring and informs a conditioning--based
+activation strategy that prevents ill--posed updates under poor excitation.
+Ablation studies demonstrate the benefits of combining inertial constraints with
+observability--aware deformation activation, resulting in improved robustness
+under non--rigid environments.
           </p>
           <!--  imagen de pipeline -->
-          
-          <div align="center">
-             <img src="images/defvins-pipeline.png" style="width:45vw;" alt="Pipeline overview">  
-          </div>
-          <p class="has-text-centered">Pipeline of the proposed visual-inertial odometry system.</p> 
-          
+        
 
 
         </div>
@@ -126,7 +123,9 @@ benefits of observability-aware activation and IMU anchoring.
   </div>
 </section>
 
-
+<!-- RESULTS -->
+<section class="section">
+  <div class="container is-max-desktop">
 
 <!-- RESULTS -->
 <section class="section">
@@ -134,8 +133,56 @@ benefits of observability-aware activation and IMU anchoring.
     <h2 class="title is-3 has-text-centered">Experiments</h2>
     <div class="content has-text-justified">
       <p>
-        The proposed method is evaluated on the ...
+        The proposed method is evaluated on both synthetic and real deformable datasets to assess accuracy,
+        drift, and robustness under increasing non-rigid motion. We report standard trajectory metrics
+        (ATE/ARE/RPE) and the number of successfully tracked frames, and compare against ORB-SLAM3 and NR-SLAM.
       </p>
+      <!-- Figure 3 -->
+      <figure class="image" style="margin-top: 1.75rem;">
+        <img src="images/defvins/figure3.png" alt="Figure 3 - Qualitative comparison on sequence R4 (ORB-SLAM3, NR-SLAM, DefVINS variants)">
+      </figure>
+      <p class="has-text-centered is-size-7" style="margin-top: 0.5rem;">
+        <b>Figure 3.</b> Qualitative trajectory comparison on sequence R4. Rigid VI SLAM (ORB-SLAM3) and non-rigid SLAM (NR-SLAM)
+        may suffer tracking loss/relocalization under deformation; visual-only non-rigid variants can accumulate drift.
+        Combining IMU anchoring with explicit non-rigid modeling (DefVINS full) improves global consistency. Dashed line: ground truth.
+      </p>
+      <p>
+        <b>Synthetic evaluation.</b> We first benchmark on the <i>Drunkard’s Dataset</i>, which provides 19 synthetic
+        RGB-D sequences with full 3D ground truth and four deformation levels (from low to extreme). Since IMU readings
+        are not provided, we generate temporally smooth inertial measurements by differentiating the ground-truth
+        trajectories represented as B-splines. Results show that inertial sensing and explicit non-rigid regularization
+        play complementary roles: inertial constraints mainly stabilize short-term motion (lower drift), while the
+        non-rigid model is key to preserve global accuracy as deformation increases.
+      </p>
+
+      <p>
+        <b>Observability study.</b> To connect performance with estimator conditioning, we compute a
+        numerical observability score from the stacked Jacobians over multiple keyframe pairs, using the ratio
+        <i>&rho;<sub>k</sub> = &sigma;<sub>min</sub> / &sigma;<sub>max</sub></i>. The analysis shows that inertial terms
+        lift near-null modes associated with gravity and biases, while non-rigid regularization prevents deformation
+        variables from absorbing rigid drift, yielding a well-conditioned problem with only a few frames.
+      </p>
+
+      <p>
+        <b>Real-world evaluation.</b> We further validate on seven real RGB-D sequences (848&times;480) recorded in an
+        industrial setup with synchronized cameras, IMU, and motion ground truth. The sequences (R0–R6) capture
+        progressively stronger deformations of a textured mandala cloth, enabling a systematic stress test from
+        near-rigid motion to severe non-rigid dynamics. Consistent with the synthetic study, rigid methods perform best
+        in near-rigid regimes, while DefVINS becomes increasingly advantageous as deformation grows, improving both
+        accuracy and tracking coverage under strong non-rigid motion.
+      </p>
+
+      <!-- Table 3 -->
+      <figure class="image" style="margin-top: 1.25rem;">
+        <img src="images/defvins/table3.png" alt="Table 3 - Comparison on real deformable sequences (ATE, RPE, #Frames)">
+      </figure>
+      <p class="has-text-centered is-size-7" style="margin-top: 0.5rem;">
+        <b>Table 3.</b> Comparison of visual–inertial odometry methods on real deformable sequences (ATE RMSE, translational RPE,
+        and tracked frames). Best results per metric are highlighted; the last row reports the mean.
+      </p>
+
+
+
     </div>
   </div>
 </section>
@@ -146,11 +193,120 @@ benefits of observability-aware activation and IMU anchoring.
     <h2 class="title is-3 has-text-centered">Conclusion</h2>
     <div class="content has-text-justified">
       <p>
-        Conclusions ...
+        We introduced <b>DefVINS</b>, an <b>observability-gated</b> visual–inertial odometry framework for deformable scenes
+        that separates a <b>rigid, IMU-anchored state</b> from a <b>non-rigid deformation model</b> represented by an embedded
+        deformation graph. By progressively activating deformation degrees of freedom only when the estimation becomes
+        well conditioned, the method avoids early over-fitting and catastrophic drift in low-excitation or highly
+        deformable regimes.
+      </p>
+
+      <p>
+        Extensive evaluations on both synthetic and real datasets show that <b>IMU anchoring</b> and
+        <b>conditioning-aware deformation activation</b> provide stable and accurate state estimation across a wide range of
+        deformation levels, making DefVINS a reliable solution for visual–inertial odometry in the presence of non-rigid
+        scene dynamics.
       </p>
     </div>
   </div>
 </section>
+
+
+<!-- Dataset Download Section -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Dataset download</h2>
+
+    <p class="has-text-justified">
+      We release the dataset used in our experiments, consisting of seven real-world deformable sequences
+      (R0–R6) with synchronized RGB-D images, IMU measurements, and ground-truth motion capture.
+      Each sequence captures increasing levels of non-rigid deformation.
+    </p>
+
+    <div class="box mt-4 mb-6 py-3">
+      <div class="downloads-list1">
+        <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+          <thead>
+            <tr>
+              <th>Sequence</th>
+              <th>Deformation level</th>
+              <th>Download</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>R0</td>
+              <td>Low</td>
+              <td><a href="#">Download</a></td>
+            </tr>
+            <tr>
+              <td>R1</td>
+              <td>Low</td>
+              <td><a href="#">Download</a></td>
+            </tr>
+            <tr>
+              <td>R2</td>
+              <td>Medium</td>
+              <td><a href="#">Download</a></td>
+            </tr>
+            <tr>
+              <td>R3</td>
+              <td>Medium</td>
+              <td><a href="#">Download</a></td>
+            </tr>
+            <tr>
+              <td>R4</td>
+              <td>Medium</td>
+              <td><a href="#">Download</a></td>
+            </tr>
+            <tr>
+              <td>R5</td>
+              <td>High</td>
+              <td><a href="#">Download</a></td>
+            </tr>
+            <tr>
+              <td>R6</td>
+              <td>Extreme</td>
+              <td><a href="#">Download</a></td>
+            </tr>
+
+            <!-- Shared resources -->
+            <tr>
+              <td><b>Calibration</b></td>
+              <td colspan="2" style="text-align:center;">
+                <a href="#">camera_calibration.zip</a>
+              </td>
+            </tr>
+            <tr>
+              <td><b>Intrinsics</b></td>
+              <td colspan="2" style="text-align:center;">
+                <a href="#">intrinsics.yaml</a>
+              </td>
+            </tr>
+            <tr>
+              <td><b>Extrinsics</b></td>
+              <td colspan="2" style="text-align:center;">
+                <a href="#">extrinsics.yaml</a>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+    </div>
+  </div>
+</section>
+
 
 <!-- BIBTEX -->
 <section class="section" id="BibTeX">
@@ -158,7 +314,7 @@ benefits of observability-aware activation and IMU anchoring.
     <h2 class="title">BibTeX</h2>
     <pre><code>
 @article{2026defvins,
-  title={DefVINS: Robust Visual-Inertial Odometry for Deformable Scenes},
+  title={DefVINS: Visual-Inertial Odometry for Deformable Scenes},
   author={Cerezo Samuel and Civera Javier},
   journal={},
   year={2026}

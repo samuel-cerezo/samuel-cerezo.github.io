@@ -1,7 +1,7 @@
 - id: defvins
-  title: "DefVINS: Robust Visual-Inertial Odometry for Deformable Scenes"
-  venue: Under develop
-  description: "A new  observability-gated deformable visual-inertial odometry framework that separates a rigid, IMU-anchored state from a non-rigid warp represented by an embedded deformation graph"
+  title: "DefVINS: Visual-Inertial Odometry for Deformable Scenes"
+  venue: Submitted to RA-L, 2026
+  description: "A new deformable visual-inertial odometry framework that separates a rigid, IMU-anchored state from a non-rigid warp represented by an embedded deformation graph"
   project_page: https://samuel-cerezo.github.io/defvins
   arxiv: "999.9999"
   image: defvins-pipeline.png
