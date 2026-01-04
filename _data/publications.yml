@@ -22,7 +22,7 @@
 - id: GPSi
   title: "GNSS-Inertial State Initialization Using Inter-Epoch Baseline Residuals"
   venue: IEEE RA-L, 2025
-  description: "A novel GNSS-inertial initialization strategy that delays the use of global GNSS measurements until sufficient information is available to accurately estimate the state of a sensorized device. To determine the optimal moment for switching from relative to global measurements, we introduce a criterion based on the evolution of the Hessian matrix singular values"
+  description: "A novel GNSS-inertial initialization strategy that delays the use of global GNSS measurements until sufficient information is available to accurately estimate the state of a sensorized device. A criterion based on the evolution of the Hessian matrix singular values is introduced"
   project_page: https://samuel-cerezo.github.io/GPSi
   arxiv: "2506.11534"
   image: /GPSi/grafo_gpsi.png
