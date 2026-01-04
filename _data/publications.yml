@@ -1,7 +1,7 @@
 - id: defvins
   title: "DefVINS: Visual-Inertial Odometry for Deformable Scenes"
   venue: Submitted to IEEE RA-L, 2026
-  description: "A new deformable visual-inertial odometry framework that separates a rigid, IMU-anchored state from a non-rigid warp represented by an embedded deformation graph"
+  description: "A new deformable visual-inertial odometry framework that separates a rigid, IMU-anchored state from a non-rigid warp represented by an embedded deformation graph."
   project_page: https://samuel-cerezo.github.io/defvins
   arxiv: "999.9999"
   image: defvins-pipeline.png
@@ -22,7 +22,7 @@
 - id: GPSi
   title: "GNSS-Inertial State Initialization Using Inter-Epoch Baseline Residuals"
   venue: IEEE RA-L, 2025
-  description: "A novel GNSS-inertial initialization strategy that delays the use of global GNSS measurements until sufficient information is available to accurately estimate the state of a sensorized device. A criterion based on the evolution of the Hessian matrix singular values is introduced"
+  description: "A novel GNSS-inertial initialization strategy that delays the use of global GNSS measurements until sufficient information is available to accurately estimate the state of a sensorized device. A criterion based on the evolution of the Hessian matrix singular values is introduced."
   project_page: https://samuel-cerezo.github.io/GPSi
   arxiv: "2506.11534"
   image: /GPSi/grafo_gpsi.png
@@ -34,7 +34,7 @@
 - id: SlamAndRender
   title: "SLAM&Render: A Benchmark for the Intersection Between Neural Rendering, Gaussian Splatting and SLAM"
   venue: Submitted to IJRR, 2025
-  description: "A novel dataset designed to benchmark methods in the intersection between SLAM and novel view rendering. It consists of 40 sequences with synchronized RGB, depth, IMU, robot kinematic data, and ground-truth pose streams"
+  description: "A novel dataset designed to benchmark methods in the intersection between SLAM and novel view rendering. It consists of 40 sequences with synchronized RGB, depth, IMU, robot kinematic data, and ground-truth pose streams."
   project_page: https://samuel-cerezo.github.io/SLAM&Render
   arxiv: "2504.13713"
   video: slamrender_portrait_short.mp4
@@ -47,7 +47,7 @@
 - id: rgbd-sf
   title: "Camera Motion Estimation from RGB-D-inertial Scene Flow"
   venue: IEEE/CVF CVPR Workshop, 2024
-  description: "Estimate the camera motion in a rigid 3D environment, along with the state of an IMU while offering the flexibility to operate as a multiframe optimization or to marginalize older data"
+  description: "Estimate the camera motion in a rigid 3D environment, along with the state of an IMU while offering the flexibility to operate as a multiframe optimization or to marginalize older data."
   project_page: https://samuel-cerezo.github.io/rgbd_inertial
   arxiv: "2404.17251"
   image: rgbd_portrait.png
