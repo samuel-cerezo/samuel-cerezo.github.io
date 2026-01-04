@@ -1,6 +1,6 @@
 - id: defvins
   title: "DefVINS: Visual-Inertial Odometry for Deformable Scenes"
-  venue: Submitted to RA-L, 2026
+  venue: Submitted to IEEE Robotics and Automation Letters (RA-L), 2026
   description: "A new deformable visual-inertial odometry framework that separates a rigid, IMU-anchored state from a non-rigid warp represented by an embedded deformation graph"
   project_page: https://samuel-cerezo.github.io/defvins
   arxiv: "999.9999"
@@ -10,7 +10,7 @@
     - jcivera
 - id: vi-init
   title: "An Efficient Closed-Form Solution to Full Visual-Inertial State Initialization"
-  venue: Submitted to RA-L, 2025
+  venue: Submitted to IEEE Robotics and Automation Letters (RA-L), 2025
   description: "A new analytical solution that is easy to implement and robust at initialization, thanks to the small-rotation and constant-velocity approximations, which simplify the problem while preserving the essential coupling between motion and inertial measurements."
   project_page: https://samuel-cerezo.github.io/vi-init
   arxiv: "2511.18910"
@@ -33,7 +33,7 @@
     - "New"
 - id: SlamAndRender
   title: "SLAM&Render: A Benchmark for the Intersection Between Neural Rendering, Gaussian Splatting and SLAM"
-  venue: Submitted to IJRR, 2025
+  venue: Submitted to International Journal of Robotics Research (IJRR), 2025
   description: "A novel dataset designed to benchmark methods in the intersection between SLAM and novel view rendering. It consists of 40 sequences with synchronized RGB, depth, IMU, robot kinematic data, and ground-truth pose streams"
   project_page: https://samuel-cerezo.github.io/SLAM&Render
   arxiv: "2504.13713"
