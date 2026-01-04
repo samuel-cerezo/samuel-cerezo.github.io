@@ -9,7 +9,7 @@
     - samu
     - jcivera
 - id: vi-init
-  title: "'An Efficient Closed-Form Solution to Full Visual-Inertial State Initialization'"
+  title: "An Efficient Closed-Form Solution to Full Visual-Inertial State Initialization"
   venue: Submitted to IEEE RA-L, 2025
   description: "A new analytical solution that is easy to implement and robust at initialization, thanks to the small-rotation and constant-velocity approximations, which simplify the problem while preserving the essential coupling between motion and inertial measurements."
   project_page: https://samuel-cerezo.github.io/vi-init
