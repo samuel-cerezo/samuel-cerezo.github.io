@@ -33,7 +33,7 @@
     - "New"
 - id: SlamAndRender
   title: "SLAM&Render: A Benchmark for the Intersection Between Neural Rendering, Gaussian Splatting and SLAM"
-  venue: Submitted to IJRR, 2025
+  venue: Submitted to IROS, 2026
   description: "A novel dataset designed to benchmark methods in the intersection between SLAM and novel view rendering. It consists of 40 sequences with synchronized RGB, depth, IMU, robot kinematic data, and ground-truth pose streams."
   project_page: https://samuel-cerezo.github.io/SLAM&Render
   arxiv: "2504.13713"
