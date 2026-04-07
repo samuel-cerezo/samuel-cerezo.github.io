@@ -10,7 +10,7 @@
     - jcivera
 - id: vi-init
   title: "An Efficient Closed-Form Solution to Full Visual-Inertial State Initialization"
-  venue: Submitted to IEEE RA-L, 2025
+  venue: IEEE RA-L, 2026
   description: "A new analytical solution that is easy to implement and robust at initialization, thanks to the small-rotation and constant-velocity approximations, which simplify the problem while preserving the essential coupling between motion and inertial measurements."
   project_page: https://samuel-cerezo.github.io/vi-init
   arxiv: "2511.18910"
@@ -19,6 +19,8 @@
     - samu
     - seong
     - jcivera
+  awards:
+    - "New"
 - id: GPSi
   title: "GNSS-Inertial State Initialization Using Inter-Epoch Baseline Residuals"
   venue: IEEE RA-L, 2025
@@ -29,8 +31,6 @@
   authors:
     - samu
     - jcivera
-  awards:
-    - "New"
 - id: SlamAndRender
   title: "SLAM&Render: A Benchmark for the Intersection Between Neural Rendering, Gaussian Splatting and SLAM"
   venue: Submitted to IROS, 2026
