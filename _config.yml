@@ -24,10 +24,10 @@ position: PhD Student
 email: samueladriancerezo@gmail.com
 
 description: >-
-  Electronic Engineer and researcher with international experience in Argentina, Spain, and Germany. 
+  Electronic Engineer and researcher with international experience in Argentina, Spain, Germany and Italy. 
   Formerly in the oil industry, now completing a Ph.D. in Systems Engineering and Computer Science under [Prof. Javier Civera's](https://scholar.google.com/citations?hl=en&user=j_sMzokAAAAJ) supervision. 
   Skilled in C++, Python, and MATLAB, with a strong focus on real-time systems, optimization, and modular design. 
-  Native speaker in Spanish, Fluent in English; conversational in Italian. Passionate about turning technology advances into robust, deployable solutions.
+  Native speaker in Spanish, Fluent in English and Italian. Passionate about turning technology advances into robust, deployable solutions for autonomous driving.
 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://samuel-cerezo.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
