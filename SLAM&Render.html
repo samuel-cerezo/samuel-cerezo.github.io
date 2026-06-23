@@ -265,11 +265,12 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
-                    <p>Existing datasets fail to include the specific challenges of two fields: multi-modality and sequentiality in SLAM or generalization across viewpoints and illumination in neural rendering. 
-                        To bridge this gap, we introduce <strong>SLAM&amp;Render</strong>, a novel dataset designed to explore the intersection of both domains. 
-                        It comprises 40 sequences with synchronized RGB, depth, IMU and kinematic-related data. 
-                        These sequences capture five distinct setups featuring consumer and industrial goods under four different lighting conditions, 
-                        with separate training and test trajectories per scene, as well as object rearrangements. </p>
+			<p> Models and methods originally developed for Novel View Synthesis and Scene Rendering, such as Neural Radiance Fields (NeRF) and Gaussian Splatting, are increasingly being adopted as representations in Simultaneous Localization and Mapping (SLAM). 
+However, existing datasets lack the specific challenges of both fields, such as sequential operations and, in many settings, multi-modality in SLAM or generalization across viewpoints and illumination conditions in neural rendering. Additionally, the data are often collected using sensors which are handheld or mounted on drones or mobile robots, which complicates the accurate reproduction of sensor motions.
+To bridge these gaps, we introduce <strong>SLAM&amp;Render</strong>, a fully controlled benchmark designed to isolate and evaluate specific challenges arising at the intersection of SLAM, Neural Rendering, and Gaussian Splatting. 
+Recorded with a robot manipulator, it uniquely includes 40 sequences with time-synchronized RGB-D images, IMU readings, robot kinematic and ground-truth data. By releasing robot kinematic data, the dataset also enables the assessment of recent integrations of SLAM methods within robotic applications.
+The dataset features five setups with consumer and industrial objects under four controlled lighting conditions, each with separate training and test trajectories. All sequences are static with different levels of object rearrangements and occlusions.
+Our experimental results, obtained with several baselines from the literature, validate <strong>SLAM&amp;Render</strong> as a relevant benchmark for this emerging research area. </p>
                     <div align="center"><a href="#" class="image"><img src="images/SLAMdataset/light-conditions.png" style="width: 80vw; z-index: 10; position: relative;"  /></a></div>
                     <p>Illustration of our <strong>SLAM&amp;Render</strong> dataset, captured from a camera in the end effector of a robotic arm, that moves around a set of
                         objects on a table. See four different light conditions present in our dataset:
