@@ -15,7 +15,7 @@
     - "New"
 - id: defvins
   title: "DefVINS: Visual-Inertial Odometry for Deformable Scenes"
-  venue: Submitted to IEEE RA-L, 2026
+  venue: Submitted to IEEE ICRA 2027
   description: "A new deformable visual-inertial odometry framework that separates a rigid, IMU-anchored state from a non-rigid warp represented by an embedded deformation graph."
   project_page: https://samuel-cerezo.github.io/defvins
   arxiv: "2601.00702"
