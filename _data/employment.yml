@@ -1,16 +1,25 @@
-- company: Universidad de Zaragoza
+- company: Smartlogistix
+  role: Automation Engineer
   description: >-
-     Predoctoral candidate.
-     Research focused on odometry, 3D reconstruction and SLAM algorithms using sensor's fusion. 
+    Developing and validating AGV control, navigation and safety functions using Siemens PLCs, CAN/CANopen and industrial sensor systems.
+  dates: "Sep 2026 - Present"
+  location: Porcari, Italy
+  featured: true
+
+- company: Universidad de Zaragoza
+  role: Doctoral Researcher
+  description: >-
+    Conducted research on visual-inertial state estimation, odometry, 3D reconstruction and SLAM, leading to a PhD in Systems Engineering and Computer Science.
   dates: "2021 - 2026"
   location: Zaragoza, Spain
 
 - company: KUKA
+  role: Research Intern
   description: >-
-     Research Intern.
-     Worked on 3D reconstruction with Gaussians. Use of Intel camera and KUKA LBR iisy Cobot for data adquisition. Developed ROS2 tools for data recording, sync and alignment. Gained experience in industrial research.
-  dates: "Apr 2024 - March 2025"
+    Worked on Gaussian-based 3D reconstruction using an Intel RealSense camera and a KUKA LBR iisy cobot. Developed ROS 2 tools for data recording, synchronization and alignment.
+  dates: "Apr 2024 - Mar 2025"
   location: Augsburg, Germany
+  featured: true
 
 #- company: Restaurant "El Chiringo"
 #  description: >-
@@ -20,22 +29,24 @@
 #  location: Zaragoza, Spain
 
 - company: Hydroner
+  role: Junior Engineer
   description: >-
-    Junior Engineer.
     Contributed to the development and deployment of wireless communication systems for IoT-based monitoring in oilfield environments.
   dates: "Jun 2020 - Feb 2021"
   location: Neuquén, Argentina
+  featured: true
 
 - company: Matra SRL
+  role: Junior Automation Engineer
   description: >-
-   Junior Engineer.
-   Designed and implemented automated control systems for clients in the oil industry. Worked with PLCs from Allen Bradley and Siemens to develop and deploy process automation solutions.
+    Designed and implemented automated control systems for clients in the oil industry using Allen-Bradley and Siemens PLCs.
   dates: "2019 - 2020"
   location: Neuquén, Argentina
+  featured: true
 
 - company: Universidad Nacional del Comahue
+  role: Assistant Professor
   description: >-
-   Assistant professor.
-   Taught undergraduate students in Control Systems I. Prepared lectures, guided lab sessions, and assisted students with theoretical and practical concepts.
+    Taught undergraduate Control Systems I, prepared lectures and guided laboratory sessions covering theoretical and practical concepts.
   dates: "2018 - 2020"
   location: Neuquén, Argentina

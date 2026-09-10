@@ -1,0 +1,8 @@
+- area: Autonomous Robotics
+  topics: SLAM, visual-inertial odometry, sensor fusion, state estimation
+
+- area: Industrial Automation
+  topics: AGVs, Siemens PLCs, TIA Portal, CAN/CANopen, industrial safety
+
+- area: Software and Systems
+  topics: C++, Python, MATLAB, ROS 2, optimization, real-time systems

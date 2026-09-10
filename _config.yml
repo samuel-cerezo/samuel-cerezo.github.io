@@ -18,15 +18,17 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Samuel Cerezo
+title: Samuel Cerezo | Robotics and Automation Engineer
 name: Samuel Cerezo
-position: PhD in Systems Engineering and Computer Science 
+position: Electronic Engineer · PhD in Systems Engineering and Computer Science
 email: samueladriancerezo@gmail.com
 
 description: >-
-  Electronic Engineer and researcher with international experience in Argentina, Spain, Germany and Italy.
-  I earned a PhD in Systems Engineering and Computer Science under the supervision of [Prof. Javier Civera](https://scholar.google.com/citations?hl=en&user=j_sMzokAAAAJ). 
+  Electronic Engineer and PhD in Systems Engineering and Computer Science, with international experience across industrial automation, autonomous robotics, oilfield services and advanced manufacturing.
+
   I develop robust, real-time and deployable systems by combining research in SLAM, sensor fusion and state estimation with hands-on engineering experience in C++, Python, MATLAB and PLC-based automation.
+seo_description: >-
+  Samuel Cerezo is an Electronic Engineer and PhD specializing in autonomous robotics, industrial automation, SLAM, sensor fusion and real-time systems.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://samuel-cerezo.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: SsamuelCerezoo/
