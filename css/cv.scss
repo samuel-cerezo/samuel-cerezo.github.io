@@ -3,36 +3,82 @@
 
 @import "base";
 
+:root {
+  --cv-ink: #172033;
+  --cv-muted: #5f6b7a;
+  --cv-accent: #2563eb;
+  --cv-soft: #f6f8fc;
+  --cv-border: #e2e8f0;
+}
+
 body {
-  margin-top: 1em;
+  margin: 0;
+  background: var(--cv-soft);
+  color: var(--cv-ink);
   font-family: "Noto Sans", sans-serif;
+  line-height: 1.55;
 }
 
-.portrait-column {
-    padding: 0;
+main {
+  padding: 3rem 1.25rem;
 }
 
+main > section > .container {
+  border: 1px solid var(--cv-border);
+  border-radius: 1.25rem;
+  padding: 2.5rem 3rem;
+  background: #fff;
+  box-shadow: 0 18px 50px rgba(23, 32, 51, 0.08);
+}
+
+.title,
+h2 {
+  color: var(--cv-ink);
+  font-family: "Google Sans", "Noto Sans", sans-serif;
+}
+
+.portrait-column { padding: 0; }
 .portrait-image {
-    border-radius: 50%;
-    max-width: 7em;
+  width: 7rem;
+  height: 7rem;
+  border: 4px solid #fff;
+  border-radius: 1.25rem;
+  object-fit: cover;
+  box-shadow: 0 8px 24px rgba(23, 32, 51, 0.14);
 }
 
-.author-me {
-    font-weight: 600;
-}
+a { color: var(--cv-accent); }
+a:hover { color: #1d4ed8; }
+a:focus-visible { border-radius: 0.25rem; outline: 3px solid rgba(37, 99, 235, 0.28); outline-offset: 3px; }
+
+.subtitle { max-width: 36rem; color: var(--cv-muted) !important; }
+.author-me { font-weight: 700; }
 
 h2 {
-    margin-top: 0.5em !important;
-    margin-bottom: 0.3em !important;
+  margin: 1.65rem 0 0.65rem !important;
+  border-bottom: 1px solid var(--cv-border);
+  padding-bottom: 0.35rem;
+  font-size: 1.2rem !important;
+  letter-spacing: -0.01em;
 }
 
-.columns {
-    margin-bottom: 0 !important;
+.columns { margin-bottom: 0 !important; }
+.content > .columns { border-radius: 0.6rem; padding: 0.3rem 0; }
+.content > .columns:hover { background: #fafbfe; }
+
+@media screen and (max-width: 768px) {
+  main { padding: 0; }
+  main > section > .container { border: 0; border-radius: 0; padding: 1.5rem 1.25rem 2.5rem; box-shadow: none; }
+  .portrait-column { order: -1; text-align: center; }
+  .portrait-image { width: 6rem; height: 6rem; }
+  .has-text-right { text-align: left !important; }
+  .column.is-one-fifths.has-text-right { padding-top: 0; color: var(--cv-muted); font-size: 0.86rem; }
 }
 
 @media print {
-    html, body {
-        height: auto;
-        font-size: 9pt; /* changing to 10pt has no impact */
-    }
+  html,
+  body { height: auto; background: #fff; font-size: 9pt; }
+  main { padding: 0; }
+  main > section > .container { border: 0; padding: 0; box-shadow: none; }
+  .content > .columns:hover { background: transparent; }
 }
