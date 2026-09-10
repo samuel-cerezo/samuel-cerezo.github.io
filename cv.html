@@ -6,9 +6,18 @@ layout: null
 
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-
   <meta content="width=device-width, initial-scale=1" name="viewport">
-  <title>{{ site.title }}</title>
+  <meta name="description" content="Curriculum vitae of {{ site.name }}, Electronic Engineer and PhD specializing in robotics, SLAM and industrial automation.">
+  <meta name="author" content="{{ site.name }}">
+  <link rel="canonical" href="{{ '/cv.html' | absolute_url }}">
+
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Curriculum Vitae | {{ site.name }}">
+  <meta property="og:description" content="{{ site.seo_description | escape }}">
+  <meta property="og:url" content="{{ '/cv.html' | absolute_url }}">
+  <meta property="og:image" content="{{ '/images/portrait.jpg' | absolute_url }}">
+
+  <title>Curriculum Vitae | {{ site.name }}</title>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
   <script>
@@ -28,7 +37,7 @@ layout: null
   <link href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" rel="stylesheet">
   <link href="./css/bulma.min.css" rel="stylesheet">
   <link href="./css/cv.css" rel="stylesheet">
-  <link rel="icon" href="./static/images/favicon.svg">
+  <link rel="icon" href="{{ '/static/images/favicon.svg' | relative_url }}" type="image/svg+xml">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script defer src="./js/fontawesome.all.min.js"></script>
@@ -36,33 +45,34 @@ layout: null
 
 <body>
 
-  <section>
+  <main>
+  <section aria-labelledby="cv-name">
     <div class="container is-max-desktop">
       <div class="columns is-vcentered">
         <div class="column">
-          <h1 class="title is-2">{{ site.name }}</h1>
-          <h1 class="subtitle is-5">{{ site.position }}</h1>
+          <h1 id="cv-name" class="title is-2">{{ site.name }}</h1>
+          <p class="subtitle is-5">{{ site.position }}</p>
         </div>
         <div class="column is-narrow portrait-column">
-          <img class="portrait-image" src="./images/portrait.jpg" alt="A portrait" />
+          <img class="portrait-image" src="./images/portrait.jpg" alt="Portrait of Samuel Cerezo" />
         </div>
         <div class="column has-text-right">
           <p>
             <a href="{{ site.url }}">
-              <i class="fas fa-home"></i>
+              <i class="fas fa-home" aria-hidden="true"></i>
               {% assign url_parts = site.url | split: "//" %}
               {{ url_parts[1] }}
             </a>
           </p>
           <p>
             <a href="https://github.com/{{ site.github_username }}">
-              <i class="fab fa-github"></i>
+              <i class="fab fa-github" aria-hidden="true"></i>
               {{ site.github_username }}
             </a>
           </p>
           <p>
             <a href="mailto:{{ site.email }}">
-              <i class="fas fa-envelope"></i>
+              <i class="fas fa-envelope" aria-hidden="true"></i>
               {{ site.email }}
             </a>
           </p>
@@ -100,7 +110,7 @@ layout: null
         {% for job in site.data.employment %}
         <div class="columns">
           <div class="column is-four-fifths">
-            <b>{{ job.company }}</b><br />
+            <b>{{ job.role }} · {{ job.company }}</b><br />
             {{ job.description }}
           </div>
           <div class="column is-one-fifths has-text-right">
@@ -125,8 +135,7 @@ layout: null
                 {{ author.first_name | slice: 0 }}. {{ author.last_name }}{% if forloop.last == false %},{%
                 endif %}
                 {% else %}
-                <a href="{{ author.website }}">{{ author.first_name | slice: 0 }}. {{ author.last_name }}</a>{% if
-                forloop.last == false %},{% endif %}
+                {% if author.website %}<a href="{{ author.website }}">{{ author.first_name | slice: 0 }}. {{ author.last_name }}</a>{% else %}{{ author.first_name | slice: 0 }}. {{ author.last_name }}{% endif %}{% if forloop.last == false %},{% endif %}
                 {% endif %}
               </span>
               {% endfor %}
@@ -139,8 +148,10 @@ layout: null
         </div>
         {% endfor %}
 
+      </div>
     </div>
   </section>
+  </main>
 
 </body>
 

@@ -1,7 +1,7 @@
 - id: cs-photo
   title: "Compressive Sensing Mapping System for Spatial Characterization of Photovoltaic Devices"
   venue: Argentine Conference on Electronics
-  description: "Applying a new technique called compressive sensing in order to obtain the photocurrent map of photovoltaic devices without mechanical processes"
+  description: "Applies compressive sensing to obtain photocurrent maps of photovoltaic devices without mechanical scanning."
   project_page: https://samuel-cerezo.github.io/compressive_sensing
   pdf_link: https://drive.google.com/file/d/14pG3BAM9KXNySMVOp5vnkn6q1ay2axZO/view?usp=sharing
   image: reconstruction_si.png
