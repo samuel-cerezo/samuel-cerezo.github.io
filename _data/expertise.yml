@@ -1,8 +1,26 @@
 - area: Autonomous Robotics
-  topics: SLAM, visual-inertial odometry, sensor fusion, state estimation
+  description: Perception and estimation for robust autonomous systems.
+  topics:
+    - SLAM
+    - Visual-inertial odometry
+    - Sensor fusion
+    - State estimation
 
 - area: Industrial Automation
-  topics: AGVs, Siemens PLCs, TIA Portal, CAN/CANopen, industrial safety
+  description: Control and integration for industrial vehicles and machinery.
+  topics:
+    - AGVs
+    - Siemens PLCs
+    - TIA Portal
+    - CAN/CANopen
+    - Industrial safety
 
 - area: Software and Systems
-  topics: C++, Python, MATLAB, ROS 2, optimization, real-time systems
+  description: Deployable software designed around performance and reliability.
+  topics:
+    - C++
+    - Python
+    - MATLAB
+    - ROS 2
+    - Optimization
+    - Real-time systems

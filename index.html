@@ -39,6 +39,8 @@ layout: null
     gtag('config', '{{ site.google_analytics }}');
   </script>
 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="{{ '/css/fontawesome.all.min.css' | relative_url }}" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" rel="stylesheet">
@@ -73,43 +75,53 @@ layout: null
   }
   </script>
   
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script defer src="{{ '/js/fontawesome.all.min.js' | relative_url }}"></script>
-  <script src="{{ '/js/index.js' | relative_url }}"></script>
+  <script defer src="{{ '/js/index.js' | relative_url }}"></script>
 </head>
 
 <body>
 
+  <nav class="site-nav" aria-label="Primary navigation">
+    <div class="container is-max-desktop site-nav-inner">
+      <a class="site-brand" href="#about" aria-label="Samuel Cerezo, home">SC</a>
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <div id="site-nav-links" class="site-nav-links">
+        <a href="#about">About</a>
+        <a href="#expertise">Expertise</a>
+        <a href="#experience">Experience</a>
+        <a href="#publications">Publications</a>
+        <a href="{{ '/cv.html' | relative_url }}">CV</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
   <main>
 
-  <section class="hero">
+  <section id="about" class="hero profile-hero">
     <div class="hero-body container is-max-desktop">
-      <div class="columns is-vcentered">
+      <div class="columns is-vcentered profile-layout">
 
         <div class="column is-4">
-          <div class="portrait">
-            <img src="{{ '/images/portrait.jpg' | relative_url }}" alt="Portrait of Samuel Cerezo" />
+          <div class="portrait profile-portrait">
+            <img src="{{ '/images/portrait-800.webp' | relative_url }}" alt="Portrait of Samuel Cerezo" width="720" height="800" fetchpriority="high" decoding="async" />
           </div>
         </div>
 
-        <div class="column">
-          <h1 class="title">
-            <b>Hello, I'm {{ site.name }}</b>
+        <div class="column profile-copy">
+          <p class="profile-eyebrow">Electronic Engineer · Robotics & Automation</p>
+          <h1 class="title profile-title">
+            Hello, I'm {{ site.name }}
           </h1>
-          <div class="content">
+          <div class="content profile-description">
             {{ site.description | markdownify }}
 
-            <div class="buttons">
-              <!-- <a class="external-link button is-light" href="cv.html"> -->
-              <!--  
-              <a class="external-link button is-light" href="{{ '/pdfs/Cerezo_CV_en.pdf' | relative_url }}">
-                <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                <span>CV</span>
-              </a>
-              -->
-              <a class="external-link button is-light" href="cv.html">
-                <span class="icon"><i class="fas fa-globe-asia" aria-hidden="true"></i></span>
-                <span>CV</span>
+            <div class="buttons hero-actions">
+              <a class="external-link button is-primary" href="cv.html">
+                <span class="icon"><i class="fas fa-file-alt" aria-hidden="true"></i></span>
+                <span>View CV</span>
               </a>
 
               <a class="external-link button is-light"
@@ -121,6 +133,11 @@ layout: null
               <a class="external-link button is-light" href="https://github.com/{{ site.github_username }}">
                 <span class="icon"><i class="fab fa-github" aria-hidden="true"></i></span>
                 <span>GitHub</span>
+              </a>
+
+              <a class="button is-light" href="mailto:{{ site.email }}">
+                <span class="icon"><i class="fas fa-envelope" aria-hidden="true"></i></span>
+                <span>Contact</span>
               </a>
 
               {% if site.twitter_username %}
@@ -137,51 +154,62 @@ layout: null
     </div>
   </section>
 
-  <!-- News. -->
-  <div class="hr">
-    <div class="container">
-      <hr>
-    </div>
-  </div>
-
-
   <!-- Expertise and selected experience. -->
-  <section class="section" aria-labelledby="expertise-heading">
+  <section id="expertise" class="section section-soft" aria-labelledby="expertise-heading">
     <div class="container is-max-desktop">
-      <h2 id="expertise-heading" class="title is-3">Expertise</h2>
-      <div class="columns">
+      <div class="section-heading">
+        <p class="section-kicker">What I work on</p>
+        <h2 id="expertise-heading" class="title is-3">Expertise</h2>
+      </div>
+      <div class="columns expertise-grid">
         {% for expertise in site.data.expertise %}
         <div class="column">
-          <div class="content">
+          <article class="expertise-card">
             <h3 class="title is-5">{{ expertise.area }}</h3>
-            <p>{{ expertise.topics }}</p>
-          </div>
+            <p class="expertise-description">{{ expertise.description }}</p>
+            <div class="expertise-tags" aria-label="{{ expertise.area }} skills">
+              {% for topic in expertise.topics %}
+              <span class="expertise-tag">{{ topic }}</span>
+              {% endfor %}
+            </div>
+          </article>
         </div>
         {% endfor %}
       </div>
+    </div>
+  </section>
 
-      <h2 class="title is-3 mt-5">Selected Experience</h2>
+  <section id="experience" class="section" aria-labelledby="experience-heading">
+    <div class="container is-max-desktop">
+      <div class="section-heading">
+        <p class="section-kicker">From research to deployment</p>
+        <h2 id="experience-heading" class="title is-3">Selected Experience</h2>
+      </div>
+      <div class="experience-list">
       {% for job in site.data.employment %}
         {% if job.featured %}
-        <div class="box mt-2 mb-3">
-          <div class="columns">
-            <div class="column">
-              <h3 class="title is-5 mb-1">{{ job.role }} · {{ job.company }}</h3>
-              <p class="mb-2">{{ job.description }}</p>
+        <article class="experience-item{% if job.dates contains 'Present' %} is-current{% endif %}">
+          <div class="experience-marker" aria-hidden="true"></div>
+          <div class="experience-content">
+            <div class="experience-header">
+              <div>
+                <h3>{{ job.role }}</h3>
+                <p class="experience-company">{{ job.company }}</p>
+              </div>
+              <p class="experience-meta">{{ job.dates }}<br><span>{{ job.location }}</span></p>
             </div>
-            <div class="column is-narrow has-text-right-tablet">
-              <p>{{ job.dates }}<br>{{ job.location }}</p>
-            </div>
+            <p class="experience-description">{{ job.description }}</p>
           </div>
-        </div>
+        </article>
         {% endif %}
       {% endfor %}
+      </div>
     </div>
   </section>
 
 
   <!--/ ------------------------------ Publications section---------------------------- -->
-  <section class="section">
+  <section id="publications" class="section section-soft" aria-labelledby="publications-heading">
     <div class="container is-max-desktop">
 
       <!-- <h2 class="title is-3">News</h2>
@@ -196,17 +224,20 @@ layout: null
       </div> -->
 
 
-      <h2 class="title is-3">Publications</h2>
+      <div class="section-heading">
+        <p class="section-kicker">Selected research</p>
+        <h2 id="publications-heading" class="title is-3">Publications</h2>
+      </div>
 
       {% for publication in site.data.publications %}
-      <div class="box mt-2 mb-3 py-2">
+      <article class="box publication-card mt-2 mb-4">
         <div class="publication-block columns">
 
           <div class="column is-3">
 
             {% if publication.video %}
               <div class="publication-image"> 
-                <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
+                <video class="publication-preview" autoplay preload="auto" playsinline loop muted width="100%" poster="./images/{{ publication.video_poster }}" aria-label="Preview of {{ publication.title }}">
                   <source src="./images/{{ publication.video }}" type="video/mp4">
                 </video>
               </div>
@@ -215,16 +246,16 @@ layout: null
 
               <div class="publication-image {% if publication.image_mouseover %}publication-mousecell{% endif %}">        
                 {% if publication.image_mouseover contains "mp4" %}
-                <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
+                <video class="publication-preview" preload="none" playsinline loop muted width="100%" tabindex="0" aria-label="Preview of {{ publication.title }}">
                   <source src="./images/{{ publication.image_mouseover }}" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
                 {% else %}
                   {% if publication.image_mouseover contains "jpg" or publication.image_mouseover contains "png" %}
-                    <img class="mouseover-image" alt="{{ publication.title }}" src="./images/{{ publication.image_mouseover }}" style="display: none;" />
+                    <img class="mouseover-image" alt="{{ publication.title }}" src="./images/{{ publication.image_mouseover }}" loading="lazy" decoding="async" style="display: none;" />
                   {% endif %}
                 {% endif %}
-                <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" />
+                <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" loading="lazy" decoding="async" />
               </div>
 
             {% endif %}
@@ -249,8 +280,8 @@ layout: null
                 </span>
                 {% endfor %}
               </div>
-              <div class="publication-venue">
-                <span>{{ publication.venue }}</span>
+              <div class="publication-meta">
+                <span class="publication-venue">{{ publication.venue }}</span>
                 {% for award in publication.awards %}
                   <span class="publication-venue-emph">{{ award }}</span>
                 {% endfor %}
@@ -307,13 +338,13 @@ layout: null
             </div>
           </div>
         </div>
-      </div>
+      </article>
       {% endfor %}
     </div>
   </section>
 
 <!--/ ------------------------------ Master thesis section---------------------------- -->
-  <section class="section">
+  <section id="earlier-research" class="section" aria-labelledby="earlier-research-heading">
     <div class="container is-max-desktop">
 
       <!-- <h2 class="title is-3">News</h2>
@@ -328,17 +359,20 @@ layout: null
       </div> -->
 
 
-      <h2 class="title is-3">Master's Thesis</h2>
+      <div class="section-heading">
+        <p class="section-kicker">Earlier work</p>
+        <h2 id="earlier-research-heading" class="title is-3">Master's Thesis</h2>
+      </div>
 
       {% for publication in site.data.master_thesis %}
-      <div class="box mt-2 mb-3 py-2">
+      <article class="box publication-card mt-2 mb-4">
         <div class="publication-block columns">
 
           <div class="column is-3">
 
             {% if publication.video %}
               <div class="publication-image"> 
-                <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
+                <video class="publication-preview" preload="none" playsinline loop muted width="100%" tabindex="0" aria-label="Preview of {{ publication.title }}">
                   <source src="./images/{{ publication.video }}" type="video/mp4">
                 </video>
               </div>
@@ -347,16 +381,16 @@ layout: null
 
               <div class="publication-image {% if publication.image_mouseover %}publication-mousecell{% endif %}">        
                 {% if publication.image_mouseover contains "mp4" %}
-                <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
+                <video class="publication-preview" preload="none" playsinline loop muted width="100%" tabindex="0" aria-label="Preview of {{ publication.title }}">
                   <source src="./images/{{ publication.image_mouseover }}" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
                 {% else %}
                   {% if publication.image_mouseover contains "jpg" or publication.image_mouseover contains "png" %}
-                    <img class="mouseover-image" alt="{{ publication.title }}" src="./images/{{ publication.image_mouseover }}" style="display: none;" />
+                    <img class="mouseover-image" alt="{{ publication.title }}" src="./images/{{ publication.image_mouseover }}" loading="lazy" decoding="async" style="display: none;" />
                   {% endif %}
                 {% endif %}
-                <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" />
+                <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" loading="lazy" decoding="async" />
               </div>
 
             {% endif %}
@@ -381,8 +415,8 @@ layout: null
                 </span>
                 {% endfor %}
               </div>
-              <div class="publication-venue">
-                <span>{{ publication.venue }}</span>
+              <div class="publication-meta">
+                <span class="publication-venue">{{ publication.venue }}</span>
                 {% for award in publication.awards %}
                   <span class="publication-venue-emph">{{ award }}</span>
                 {% endfor %}
@@ -439,7 +473,7 @@ layout: null
             </div>
           </div>
         </div>
-      </div>
+      </article>
       {% endfor %}
     </div>
   </section>
@@ -450,7 +484,7 @@ layout: null
 
   </main>
 
-  <footer class="footer">
+  <footer id="contact" class="footer site-footer">
     <div class="container">
       <div class="content footer-links has-text-centered">
         <a href="mailto:{{ site.email }}" aria-label="Email Samuel Cerezo">
@@ -463,12 +497,7 @@ layout: null
           <i class="ai ai-google-scholar" aria-hidden="true"></i>
         </a>
       </div>
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-8">
-          <div class="content">
-          </div>
-        </div>
-      </div>
+      <p class="footer-note has-text-centered">© {{ 'now' | date: '%Y' }} Samuel Cerezo · Robotics, research and industrial automation</p>
     </div>
   </footer>
 

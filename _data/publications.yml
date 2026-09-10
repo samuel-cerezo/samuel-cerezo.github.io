@@ -1,10 +1,11 @@
 - id: SlamAndRender
   title: "SLAM&Render: A Benchmark for the Intersection Between Neural Rendering, Gaussian Splatting and SLAM"
-  venue: IROS, 2026
+  venue: IEEE IROS, 2026
   description: "A novel dataset designed to benchmark methods in the intersection between SLAM and novel view rendering. It consists of 40 sequences with synchronized RGB, depth, IMU, robot kinematic data, and ground-truth pose streams."
   project_page: https://samuel-cerezo.github.io/SLAM&Render
   arxiv: "2504.13713"
-  video: slamrender_portrait_short.mp4
+  video: slamrender-preview.mp4
+  video_poster: slamrender-poster.webp
   authors:
     - samu
     - gaetano
@@ -19,7 +20,7 @@
   description: "A new deformable visual-inertial odometry framework that separates a rigid, IMU-anchored state from a non-rigid warp represented by an embedded deformation graph."
   project_page: https://samuel-cerezo.github.io/defvins
   arxiv: "2601.00702"
-  image: defvins-pipeline.png
+  image: defvins-pipeline-960.webp
   authors:
     - samu
     - jcivera
@@ -29,7 +30,7 @@
   description: "A new analytical solution that is easy to implement and robust at initialization, thanks to the small-rotation and constant-velocity approximations, which simplify the problem while preserving the essential coupling between motion and inertial measurements."
   project_page: https://samuel-cerezo.github.io/vi-init
   arxiv: "2511.18910"
-  image: vi-init-pipeline.png
+  image: vi-init-pipeline-960.webp
   authors:
     - samu
     - seong
@@ -40,7 +41,7 @@
   description: "A novel GNSS-inertial initialization strategy that delays the use of global GNSS measurements until sufficient information is available to accurately estimate the state of a sensorized device. A criterion based on the evolution of the Hessian matrix singular values is introduced."
   project_page: https://samuel-cerezo.github.io/GPSi
   arxiv: "2506.11534"
-  image: /GPSi/grafo_gpsi.png
+  image: /GPSi/grafo_gpsi-960.webp
   authors:
     - samu
     - jcivera
@@ -50,7 +51,7 @@
   description: "Estimates camera motion and IMU state in a rigid 3D environment, with the flexibility to operate as a multiframe optimization or to marginalize older data."
   project_page: https://samuel-cerezo.github.io/rgbd_inertial
   arxiv: "2404.17251"
-  image: rgbd_portrait.png
+  image: rgbd_portrait-960.webp
   authors:
     - samu
     - jcivera

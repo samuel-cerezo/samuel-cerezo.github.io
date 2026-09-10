@@ -155,3 +155,167 @@ body {
 #interpolation-image-wrapper img {
   border-radius: 5px;
 }
+
+/* Shared light visual system for project pages. */
+:root {
+  --project-ink: #172033;
+  --project-muted: #5f6b7a;
+  --project-accent: #2563eb;
+  --project-accent-dark: #1d4ed8;
+  --project-soft: #f6f8fc;
+  --project-border: #e2e8f0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #fff;
+  color: var(--project-ink);
+  line-height: 1.65;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  min-height: 4rem;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+}
+
+.navbar .navbar-item {
+  color: #465164;
+}
+
+.navbar .navbar-item:hover {
+  background: var(--project-soft);
+  color: var(--project-accent);
+}
+
+body > .hero:first-of-type {
+  background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.1), transparent 35rem), linear-gradient(180deg, #fff 0%, #fbfcff 100%);
+}
+
+body > .hero:first-of-type .hero-body {
+  padding-top: 4.75rem;
+  padding-bottom: 4.25rem;
+}
+
+.publication-title {
+  color: var(--project-ink);
+  font-size: clamp(2.25rem, 5vw, 3.5rem) !important;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+.publication-authors {
+  color: #465164;
+}
+
+.publication-authors a {
+  color: var(--project-accent) !important;
+}
+
+.publication-venue,
+.project-venue {
+  display: inline-flex;
+  margin-top: 0.8rem;
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  background: #edf1f7;
+  color: #465164;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.publication-links .button.is-dark {
+  border: 1px solid var(--project-accent);
+  background: var(--project-accent);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.18);
+}
+
+.publication-links .button.is-dark:hover {
+  border-color: var(--project-accent-dark);
+  background: var(--project-accent-dark);
+}
+
+.section {
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
+}
+
+.hero.is-light,
+.interpolation-panel {
+  background: var(--project-soft);
+}
+
+.content.has-text-justified {
+  text-align: left !important;
+}
+
+.content p {
+  color: #465164;
+}
+
+.section .title {
+  color: var(--project-ink);
+  letter-spacing: -0.025em;
+}
+
+figure.image img,
+.publication-body img,
+.interpolation-panel,
+.results-carousel .item {
+  border: 1px solid var(--project-border);
+  border-radius: 0.8rem;
+  background: #fff;
+}
+
+pre {
+  overflow-x: auto;
+  border: 1px solid var(--project-border);
+  border-radius: 0.75rem;
+  background: var(--project-soft);
+}
+
+.footer {
+  border-top: 1px solid var(--project-border);
+  background: #fff;
+}
+
+.footer .icon-link {
+  color: #465164;
+}
+
+.footer .icon-link:hover {
+  color: var(--project-accent);
+}
+
+@media screen and (max-width: 768px) {
+  body > .hero:first-of-type .hero-body {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .publication-title {
+    font-size: 2.25rem !important;
+  }
+
+  .publication-links .button {
+    min-height: 2.65rem;
+  }
+
+  .section {
+    padding: 3.25rem 1.1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
