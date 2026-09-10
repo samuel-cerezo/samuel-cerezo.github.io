@@ -52,8 +52,12 @@ layout: null
           <h1 class="title">
             <b>Hello, I'm {{ site.name }}</b>
           </h1>
-          <div class="content has-text-justified">
+          <div class="content">
             {{ site.description | markdownify }}
+
+            <p class="professional-tagline">
+              Automation Engineer · Autonomous Robotics · Real-Time Systems
+            </p>
             <div class="buttons">
               <!-- <a class="external-link button is-light" href="cv.html"> -->
               <!--  
@@ -185,7 +189,7 @@ layout: null
                 {% endif %}
                 
                 {% if publication.pdf_link %}
-                <a class="external-link button is-small is-ghost" href="{{ publication.pdf_link }}f">
+                <a class="external-link button is-small is-ghost" href="{{ publication.pdf_link }}">
                   <span class="icon"><i class="fas fa-file-pdf"></i></span>
                   <span>PDF</span>
                 </a>              
