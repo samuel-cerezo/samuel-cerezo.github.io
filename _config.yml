@@ -24,14 +24,9 @@ position: PhD in Systems Engineering and Computer Science
 email: samueladriancerezo@gmail.com
 
 description: >-
-  Electronic Engineer and researcher with international experience in Argentina, Spain, Germany and Italy. 
-  My professional background spans oilfield services, industrial automation and autonomous robots.
-
-  I earned a PhD in Systems Engineering and Computer Science under the supervision of [Prof. Javier Civera's](https://scholar.google.com/citations?hl=en&user=j_sMzokAAAAJ). 
-  My expertise includes C++, Python and MATLAB, with a strong focus on real-time systems, optimization, and modular system design. 
-  
-  A native Spanish speaker and fluent in English and Italian, I am passionate about transforming technological advances into robust, deployable solutions for complex industrial and autonomous systems.
-
+  Electronic Engineer and researcher with international experience in Argentina, Spain, Germany and Italy.
+  I earned a PhD in Systems Engineering and Computer Science under the supervision of [Prof. Javier Civera](https://scholar.google.com/citations?hl=en&user=j_sMzokAAAAJ). 
+  I develop robust, real-time and deployable systems by combining research in SLAM, sensor fusion and state estimation with hands-on engineering experience in C++, Python, MATLAB and PLC-based automation.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://samuel-cerezo.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: SsamuelCerezoo/
