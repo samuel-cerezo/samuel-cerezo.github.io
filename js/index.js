@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  document.querySelectorAll(".publication-image").forEach((container) => {
+  document.querySelectorAll(".publication-mousecell").forEach((container) => {
     const video = container.querySelector("video.publication-preview");
     if (!video) return;
 

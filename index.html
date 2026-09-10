@@ -237,7 +237,7 @@ layout: null
 
             {% if publication.video %}
               <div class="publication-image"> 
-                <video class="publication-preview" preload="none" playsinline loop muted width="100%" poster="./images/{{ publication.video_poster }}" tabindex="0" aria-label="Preview of {{ publication.title }}">
+                <video class="publication-preview" autoplay preload="auto" playsinline loop muted width="100%" poster="./images/{{ publication.video_poster }}" aria-label="Preview of {{ publication.title }}">
                   <source src="./images/{{ publication.video }}" type="video/mp4">
                 </video>
               </div>
