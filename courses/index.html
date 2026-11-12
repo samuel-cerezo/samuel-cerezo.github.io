@@ -1,0 +1,99 @@
+---
+layout: null
+---
+<!doctype html><html lang="en-US"><head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta name="description" content="Courses and practical learning experiences by Samuel Cerezo.">
+  <meta name="author" content="{{ site.name }}">
+  <link rel="canonical" href="{{ "/courses/" | absolute_url }}">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ site.title }}">
+  <meta property="og:description" content="Courses and practical learning experiences by Samuel Cerezo.">
+  <meta property="og:url" content="{{ "/courses/" | absolute_url }}">
+  <meta property="og:image" content="{{ '/images/portrait.jpg' | absolute_url }}">
+  <meta property="og:image:alt" content="Portrait of Samuel Cerezo">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ site.title }}">
+  <meta name="twitter:description" content="Courses and practical learning experiences by Samuel Cerezo.">
+  <meta name="twitter:image" content="{{ '/images/portrait.jpg' | absolute_url }}">
+
+  <title>Courses | Samuel Cerezo</title>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', '{{ site.google_analytics }}');
+  </script>
+-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="{{ '/css/fontawesome.all.min.css' | relative_url }}" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" rel="stylesheet">
+  <link href="{{ '/css/bulma.min.css' | relative_url }}" rel="stylesheet">
+  <link href="{{ '/css/index.css' | relative_url }}" rel="stylesheet">
+  <link rel="icon" href="{{ '/static/images/favicon.svg' | relative_url }}" type="image/svg+xml">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": {{ site.name | jsonify }},
+    "url": {{ site.url | jsonify }},
+    "image": {{ '/images/portrait.jpg' | absolute_url | jsonify }},
+    "jobTitle": "Automation Engineer",
+    "alumniOf": [
+      {"@type": "CollegeOrUniversity", "name": "Universidad de Zaragoza"},
+      {"@type": "CollegeOrUniversity", "name": "Universidad Nacional del Comahue"}
+    ],
+    "sameAs": [
+      "https://github.com/{{ site.github_username }}",
+      "https://scholar.google.com/citations?user={{ site.google_scholar }}"
+    ],
+    "knowsAbout": [
+      "Autonomous robotics",
+      "Industrial automation",
+      "SLAM",
+      "Sensor fusion",
+      "State estimation",
+      "Real-time systems"
+    ]
+  }
+  </script>
+  
+  <script defer src="{{ '/js/fontawesome.all.min.js' | relative_url }}"></script>
+  <script defer src="{{ '/js/index.js' | relative_url }}"></script>
+</head><body>  <nav class="site-nav" aria-label="Primary navigation">
+    <div class="container is-max-desktop site-nav-inner">
+      <a class="site-brand" href="/#about" aria-label="Samuel Cerezo, home">SC</a>
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <div id="site-nav-links" class="site-nav-links">
+        <a href="/#about">About</a>
+        <a href="/#expertise">Expertise</a>
+        <a href="/#experience">Experience</a>
+        <a href="/#publications">Publications</a>
+        <a href="/courses/" aria-current="page">Courses</a>
+        <a href="{{ '/cv.html' | relative_url }}">CV</a>
+        <a href="/#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+<main><section class="hero profile-hero"><div class="hero-body container is-max-desktop"><p class="profile-eyebrow">Teaching & practical learning</p><h1 class="title profile-title">Courses</h1><div class="profile-description"><p>Practical courses designed to connect clear explanations with hands-on experience.</p></div></div></section><section class="section section-soft" aria-label="Available courses"><div class="container is-max-desktop"><div class="section-heading"><p class="section-kicker">Learning by doing</p><h2 class="title is-3">Course collection</h2></div>
+{% for course in site.data.courses %}
+<article class="box publication-card mt-2 mb-4"><div class="publication-block columns"><div class="column is-3"><a class="publication-image" style="background:#0b3155;padding:1.25rem" href="{{ course.url | relative_url }}"><img src="{{ course.image | relative_url }}" alt="{{ course.image_alt }}" width="300" height="135" decoding="async"></a></div><div class="column"><h3 class="publication-title"><a href="{{ course.url | relative_url }}">{{ course.title }}</a></h3><p class="publication-authors">{{ course.organization }}</p><div class="publication-meta"><span class="publication-venue">{{ course.format }}</span><span class="publication-venue">{{ course.duration }}</span><span class="publication-venue">{{ course.language }}</span><span class="publication-venue">{{ course.level }}</span></div><p class="publication-description">{{ course.description }}</p><div class="publication-links buttons"><a class="external-link button is-small is-ghost" href="{{ course.url | relative_url }}">Esplora il corso →</a><a class="external-link button is-small is-ghost" href="{{ course.url | relative_url }}#laboratorio">Prova il laboratorio PC</a></div><p style="font-size:.78rem;color:#5f6b7a;margin-top:.6rem">{{ course.status }} · Programma e materiali in preparazione.</p></div></div></article>
+{% endfor %}
+</div></section></main><footer class="footer site-footer"><div class="container is-max-desktop"><p class="footer-note">© {{ site.time | date: '%Y' }} Samuel Cerezo · <a href="/">Back to portfolio</a></p></div></footer></body></html>
