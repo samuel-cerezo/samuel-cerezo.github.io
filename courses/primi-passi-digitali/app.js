@@ -224,7 +224,7 @@ import('./features.mjs').then(async module=>{
  features.init({icon,esc,storage,notify,readContent:()=>content,render:()=>route(true)});
  if(parseRoute().page==='lab')route(true);
  const result=await courseResult;
- if(result.data){content={...result.data,canManage:false,practiceAvailable:true};route(true);}
+ if(result.data){content={...result.data,canManage:false,practiceAvailable:true};if(current.page==='lab')renderNavigation();else route(true);}
  else if(parseRoute().page!=='lab'){
   renderNavigation();main.innerHTML='<div class="objective-box"><h1>Le lezioni torneranno tra poco.</h1><p>Il collegamento ai materiali non risponde. Puoi intanto esercitarti nel laboratorio PC.</p><a class="btn btn-primary" href="#laboratorio">Apri il laboratorio PC</a> <button class="btn btn-secondary" id="reload">Riprova</button></div>';document.getElementById('reload').onclick=()=>location.reload();
  }
