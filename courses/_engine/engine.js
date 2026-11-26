@@ -135,6 +135,58 @@ async function api(path, { method = 'GET', body, auth = Boolean(token()) } = {})
   return { status: res.status, ok: res.ok, json };
 }
 
+// ---------- extensiones ----------
+// Un curso puede declarar `extensions: [nombre, …]` en course.yaml. Cada una es un módulo
+// extensions/<nombre>.js que puede exportar: init(api), navLinks(api), footActions(api), route(hash, api).
+// Una extensión que falla nunca debe romper el curso.
+const EXT_CACHE_KEY = `pdf2course:${SLUG}:extensions`;
+let extensions = [];
+const extApi = {
+  h, store, safeUrl, progress, saveProgress, slug: SLUG,
+  get data() { return data; },
+  get t() { return t; },
+  refresh: () => route({ keepScroll: true }),
+};
+async function loadExtensions(names) {
+  extensions = [];
+  for (const name of names) {
+    if (typeof name !== 'string' || !/^[a-z0-9-]+$/.test(name)) continue;
+    try {
+      const m = await import(new URL(`./extensions/${name}.js`, import.meta.url));
+      await m.init?.(extApi);
+      extensions.push(m);
+    } catch {
+      /* ignorar */
+    }
+  }
+}
+function extNodes(hook) {
+  return extensions.flatMap((m) => {
+    try {
+      return [m[hook]?.(extApi)].flat();
+    } catch {
+      return [];
+    }
+  }).filter(Boolean);
+}
+function routeExtension(hash, opts = {}) {
+  for (const m of extensions) {
+    let node = null;
+    try {
+      node = m.route?.(hash, extApi);
+    } catch {}
+    if (node) {
+      render(node);
+      if (!opts.keepScroll) {
+        document.getElementById('main')?.focus({ preventScroll: true });
+        window.scrollTo(0, 0);
+      }
+      return true;
+    }
+  }
+  return false;
+}
+
 // ---------- carga ----------
 async function load() {
   render(h('p', { class: 'status', role: 'status' }, t.loading));
@@ -149,9 +201,14 @@ async function load() {
     data = res.json;
     t = I18N[data.course.language?.slice(0, 2)] ?? t;
     applyTheme(data.course);
+    store.set(EXT_CACHE_KEY, data.course.extensions ?? []);
+    await loadExtensions(data.course.extensions ?? []);
     route();
   } catch {
-    render(h('div', { class: 'status' }, h('p', {}, t.loadError), h('button', { class: 'btn', type: 'button', onclick: load }, t.retry)));
+    // Sin conexión con el Worker: las extensiones que funcionan sin datos (p. ej. el laboratorio) siguen disponibles.
+    await loadExtensions(store.get(EXT_CACHE_KEY, []));
+    if (routeExtension(decodeURIComponent(location.hash.slice(1)))) return;
+    render(h('div', { class: 'status' }, h('p', {}, t.loadError), h('button', { class: 'btn', type: 'button', onclick: load }, t.retry), extNodes('offlineLinks')));
   }
 }
 
@@ -183,6 +240,7 @@ function sidebar() {
         h('span', { class: 'nav-num' }, l.number), ' ', l.shortTitle, progress().done[l.id] ? h('span', { class: 'nav-done', 'aria-label': t.undone }, ' ✓') : null)),
     data.upcoming.length ? h('p', { class: 'nav-caption' }, t.upcoming) : null,
     data.upcoming.map((u) => h('span', { class: 'nav-link is-locked', 'aria-disabled': 'true' }, h('span', { class: 'nav-num' }, u.number), ' ', u.title)),
+    extNodes('navLinks'),
   );
   const toggle = h('button', { type: 'button', class: 'menu-toggle', 'aria-expanded': 'false', 'aria-controls': 'course-nav',
     onclick: (e) => {
@@ -197,14 +255,16 @@ function sidebar() {
     toggle,
     nav,
     h('div', { class: 'sidebar-foot' },
+      extNodes('footActions'),
       h('a', { href: '/courses/' }, t.allCourses),
       h('a', { href: '#docente' }, data.teacher ? `${t.teacherTitle} ●` : t.teacher)),
   );
 }
 
 // ---------- rutas ----------
-function route() {
+function route(opts = {}) {
   const hash = decodeURIComponent(location.hash.slice(1));
+  if (routeExtension(hash, opts)) return;
   if (hash === 'docente') render(teacherView());
   else if (hash.startsWith('lezione/')) {
     const lesson = data.lessons.find((l) => l.id === hash.slice(8));
@@ -213,7 +273,7 @@ function route() {
   document.getElementById('main')?.focus({ preventScroll: true });
   window.scrollTo(0, 0);
 }
-addEventListener('hashchange', () => data && route());
+addEventListener('hashchange', () => (data ? route() : load()));
 
 function homeView() {
   const c = data.course;
