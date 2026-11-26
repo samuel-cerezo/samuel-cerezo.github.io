@@ -166,6 +166,22 @@ const extApi = {
   get data() { return data; },
   get t() { return t; },
   refresh: () => route({ keepScroll: true }),
+  // Para extensiones que reemplazan la página completa (mount):
+  root, api: (path, opts) => api(path, opts), apiUrl, apiBase: API,
+  setData: (d) => { data = d; },
+  hasTeacher: () => Boolean(token()),
+  saveSession: (session) => store.set(TOKEN_KEY, session, sessionStorage),
+  clearSession: () => store.del(TOKEN_KEY, sessionStorage),
+  async reload() {
+    let res = await api(`/api/courses/${encodeURIComponent(SLUG)}`);
+    if (res.status === 401 || (token() && res.ok && !res.json.teacher)) {
+      store.del(TOKEN_KEY, sessionStorage);
+      res = await api(`/api/courses/${encodeURIComponent(SLUG)}`, { auth: false });
+    }
+    if (!res.ok) throw new Error(String(res.status));
+    data = res.json;
+    return data;
+  },
 };
 async function loadExtensions(names) {
   extensions = [];
@@ -223,10 +239,20 @@ async function load() {
     applyTheme(data.course);
     store.set(EXT_CACHE_KEY, data.course.extensions ?? []);
     await loadExtensions(data.course.extensions ?? []);
+    const owner = extensions.find((m) => m.mount);
+    if (owner) {
+      await owner.mount(extApi);
+      return;
+    }
     route();
   } catch {
     // Sin conexión con el Worker: las extensiones que funcionan sin datos (p. ej. el laboratorio) siguen disponibles.
     await loadExtensions(store.get(EXT_CACHE_KEY, []));
+    const offlineOwner = extensions.find((m) => m.mountOffline);
+    if (offlineOwner) {
+      await offlineOwner.mountOffline(extApi, load);
+      return;
+    }
     if (routeExtension(decodeURIComponent(location.hash.slice(1)))) return;
     render(h('div', { class: 'status' }, h('p', {}, t.loadError), h('button', { class: 'btn', type: 'button', onclick: load }, t.retry), extNodes('offlineLinks')));
   }
@@ -293,7 +319,7 @@ function route(opts = {}) {
   document.getElementById('main')?.focus({ preventScroll: true });
   window.scrollTo(0, 0);
 }
-addEventListener('hashchange', () => (data ? route() : load()));
+addEventListener('hashchange', () => { if (!extensions.some((m) => m.mount || m.mountOffline)) (data ? route() : load()); });
 
 function homeView() {
   const c = data.course;
@@ -390,7 +416,10 @@ function quizView(l) {
       const ok = Number(chosen) === q.correct;
       feedback.className = `feedback ${ok ? 'ok' : 'ko'}`;
       feedback.replaceChildren(ok ? t.correct : t.wrong);
-      if (!ok && q.hint) feedback.append(h('span', { class: 'hint' }, ` ${t.hint}: ${q.hint}`));
+      const why = q.feedback?.[Number(chosen)];
+      if (why) feedback.append(h('span', { class: 'hint' }, ` ${why}`));
+      if (!ok && q.feedback?.[q.correct]) feedback.append(h('span', { class: 'hint' }, ` ${q.feedback[q.correct]}`));
+      else if (!ok && q.hint) feedback.append(h('span', { class: 'hint' }, ` ${t.hint}: ${q.hint}`));
     } },
       h('fieldset', {}, h('legend', {}, `${qi + 1}. ${q.prompt}`),
         q.options.map((o, oi) => h('label', { class: 'option' }, h('input', { type: 'radio', name, value: String(oi) }), ' ', o))),
