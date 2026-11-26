@@ -10,4 +10,16 @@
   teacher_url: https://primi-passi-digitali.samuel-cerezo.workers.dev/#docente
 
 # >>> pdf2course: bloque generado automáticamente desde el repo pdf2course. No lo edites a mano.
+- title: Primi passi digitali
+  organization: ASL UIL Lucca · UIL Toscana
+  description: Un percorso pratico per utilizzare il PC e i suoi strumenti. Lezioni online, esercizi guidati, quiz di ripasso e un laboratorio per provare con file e cartelle.
+  image: /courses/primi-passi-digitali/cover.png
+  image_alt: UIL Toscana
+  url: /courses/primi-passi-digitali/
+  language: Italiano
+  level: Livello base
+  format: Online
+  duration: 2 ore a incontro · Pausa di 5 minuti
+  teacher_url: /courses/primi-passi-digitali/#docente
+  generated_by: pdf2course
 # <<< pdf2course
