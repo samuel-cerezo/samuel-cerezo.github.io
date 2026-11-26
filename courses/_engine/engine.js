@@ -68,6 +68,26 @@ const PROGRESS_KEY = `pdf2course:${SLUG}:progress`;
 let t = I18N[(document.documentElement.lang || 'it').slice(0, 2)] ?? I18N.it;
 let data = null;
 
+// Ilustración decorativa fija (no contiene datos del curso).
+const HERO_ART = `<svg xmlns="http://www.w3.org/2000/svg" class="hero-art" viewBox="0 0 350 275" fill="none" aria-hidden="true">
+  <path d="M31 168c-20-65 9-132 84-134 50-2 65-28 118-7 66 26 89 105 54 167-38 65-210 69-256-26Z" fill="#E8EDE0"/>
+  <path d="M52 230h256" stroke="#B4C0A7" stroke-width="2" stroke-linecap="round"/>
+  <rect x="58" y="68" width="215" height="143" rx="11" fill="#D5DECC" stroke="#61785D" stroke-width="2"/>
+  <rect x="67" y="78" width="197" height="123" rx="5" fill="#FAFBF6"/>
+  <path d="M131 211v18h68v-18" fill="#D5DECC" stroke="#61785D" stroke-width="2"/>
+  <path d="M111 230h107" stroke="#61785D" stroke-width="2" stroke-linecap="round"/>
+  <rect x="83" y="94" width="165" height="91" rx="5" fill="white" stroke="#D8E0CF"/>
+  <path d="M83 107h165" stroke="#E1E7DA"/><circle cx="91" cy="101" r="2" fill="#C18B65"/><circle cx="98" cy="101" r="2" fill="#B6C29B"/><circle cx="105" cy="101" r="2" fill="#9FAF95"/>
+  <rect x="96" y="119" width="30" height="38" rx="4" fill="#E9EFDE"/><path d="M104 128h14m-14 7h14m-14 7h9" stroke="#98AD86" stroke-width="2" stroke-linecap="round"/>
+  <rect x="137" y="120" width="90" height="6" rx="3" fill="#ADBCA0"/><rect x="137" y="134" width="72" height="4" rx="2" fill="#E0E7D6"/><rect x="137" y="144" width="82" height="4" rx="2" fill="#E0E7D6"/><rect x="137" y="160" width="56" height="13" rx="4" fill="#52734F"/>
+  <g transform="rotate(9 275 75)"><rect x="243" y="37" width="57" height="72" rx="7" fill="#F4E6C1" stroke="#AC9C72" stroke-width="1.5"/><path d="m257 69 9 9 18-20" stroke="#817C4E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M256 89h29" stroke="#C2B587" stroke-width="2" stroke-linecap="round"/></g>
+  <path d="M289 193v-49m0 25c-18-2-24-12-21-23 14 1 22 8 21 23Zm0-13c18-1 25-9 24-21-16-1-24 7-24 21Z" fill="#90A77C"/><path d="M289 193v-50" stroke="#637E53" stroke-width="2"/>
+  <path d="M273 188h33l-5 41h-23Z" fill="#D9AC8A" stroke="#A97D5E" stroke-width="1.5"/>
+  <path d="m44 40 2-7 2 7 7 2-7 2-2 7-2-7-7-2Z" fill="#C1A36C"/><circle cx="318" cy="113" r="3" fill="#C6AA79"/><circle cx="33" cy="191" r="3" fill="#A9BA9B"/>
+  </svg>`;
+const heroArt = () => document.importNode(new DOMParser().parseFromString(HERO_ART, 'image/svg+xml').documentElement, true);
+const themeClass = (l) => `lesson-theme-${((l.number - 1) % 4) + 1}`;
+
 // ---------- utilidades ----------
 function h(tag, attrs = {}, ...children) {
   const el = document.createElement(tag);
@@ -280,20 +300,25 @@ function homeView() {
   const done = data.lessons.filter((l) => progress().done[l.id]).length;
   return h('div', { class: 'home' },
     data.teacher ? h('p', { class: 'notice' }, t.teacherMode) : null,
-    h('header', { class: 'hero' },
+    h('div', { class: 'hero-grid' }, h('header', { class: 'hero' },
       h('h1', {}, c.title),
       c.subtitle ? h('p', { class: 'subtitle' }, c.subtitle) : null,
       c.description ? h('p', { class: 'lead' }, c.description) : null,
       h('div', { class: 'meta' }, [c.format, c.duration, c.level, c.languageLabel].filter(Boolean).map((m) => h('span', { class: 'tag' }, m))),
       c.meetingUrl ? h('a', { class: 'btn btn-primary', href: c.meetingUrl, target: '_blank', rel: 'noopener noreferrer' }, t.join) : null,
-    ),
+    ), heroArt()),
     data.lessons.length
       ? h('section', { 'aria-labelledby': 'h-lessons' },
           h('h2', { id: 'h-lessons' }, t.lessons),
-          h('p', { class: 'progress-text' }, t.progress(done, data.lessons.length)),
-          h('progress', { max: String(data.lessons.length), value: String(done), 'aria-hidden': 'true' }),
+          h('div', { class: 'progress-panel' },
+            h('p', { class: 'progress-text' }, t.progress(done, data.lessons.length)),
+            h('progress', { max: String(data.lessons.length), value: String(done), 'aria-hidden': 'true' })),
+          data.lessons.length + data.upcoming.length > 1 ? h('ol', { class: 'course-roadmap', 'aria-label': t.lessons }, [...data.lessons.map((l) =>
+            h('li', {}, h('a', { class: `roadmap-step ${themeClass(l)}`, href: `#lezione/${l.id}` },
+              h('span', { class: 'roadmap-circle' }, progress().done[l.id] ? '✓' : l.number), h('span', {}, h('strong', {}, l.shortTitle))))),
+            ...data.upcoming.map((u) => h('li', {}, h('span', { class: 'roadmap-step' }, h('span', { class: 'roadmap-circle' }, u.number), h('span', {}, h('strong', {}, u.title), h('small', {}, t.locked)))))]) : null,
           h('ol', { class: 'cards' }, data.lessons.map((l) =>
-            h('li', { class: 'card' },
+            h('li', { class: `card ${themeClass(l)}` },
               h('a', { href: `#lezione/${l.id}` },
                 h('span', { class: 'card-num' }, `${t.lesson} ${l.number}`),
                 h('strong', { class: 'card-title' }, l.title),
