@@ -66,3 +66,7 @@ sass:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+# pdf2course: Jekyll ignora las carpetas que empiezan por "_" salvo que se incluyan aquí.
+include:
+  - _engine
