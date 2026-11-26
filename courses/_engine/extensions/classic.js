@@ -2,7 +2,8 @@
 // (barra lateral con logos, hoja de ruta por colores, pestañas de lección, laboratorio, ayuda).
 // Los textos propios del curso vienen de `look` en course.yaml. Contenido siempre escapado con esc().
 // Generado a partir del frontend antiguo; el estado del laboratorio y del promemoria se guarda en este dispositivo.
-import { newLab, openFolder, addFolder, rename, cut, paste, tasks, restoreLab, goUp } from './file-lab.js';
+const V = new URL(import.meta.url).search; // ?v= del motor (evita cachés antiguas)
+const { newLab, openFolder, addFolder, rename, cut, paste, tasks, restoreLab, goUp } = await import(`./file-lab.js${V}`);
 
 const paths = {
   home: '<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/>',
@@ -225,6 +226,8 @@ function parseRoute() {
   if (hash === 'materiali') return { page: 'materials' };
   if (hash === 'laboratorio' && A.hasLab) return { page: 'lab' };
   if (hash === 'docente') return { page: 'admin' };
+  const byKey = hash.match(/^lezione\/(.+)$/); // enlaces del motor básico: #lezione/<id>
+  if (byKey) { const l = content.lessons.find((x) => x.key === byKey[1]); if (l) return { page: 'lesson', id: l.id, tab: 'guida' }; }
   const match = hash.match(/^lezione-(\d+)(?:\/(pratica|scheda|quiz))?$/);
   return match ? { page: 'lesson', id: Number(match[1]), tab: match[2] || 'guida' } : { page: 'home' };
 }
@@ -401,7 +404,7 @@ function boot(api) {
   for (const l of document.querySelectorAll('link[rel="stylesheet"]')) if (/\/engine\.css(\?|$)/.test(l.getAttribute('href') || '')) l.disabled = true;
   if (!document.getElementById('classic-css')) {
     const link = document.createElement('link');
-    link.id = 'classic-css'; link.rel = 'stylesheet'; link.href = new URL('./classic.css', import.meta.url).href;
+    link.id = 'classic-css'; link.rel = 'stylesheet'; link.href = new URL(`./classic.css${V}`, import.meta.url).href;
     document.head.append(link);
   }
 }

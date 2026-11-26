@@ -188,7 +188,7 @@ async function loadExtensions(names) {
   for (const name of names) {
     if (typeof name !== 'string' || !/^[a-z0-9-]+$/.test(name)) continue;
     try {
-      const m = await import(new URL(`./extensions/${name}.js`, import.meta.url));
+      const m = await import(new URL(`./extensions/${name}.js${new URL(import.meta.url).search}`, import.meta.url));
       await m.init?.(extApi);
       extensions.push(m);
     } catch {
@@ -239,10 +239,16 @@ async function load() {
     applyTheme(data.course);
     store.set(EXT_CACHE_KEY, data.course.extensions ?? []);
     await loadExtensions(data.course.extensions ?? []);
+    root.dataset.extensions = extensions.map((m) => m.name ?? '').join(' ') || (data.course.extensions ?? []).join(' ');
     const owner = extensions.find((m) => m.mount);
     if (owner) {
-      await owner.mount(extApi);
-      return;
+      try {
+        await owner.mount(extApi);
+        return;
+      } catch (err) {
+        console.error('La extensión de página falló; uso la vista básica.', err);
+        extensions = extensions.filter((m) => m !== owner);
+      }
     }
     route();
   } catch {
