@@ -376,6 +376,7 @@ function lessonView(l) {
     data.teacher && l.number > data.state.releasedThrough ? h('p', { class: 'notice' }, t.notReleased) : null,
     l.description ? h('p', { class: 'lead' }, l.description) : null,
     l.objectives.length ? box(t.objectives, h('ul', {}, l.objectives.map((o) => h('li', {}, o)))) : null,
+    mediaView(l),
     l.sections.map((s) => h('section', { class: 'content' }, s.heading ? h('h2', {}, s.heading) : null, s.paragraphs.map((x) => h('p', {}, x)))),
     l.words.length ? box(t.words, h('dl', { class: 'words' }, l.words.map((w) => [h('dt', {}, w.term), h('dd', {}, w.definition)]))) : null,
     l.activity ? box(`${t.activity}: ${l.activity.title}`, h('ol', { class: 'steps' }, l.activity.steps.map((s, k) => {
@@ -392,6 +393,20 @@ function lessonView(l) {
       prev ? h('a', { class: 'btn', href: `#lezione/${prev.id}` }, t.prev) : h('span'),
       next ? h('a', { class: 'btn', href: `#lezione/${next.id}` }, t.next) : null),
   );
+}
+
+// Material de la lección (video, presentación, infografía…) guardado en Google Drive.
+// Los archivos de Drive se incrustan (/preview); el resto se ofrece como enlace.
+function mediaView(l) {
+  const items = l.media ?? [];
+  if (!items.length) return null;
+  const labels = { video: 'Video', slides: 'Presentazione', infographic: 'Infografica', document: 'Documento', link: 'Link' };
+  return h('section', { class: 'media' }, items.map((m) => h('figure', { class: `media-item media-${m.type}` },
+    h('figcaption', {}, h('strong', {}, m.title), ' ', h('span', { class: 'media-kind' }, labels[m.type] ?? '')),
+    m.embedUrl
+      ? h('div', { class: 'media-frame' }, h('iframe', { src: m.embedUrl, title: m.title, loading: 'lazy', allow: 'autoplay; fullscreen', allowfullscreen: 'true', referrerpolicy: 'no-referrer' }))
+      : null,
+    h('a', { class: 'btn', href: m.url, target: '_blank', rel: 'noopener noreferrer' }, m.embedUrl ? 'Apri in una nuova scheda' : 'Apri'))));
 }
 
 function box(title, body) {
