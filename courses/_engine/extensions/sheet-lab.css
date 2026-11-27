@@ -29,3 +29,6 @@
 .recap-card ol{margin:8px 0 6px 20px;padding:0}.recap-card p{margin:6px 0 0}
 .recap-goal{color:var(--muted);font-style:italic}
 .recap-card.problem{border-left:4px solid #c18b65}.recap-card.problem .lesson-diagram{max-width:520px}
+
+.lv{display:inline-block;font-size:11px;font-weight:700;color:#fff;background:#6b8f71;border-radius:10px;padding:1px 9px;margin-left:6px;vertical-align:middle}
+.lv-medio{background:#c18b65}.lv-impegnativo{background:#b0503a}.lv-sfida{background:#3b3b6d}
