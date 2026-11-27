@@ -247,6 +247,8 @@ function parseRoute() {
   const hash = decodeURIComponent(location.hash.slice(1));
   if (hash === 'aiuto') return { page: 'help' };
   if (hash === 'materiali') return { page: 'materials' };
+  const certLink = hash.match(/^attestato\/([A-Za-z0-9_-]{24})$/);
+  if (certLink) { if (!storage.get(certReqKey(), null)) storage.set(certReqKey(), { id: certLink[1], status: 'pending', name: '' }); return { page: 'certificate' }; }
   if (hash === 'attestato') return { page: 'certificate' };
   if (hash === 'laboratorio' && A.hasLab) return { page: 'lab' };
   if (hash === 'docente') return { page: 'admin' };
@@ -263,7 +265,7 @@ function route(isFirst = false) {
   const lessonPage = () => (availableLesson(current.id) ? lesson(availableLesson(current.id)) : '<div class="objective-box"><h1>Un passo alla volta.</h1><p>Questa lezione non è ancora disponibile. Il docente la aprirà durante il corso.</p><a class="btn btn-primary" href="#home">Torna al corso</a></div>');
   main.innerHTML = current.page === 'lab' ? labPage() : current.page === 'help' ? help() : current.page === 'materials' ? materialsPage() : current.page === 'certificate' ? certificatePage() : current.page === 'admin' ? adminPage() : current.page === 'lesson' ? lessonPage() : home();
   if (current.page === 'lab' && labKind === 'sheet') mountSheetLab(document.getElementById('sheet-root'), { storage, key: labKey + '-sheet', icon: { back: icon('back') } });
-  if (current.page === 'certificate') bindCertificate();
+  if (current.page === 'certificate') { bindCertificate(); refreshCertificate(); }
   const names = { certificate: 'Il tuo attestato', lab: look.lab_nav || 'Laboratorio PC', help: 'Hai bisogno di aiuto?', materials: 'Materiali e PDF', admin: 'Area docente' };
   document.title = `${current.page === 'lesson' ? `Lezione ${current.id} · ${availableLesson(current.id)?.shortTitle || 'Lezione non disponibile'}` : names[current.page] || content.raw.course.title} · ${content.raw.course.organization || content.raw.course.title}`;
   if (!isFirst) {
@@ -316,65 +318,80 @@ function certificateTeaser() {
   const ok = certificateStatus().ok;
   return `<aside class="bottom-note certificate-note">${icon('check')}<div><strong>${ok ? 'Il tuo attestato è pronto!' : 'Attestato di partecipazione'}</strong><p>${ok ? 'Hai completato tutti i quiz e il laboratorio: scarica il tuo attestato in PDF.' : 'Rispondi ai quiz di ogni lezione e completa il laboratorio: poi potrai scaricare il tuo attestato.'}</p></div><a href="#attestato">${ok ? 'Scarica l’attestato' : 'Vedi i requisiti'}</a></aside>`;
 }
-const certNameKey = () => `pdf2course:${A.slug}:attestato-name`;
+const certReqKey = () => `pdf2course:${A.slug}:attestato-request`;
+const certErrors = {
+  mail_not_configured: 'Il servizio di firma non è ancora attivo. Riprova più tardi.',
+  too_many_requests: 'Hai fatto troppe richieste. Riprova tra un’ora.',
+  invalid_name: 'Scrivi nome e cognome.',
+};
+let certMessage = '', certBusy = false, certTimer = null;
 function certificatePage() {
   const st = certificateStatus();
+  const req = storage.get(certReqKey(), null);
   const rows = st.lessons.map((l) => `<li class="${!l.quizCount || quizIsDone(l) ? 'done' : ''}"><span aria-hidden="true">${!l.quizCount || quizIsDone(l) ? '✓' : l.id}</span><div><strong>Quiz della lezione ${l.id}: ${esc(l.title)}</strong>${!l.quizCount || quizIsDone(l) ? '' : `<p><a href="#lezione-${l.id}/quiz">Vai al quiz</a></p>`}</div></li>`).join('');
   const labRow = `<li class="${st.labMissing ? '' : 'done'}"><span aria-hidden="true">${st.labMissing ? '•' : '✓'}</span><div><strong>${esc(look.lab_nav || 'Laboratorio')}: tutti gli esercizi completati</strong>${st.labMissing ? '<p><a href="#laboratorio">Vai al laboratorio</a></p>' : ''}</div></li>`;
   const open = st.lessonsOpen ? `<li><span aria-hidden="true">•</span><div><strong>Altre ${st.lessonsOpen} ${st.lessonsOpen === 1 ? 'lezione' : 'lezioni'} da seguire</strong><p>Il docente le aprirà durante il corso.</p></div></li>` : '';
-  const head = `<a class="breadcrumb" href="#home">${icon('back')} Torna al corso</a><div class="help-intro"><p class="eyebrow">ATTESTATO DI PARTECIPAZIONE</p><h1>Il tuo attestato.</h1><p class="intro">${st.ok ? 'Complimenti, hai completato il percorso! Scrivi il tuo nome come vuoi che compaia e scarica l’attestato in PDF.' : 'L’attestato si sblocca quando hai risposto a tutti i quiz e completato tutti gli esercizi del laboratorio.'}</p></div>`;
   const list = `<section class="lab-task-panel certificate-checklist"><h2>${st.ok ? 'Tutto fatto' : 'Cosa manca'}</h2><ol>${rows}${labRow}${open}</ol></section>`;
-  if (!st.ok) return `${head}${list}`;
-  const saved = attestato.cleanName(storage.get(certNameKey(), ''));
-  return `${head}<form id="certificate-form" class="certificate-form" novalidate><label for="certificate-name">Nome e cognome</label><input id="certificate-name" class="form-field" name="name" autocomplete="name" maxlength="60" value="${esc(saved)}" placeholder="Per esempio: Maria Rossi" required><p id="certificate-error" class="certificate-error" role="alert" hidden>Scrivi il tuo nome e cognome.</p><div class="certificate-actions"><button type="submit" class="btn btn-primary">${icon('download')} Scarica l’attestato (PDF)</button></div><p class="certificate-note-text">Il nome resta solo su questo dispositivo: non viene inviato a nessuno.</p></form><div class="certificate-preview" id="certificate-preview" aria-live="polite"></div>${list}`;
+  const back = `<a class="breadcrumb" href="#home">${icon('back')} Torna al corso</a>`;
+  const msg = certMessage ? `<p class="certificate-error" role="alert">${esc(certMessage)}</p>` : '';
+  const intro = (t) => `<div class="help-intro"><p class="eyebrow">ATTESTATO DI PARTECIPAZIONE</p><h1>Il tuo attestato.</h1><p class="intro">${t}</p></div>`;
+  if (req?.id) {
+    const link = `${location.origin}${location.pathname}#attestato/${req.id}`;
+    const body = req.status === 'approved'
+      ? `<p><strong>Il docente ha firmato il tuo attestato.</strong></p><div class="certificate-actions"><button type="button" class="btn btn-primary" data-cert-download>${icon('download')} Scarica l’attestato (PDF)</button></div>`
+      : req.status === 'rejected'
+        ? `<p>Il docente non ha confermato la richiesta. Puoi farne una nuova.</p><div class="certificate-actions"><button type="button" class="btn btn-secondary" data-cert-reset>Fai una nuova richiesta</button></div>`
+        : `<p><strong>Richiesta inviata per ${esc(req.name || '')}.</strong> Il docente deve confermare la firma: appena lo fa, qui compare il pulsante per scaricare l’attestato.</p><div class="certificate-actions"><button type="button" class="btn btn-secondary" data-cert-check>Controlla ora</button></div><p class="certificate-note-text">Puoi chiudere la pagina. Per tornare, salva questo link personale:</p><input class="form-field" readonly value="${esc(link)}" aria-label="Link personale per ritrovare il tuo attestato" onclick="this.select()">`;
+    return `${back}${intro(req.status === 'approved' ? 'Il tuo attestato è pronto.' : 'La tua richiesta è in attesa della firma del docente.')}<section class="certificate-form" aria-live="polite">${body}${msg}</section>`;
+  }
+  if (!st.ok) return `${back}${intro('L’attestato si sblocca quando hai risposto a tutti i quiz e completato tutti gli esercizi del laboratorio.')}${list}`;
+  const saved = attestato.cleanName(storage.get(`pdf2course:${A.slug}:attestato-name`, ''));
+  return `${back}${intro('Complimenti, hai completato il percorso! Scrivi il tuo nome come vuoi che compaia: il docente confermerà la firma e potrai scaricare l’attestato in PDF.')}<form id="certificate-form" class="certificate-form" novalidate><label for="certificate-name">Nome e cognome</label><input id="certificate-name" class="form-field" name="name" autocomplete="name" maxlength="60" value="${esc(saved)}" placeholder="Per esempio: Maria Rossi" required>${msg}<div class="certificate-actions"><button type="submit" class="btn btn-primary" ${certBusy ? 'disabled' : ''}>${icon('check')} Richiedi l’attestato</button></div><p class="certificate-note-text">Il docente riceve la richiesta e deve confermare la firma. Non serve registrarsi.</p></form>${list}`;
 }
-async function drawCertificateFor(name, canvas) {
-  const course = content.raw.course;
-  const hours = look.attestato?.hours;
-  const meta = [`${content.lessons.length} ${content.lessons.length === 1 ? 'incontro' : 'incontri'}`, hours ? String(hours) : (course.duration || '')].filter(Boolean).join(' · ');
-  await attestato.ensureFonts();
-  const sigName = look.attestato?.signature;
-  const logos = await attestato.loadLogos((look.logos || []).map((lg) => assetUrl(lg.asset)));
-  const signature = sigName ? (await attestato.loadLogos([assetUrl(sigName)]))[0] || null : null;
-  attestato.drawCertificate(canvas, {
-    name, courseTitle: course.title, subtitle: course.subtitle || '', organization: look.org || course.organization || '',
-    bullets: attestato.bulletsOf(look, content.lessons), meta,
-    dateText: new Date().toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }), logos,
-    signature, teacher: String(look.attestato?.teacher || ''),
-  });
+function rerenderCertificate() { if (current.page !== 'certificate') return; main.innerHTML = certificatePage(); bindCertificate(); }
+async function refreshCertificate(manual = false) {
+  const req = storage.get(certReqKey(), null);
+  if (!req?.id) return;
+  try {
+    const res = await A.api(`/api/certificates/${encodeURIComponent(req.id)}`, { auth: false });
+    if (res.status === 404) { storage.set(certReqKey(), null); history.replaceState(null, '', '#attestato'); certMessage = 'La richiesta è scaduta: puoi farne una nuova.'; return rerenderCertificate(); }
+    if (res.ok && res.json?.status && res.json.status !== req.status) { storage.set(certReqKey(), { ...req, status: res.json.status }); certMessage = ''; rerenderCertificate(); }
+    else if (manual) notify('Il docente non ha ancora confermato.');
+  } catch { if (manual) notify('Connessione non riuscita. Riprova.'); }
 }
 function bindCertificate() {
-  const form = document.getElementById('certificate-form');
-  if (!form) return;
-  const input = document.getElementById('certificate-name'), error = document.getElementById('certificate-error'), preview = document.getElementById('certificate-preview');
-  const canvas = document.createElement('canvas');
-  canvas.className = 'certificate-canvas'; canvas.setAttribute('role', 'img'); canvas.setAttribute('aria-label', 'Anteprima dell’attestato');
-  let timer;
-  const refresh = async () => {
-    const name = attestato.cleanName(input.value);
-    if (!name) { preview.replaceChildren(); return; }
-    storage.set(certNameKey(), name);
-    await drawCertificateFor(name, canvas);
-    if (!canvas.isConnected) preview.replaceChildren(canvas);
-  };
-  input.addEventListener('input', () => { error.hidden = true; clearTimeout(timer); timer = setTimeout(refresh, 300); });
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = attestato.cleanName(input.value);
-    if (!name) { error.hidden = false; input.focus(); return; }
-    clearTimeout(timer);
+  clearInterval(certTimer); certTimer = null;
+  const req = storage.get(certReqKey(), null);
+  if (req?.id && req.status === 'pending') certTimer = setInterval(() => { if (current.page === 'certificate') refreshCertificate(); else { clearInterval(certTimer); certTimer = null; } }, 10000);
+  main.querySelector('[data-cert-check]')?.addEventListener('click', () => refreshCertificate(true));
+  main.querySelector('[data-cert-reset]')?.addEventListener('click', () => { storage.set(certReqKey(), null); history.replaceState(null, '', '#attestato'); certMessage = ''; rerenderCertificate(); });
+  main.querySelector('[data-cert-download]')?.addEventListener('click', async () => {
     try {
-      await refresh();
-      const pdf = await attestato.certificatePdf(canvas, `Attestato - ${content.raw.course.title}`);
-      const url = URL.createObjectURL(new Blob([pdf], { type: 'application/pdf' }));
+      const res = await fetch(A.apiUrl(`/api/certificates/${encodeURIComponent(req.id)}/pdf`), { credentials: 'omit', cache: 'no-store' });
+      if (!res.ok) throw new Error(String(res.status));
+      const url = URL.createObjectURL(await res.blob());
       const a = document.createElement('a');
-      a.href = url; a.download = `Attestato - ${content.raw.course.title} - ${name}.pdf`.replace(/[\\/:*?"<>|]/g, '');
+      a.href = url; a.download = `Attestato - ${content.raw.course.title}.pdf`.replace(/[\\/:*?"<>|]/g, '');
       document.body.append(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 10000);
-      notify('Attestato scaricato.');
-    } catch { notify('Non è stato possibile creare il PDF. Riprova.'); }
+    } catch { notify('Non è stato possibile scaricare il PDF. Riprova.'); }
   });
-  if (attestato.cleanName(input.value)) refresh();
+  const form = document.getElementById('certificate-form');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = attestato.cleanName(document.getElementById('certificate-name').value);
+    if (name.length < 3 || !name.includes(' ')) { certMessage = certErrors.invalid_name; return rerenderCertificate(); }
+    storage.set(`pdf2course:${A.slug}:attestato-name`, name);
+    certBusy = true; certMessage = '';
+    form.querySelector('button[type="submit"]').disabled = true;
+    try {
+      const res = await A.api(`/api/courses/${encodeURIComponent(A.slug)}/certificates`, { method: 'POST', body: { name }, auth: false });
+      if (res.ok && res.json?.id) storage.set(certReqKey(), { id: res.json.id, status: 'pending', name });
+      else certMessage = certErrors[res.json?.error] || 'Non è stato possibile inviare la richiesta. Riprova.';
+    } catch { certMessage = 'Connessione non riuscita. Riprova.'; }
+    certBusy = false;
+    rerenderCertificate();
+  });
 }
 
 function labPage(){
