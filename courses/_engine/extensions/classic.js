@@ -3,7 +3,8 @@
 // Los textos propios del curso vienen de `look` en course.yaml. Contenido siempre escapado con esc().
 // Generado a partir del frontend antiguo; el estado del laboratorio y del promemoria se guarda en este dispositivo.
 const V = new URL(import.meta.url).search; // ?v= del motor (evita cachés antiguas)
-const { mountSheetLab } = await import(`./sheet-lab.js${V}`);
+const { mountSheetLab, restore: restoreSheet, EXERCISES, sheetOf, taskStatus } = await import(`./sheet-lab.js${V}`);
+const attestato = await import(`./attestato.js${V}`);
 const { newLab, openFolder, addFolder, rename, cut, paste, tasks, restoreLab, goUp } = await import(`./file-lab.js${V}`);
 
 const paths = {
@@ -156,7 +157,7 @@ function renderNavigation() {
   document.getElementById('lesson-navigation').innerHTML = content.lessons.map((l) => `<a class="nav-link ${current.page === 'lesson' && current.id === l.id ? 'active' : ''}" href="#lezione-${l.id}" ${current.page === 'lesson' && current.id === l.id ? 'aria-current="page"' : ''}><span class="nav-num">${String(l.id).padStart(2, '0')}</span><span>${esc(l.shortTitle)}</span>${isDone(l.id) ? `<span class="nav-done" aria-label="Completata">${icon('check')}</span>` : ''}</a>`).join('');
   let tools = document.getElementById('course-tools');
   if (!tools) { tools = document.createElement('div'); tools.id = 'course-tools'; document.querySelector('nav').append(tools); }
-  tools.innerHTML = `<a class="nav-link ${current.page === 'materials' ? 'active' : ''}" href="#materiali">${icon('download')} Materiali e PDF</a>${A.hasLab ? `<a class="nav-link ${current.page === 'lab' ? 'active' : ''}" href="#laboratorio">${icon('computer')} ${esc(look.lab_nav||'Laboratorio PC')}</a>` : ''}<a class="nav-link teacher-link ${current.page === 'admin' ? 'active' : ''}" href="#docente">${icon('pencil')} ${content.canManage ? 'Area docente' : 'Accesso docente'}</a>`;
+  tools.innerHTML = `<a class="nav-link ${current.page === 'materials' ? 'active' : ''}" href="#materiali">${icon('download')} Materiali e PDF</a><a class="nav-link ${current.page === 'certificate' ? 'active' : ''}" href="#attestato">${icon('check')} Il tuo attestato</a>${A.hasLab ? `<a class="nav-link ${current.page === 'lab' ? 'active' : ''}" href="#laboratorio">${icon('computer')} ${esc(look.lab_nav||'Laboratorio PC')}</a>` : ''}<a class="nav-link teacher-link ${current.page === 'admin' ? 'active' : ''}" href="#docente">${icon('pencil')} ${content.canManage ? 'Area docente' : 'Accesso docente'}</a>`;
   for (const [selector, active] of [['.home-link', current.page === 'home'], ['.help-link', current.page === 'help']]) {
     const link = document.querySelector(selector);
     link.classList.toggle('active', active);
@@ -170,6 +171,7 @@ function home() {
   return `<section class="hero" aria-labelledby="home-title"><div><p class="eyebrow">${esc(hero.eyebrow || 'IL TUO PERCORSO COMINCIA QUI')}</p><h1 id="home-title">${br(hero.title || content.raw.course.title)}</h1><p class="intro">${esc(hero.intro || content.raw.course.description || '')}</p>${zoomEntry('hero-join')}<div class="course-facts">${(look.facts || []).map((f) => `<span>${icon(f.icon)} ${esc(f.text)}</span>`).join('')}</div></div>${(look.hero?.art==='sheet'?sheetArt():heroArt())}</section>
  <section class="progress-panel" aria-label="I tuoi progressi"><div class="progress-copy"><strong>${n === 0 ? 'Ogni passo conta.' : n === tot ? 'Hai completato il percorso!' : 'Stai facendo progressi.'}</strong><span>${content.lessons.length} ${content.lessons.length === 1 ? 'lezione disponibile' : 'lezioni disponibili'} di ${tot}</span></div><div class="progress-right"><div class="progress-track" role="progressbar" aria-label="Lezioni segnate come completate" aria-valuenow="${n}" aria-valuemin="0" aria-valuemax="${tot}"><div class="progress-fill" style="width:${tot ? Math.round((n / tot) * 100) : 0}%"></div></div><span class="progress-amount">${n} di ${tot} completate</span></div></section>
  <section aria-labelledby="lessons-title"><div class="section-heading"><h2 id="lessons-title">Le lezioni, in ordine</h2><span>Un argomento alla volta</span></div>${roadmap()}<div class="lessons-grid ${content.lessons.length === 1 ? 'single' : ''}">${content.lessons.map((l) => `<article class="lesson-card lesson-theme-${themeOf(l)} ${l.id === 1 ? 'featured' : ''}"><div class="card-top"><span class="lesson-icon ${esc(l.color)}">${icon(l.icon)}</span><div class="lesson-meta">LEZIONE ${String(l.id).padStart(2, '0')} <span></span> 2 ORE</div></div><h3><span class="lesson-title-number">${l.id}.</span> ${esc(l.title)}</h3><p>${esc(l.description)}</p><div class="card-bottom"><span class="card-state">${isDone(l.id) ? icon('check') + ' Completata' : 'Disponibile'}</span><a class="card-action" href="#lezione-${l.id}" aria-label="Apri la lezione ${l.id}: ${esc(l.title)}">Apri la lezione ${icon('arrow')}</a></div></article>`).join('')}</div>${content.lessons.length === 0 ? '<div class="objective-box"><p>Le lezioni compariranno qui quando il docente le renderà disponibili.</p></div>' : ''}${content.lessons.length < tot ? '<p class="release-note">Le altre lezioni appariranno qui quando le affronteremo insieme. Quelle già aperte restano disponibili per ripassare.</p>' : ''}</section>
+ ${certificateTeaser()}
  <aside class="bottom-note">${icon('folder')}<div><strong>Porta i materiali con te.</strong><p>Scarica le schede PDF sul PC per rileggerle o stamparle quando vuoi.</p></div><a href="#materiali">Apri i materiali</a></aside>
 `;
 }
@@ -245,6 +247,7 @@ function parseRoute() {
   const hash = decodeURIComponent(location.hash.slice(1));
   if (hash === 'aiuto') return { page: 'help' };
   if (hash === 'materiali') return { page: 'materials' };
+  if (hash === 'attestato') return { page: 'certificate' };
   if (hash === 'laboratorio' && A.hasLab) return { page: 'lab' };
   if (hash === 'docente') return { page: 'admin' };
   const byKey = hash.match(/^lezione\/(.+)$/); // enlaces del motor básico: #lezione/<id>
@@ -258,9 +261,10 @@ function route(isFirst = false) {
   if (previous.id !== current.id) step = 0;
   renderNavigation();
   const lessonPage = () => (availableLesson(current.id) ? lesson(availableLesson(current.id)) : '<div class="objective-box"><h1>Un passo alla volta.</h1><p>Questa lezione non è ancora disponibile. Il docente la aprirà durante il corso.</p><a class="btn btn-primary" href="#home">Torna al corso</a></div>');
-  main.innerHTML = current.page === 'lab' ? labPage() : current.page === 'help' ? help() : current.page === 'materials' ? materialsPage() : current.page === 'admin' ? adminPage() : current.page === 'lesson' ? lessonPage() : home();
+  main.innerHTML = current.page === 'lab' ? labPage() : current.page === 'help' ? help() : current.page === 'materials' ? materialsPage() : current.page === 'certificate' ? certificatePage() : current.page === 'admin' ? adminPage() : current.page === 'lesson' ? lessonPage() : home();
   if (current.page === 'lab' && labKind === 'sheet') mountSheetLab(document.getElementById('sheet-root'), { storage, key: labKey + '-sheet', icon: { back: icon('back') } });
-  const names = { lab: look.lab_nav || 'Laboratorio PC', help: 'Hai bisogno di aiuto?', materials: 'Materiali e PDF', admin: 'Area docente' };
+  if (current.page === 'certificate') bindCertificate();
+  const names = { certificate: 'Il tuo attestato', lab: look.lab_nav || 'Laboratorio PC', help: 'Hai bisogno di aiuto?', materials: 'Materiali e PDF', admin: 'Area docente' };
   document.title = `${current.page === 'lesson' ? `Lezione ${current.id} · ${availableLesson(current.id)?.shortTitle || 'Lezione non disponibile'}` : names[current.page] || content.raw.course.title} · ${content.raw.course.organization || content.raw.course.title}`;
   if (!isFirst) {
     if (previous.page === 'lesson' && current.page === 'lesson' && previous.id === current.id && previous.tab !== current.tab) document.querySelector(`[data-tab="${current.tab}"]`)?.focus({ preventScroll: true });
@@ -286,7 +290,88 @@ function quizPage(lesson){
     const item=result?.items[i];
     const selected=item?.selected;
     return `<fieldset class="quiz-question"><legend><span class="question-number">${i+1}</span><span>${esc(q.prompt)}</span></legend><div class="quiz-options">${q.options.map((o,n)=>`<label class="quiz-option ${item?.states[n]||''}"><input type="radio" name="question-${i}" value="${n}" ${a.answers[i]===n?'checked':''} ${a.checked?'disabled':''}><span class="option-letter">${'ABCD'[n]}</span><span class="option-text">${esc(o.label)}${a.checked&&n===q.correct?'<strong class="option-status">✓ Risposta da ricordare</strong>':a.checked&&selected===n&&!item.ok?'<strong class="option-status">La tua risposta</strong>':''}</span></label>`).join('')}</div>${a.checked?`<div class="quiz-feedback ${item.ok?'positive':'explain'}"><strong>${item.ok?'Il concetto è chiaro.':selected===null?'Rivediamo questo passaggio.':'Proviamo a ragionarci insieme.'}</strong><p>${esc(selected===null?q.options[q.correct].feedback:q.options[selected].feedback)}</p>${selected!==null&&!item.ok?`<p>${esc(q.options[q.correct].feedback)}</p>`:''}</div>`:`<details class="quiz-hint"><summary>Un piccolo aiuto</summary><p>${esc(q.hint)}</p></details>`}</fieldset>`;
-  }).join('')}<div class="quiz-actions">${a.checked?`<div class="quiz-summary" role="status"><strong>Ripasso completato</strong><span>Concetti riconosciuti: ${result.score} su ${result.total}. Puoi rivedere le spiegazioni o riprovare.</span></div><button type="button" class="btn btn-primary" data-review-retry="${lesson.id}">Riprova il ripasso</button><a class="btn btn-secondary" href="#lezione-${lesson.id}">Torna alla lezione</a>`:'<button class="btn btn-primary" type="submit">Controlla le risposte</button><p>Il ripasso non blocca l’accesso alle altre lezioni.</p>'}</div></form>`;
+  }).join('')}<div class="quiz-actions">${a.checked?`<div class="quiz-summary" role="status"><strong>Ripasso completato</strong><span>Concetti riconosciuti: ${result.score} su ${result.total}. Puoi rivedere le spiegazioni o riprovare.${questions.some((_,i)=>!Number.isInteger(a.answers[i]))?' Per l’attestato servono risposte a tutte le domande: riprova.':''}</span></div><button type="button" class="btn btn-primary" data-review-retry="${lesson.id}">Riprova il ripasso</button><a class="btn btn-secondary" href="#lezione-${lesson.id}">Torna alla lezione</a>`:'<button class="btn btn-primary" type="submit">Controlla le risposte</button><p>Il ripasso non blocca l’accesso alle altre lezioni.</p>'}</div></form>`;
+}
+
+// ---------- attestato de finalización ----------
+function recordQuiz(lesson, a) {
+  const qs = lesson.quiz || [];
+  if (!qs.length || qs.some((_, i) => !Number.isInteger(a.answers[i]))) return; // solo cuenta con todas las preguntas contestadas
+  const r = gradeQuiz(qs, a.answers);
+  const p = A.progress();
+  (p.quiz ??= {})[lesson.key] = { score: r.score, total: r.total, at: Date.now() };
+  A.saveProgress();
+}
+const quizIsDone = (l) => Boolean(A.progress().quiz?.[l.key]);
+function labIsDone() {
+  if (labKind === 'sheet') { const st = restoreSheet(storage.get(labKey + '-sheet', null)); return EXERCISES.every((ex) => taskStatus(ex, sheetOf(st, ex)).every((t) => t.done)); }
+  return tasks(lab).every((t) => t.done);
+}
+function certificateStatus() {
+  const lessons = content.lessons.map((l) => ({ key: l.key, title: l.title, id: l.id, quizCount: (l.quiz || []).length }));
+  const status = attestato.isComplete({ lessons, total: total(), quizDone: quizIsDone, labDone: labIsDone });
+  return { ...status, lessons };
+}
+function certificateTeaser() {
+  const ok = certificateStatus().ok;
+  return `<aside class="bottom-note certificate-note">${icon('check')}<div><strong>${ok ? 'Il tuo attestato è pronto!' : 'Attestato di partecipazione'}</strong><p>${ok ? 'Hai completato tutti i quiz e il laboratorio: scarica il tuo attestato in PDF.' : 'Rispondi ai quiz di ogni lezione e completa il laboratorio: poi potrai scaricare il tuo attestato.'}</p></div><a href="#attestato">${ok ? 'Scarica l’attestato' : 'Vedi i requisiti'}</a></aside>`;
+}
+const certNameKey = () => `pdf2course:${A.slug}:attestato-name`;
+function certificatePage() {
+  const st = certificateStatus();
+  const rows = st.lessons.map((l) => `<li class="${!l.quizCount || quizIsDone(l) ? 'done' : ''}"><span aria-hidden="true">${!l.quizCount || quizIsDone(l) ? '✓' : l.id}</span><div><strong>Quiz della lezione ${l.id}: ${esc(l.title)}</strong>${!l.quizCount || quizIsDone(l) ? '' : `<p><a href="#lezione-${l.id}/quiz">Vai al quiz</a></p>`}</div></li>`).join('');
+  const labRow = `<li class="${st.labMissing ? '' : 'done'}"><span aria-hidden="true">${st.labMissing ? '•' : '✓'}</span><div><strong>${esc(look.lab_nav || 'Laboratorio')}: tutti gli esercizi completati</strong>${st.labMissing ? '<p><a href="#laboratorio">Vai al laboratorio</a></p>' : ''}</div></li>`;
+  const open = st.lessonsOpen ? `<li><span aria-hidden="true">•</span><div><strong>Altre ${st.lessonsOpen} ${st.lessonsOpen === 1 ? 'lezione' : 'lezioni'} da seguire</strong><p>Il docente le aprirà durante il corso.</p></div></li>` : '';
+  const head = `<a class="breadcrumb" href="#home">${icon('back')} Torna al corso</a><div class="help-intro"><p class="eyebrow">ATTESTATO DI PARTECIPAZIONE</p><h1>Il tuo attestato.</h1><p class="intro">${st.ok ? 'Complimenti, hai completato il percorso! Scrivi il tuo nome come vuoi che compaia e scarica l’attestato in PDF.' : 'L’attestato si sblocca quando hai risposto a tutti i quiz e completato tutti gli esercizi del laboratorio.'}</p></div>`;
+  const list = `<section class="lab-task-panel certificate-checklist"><h2>${st.ok ? 'Tutto fatto' : 'Cosa manca'}</h2><ol>${rows}${labRow}${open}</ol></section>`;
+  if (!st.ok) return `${head}${list}`;
+  const saved = attestato.cleanName(storage.get(certNameKey(), ''));
+  return `${head}<form id="certificate-form" class="certificate-form" novalidate><label for="certificate-name">Nome e cognome</label><input id="certificate-name" class="form-field" name="name" autocomplete="name" maxlength="60" value="${esc(saved)}" placeholder="Per esempio: Maria Rossi" required><p id="certificate-error" class="certificate-error" role="alert" hidden>Scrivi il tuo nome e cognome.</p><div class="certificate-actions"><button type="submit" class="btn btn-primary">${icon('download')} Scarica l’attestato (PDF)</button></div><p class="certificate-note-text">Il nome resta solo su questo dispositivo: non viene inviato a nessuno.</p></form><div class="certificate-preview" id="certificate-preview" aria-live="polite"></div>${list}`;
+}
+async function drawCertificateFor(name, canvas) {
+  const course = content.raw.course;
+  const hours = look.attestato?.hours;
+  const meta = [`${content.lessons.length} ${content.lessons.length === 1 ? 'incontro' : 'incontri'}`, hours ? String(hours) : (course.duration || '')].filter(Boolean).join(' · ');
+  await attestato.ensureFonts();
+  const logos = await attestato.loadLogos((look.logos || []).map((lg) => assetUrl(lg.asset)));
+  attestato.drawCertificate(canvas, {
+    name, courseTitle: course.title, subtitle: course.subtitle || '', organization: look.org || course.organization || '',
+    bullets: attestato.bulletsOf(look, content.lessons), meta,
+    dateText: new Date().toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }), logos,
+  });
+}
+function bindCertificate() {
+  const form = document.getElementById('certificate-form');
+  if (!form) return;
+  const input = document.getElementById('certificate-name'), error = document.getElementById('certificate-error'), preview = document.getElementById('certificate-preview');
+  const canvas = document.createElement('canvas');
+  canvas.className = 'certificate-canvas'; canvas.setAttribute('role', 'img'); canvas.setAttribute('aria-label', 'Anteprima dell’attestato');
+  let timer;
+  const refresh = async () => {
+    const name = attestato.cleanName(input.value);
+    if (!name) { preview.replaceChildren(); return; }
+    storage.set(certNameKey(), name);
+    await drawCertificateFor(name, canvas);
+    if (!canvas.isConnected) preview.replaceChildren(canvas);
+  };
+  input.addEventListener('input', () => { error.hidden = true; clearTimeout(timer); timer = setTimeout(refresh, 300); });
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = attestato.cleanName(input.value);
+    if (!name) { error.hidden = false; input.focus(); return; }
+    clearTimeout(timer);
+    try {
+      await refresh();
+      const pdf = await attestato.certificatePdf(canvas, `Attestato - ${content.raw.course.title}`);
+      const url = URL.createObjectURL(new Blob([pdf], { type: 'application/pdf' }));
+      const a = document.createElement('a');
+      a.href = url; a.download = `Attestato - ${content.raw.course.title} - ${name}.pdf`.replace(/[\\/:*?"<>|]/g, '');
+      document.body.append(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+      notify('Attestato scaricato.');
+    } catch { notify('Non è stato possibile creare il PDF. Riprova.'); }
+  });
+  if (attestato.cleanName(input.value)) refresh();
 }
 
 function labPage(){
@@ -384,7 +469,7 @@ function wire() {
  document.addEventListener('submit',e=>{
   if(e.target.id==='review-form'){
    e.preventDefault();const id=Number(e.target.dataset.lesson);const a=attempts.get(id);a.checked=true;
-   const lesson=content.lessons.find(l=>l.id===id);document.getElementById('lesson-panel').innerHTML=quizPage(lesson);
+   const lesson=content.lessons.find(l=>l.id===id);recordQuiz(lesson,a);document.getElementById('lesson-panel').innerHTML=quizPage(lesson);
    document.querySelector('.quiz-summary')?.scrollIntoView({block:'nearest',behavior:'smooth'});
   }
   if(e.target.id==='lab-name-form'){
