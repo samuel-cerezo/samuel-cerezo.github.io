@@ -1,4 +1,16 @@
 # >>> pdf2course: bloque generado automáticamente desde el repo pdf2course. No lo edites a mano.
+- title: Primi passi con Excel
+  organization: UIL FP Lucca
+  description: Tabelle, formule, filtri e grafici per il lavoro di ogni giorno. Lezioni online, esercizi guidati, quiz di ripasso e un laboratorio per provare con il foglio di calcolo.
+  image: /courses/primi-passi-con-excel/cover.png
+  image_alt: UIL FP Lucca
+  url: /courses/primi-passi-con-excel/
+  language: Italiano
+  level: Livello base-medio
+  format: Online
+  duration: 2 ore a incontro
+  teacher_url: /courses/primi-passi-con-excel/#docente
+  generated_by: pdf2course
 - title: Primi passi digitali
   organization: ASL UIL Lucca · UIL Toscana
   description: Un percorso pratico per utilizzare il PC e i suoi strumenti. Lezioni online, esercizi guidati, quiz di ripasso e un laboratorio per provare con file e cartelle.
