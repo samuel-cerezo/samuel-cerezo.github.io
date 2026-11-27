@@ -22,3 +22,10 @@
 .sheet-grid td:focus-visible{outline:3px solid #1b5e8a;outline-offset:-3px}
 .sheet-workspace .lab-message{min-height:24px;margin:10px 14px 0;color:var(--green);font-weight:600}
 .sheet-workspace .lab-device-tip{margin:6px 14px 14px}
+
+/* Secciones del promemoria (classic): esercitazioni y problemi comuni */
+.recap-h{margin:26px 0 10px;font-size:13px;letter-spacing:.08em;color:var(--green)}
+.recap-card{border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:10px 0;background:#fbfcfa}
+.recap-card ol{margin:8px 0 6px 20px;padding:0}.recap-card p{margin:6px 0 0}
+.recap-goal{color:var(--muted);font-style:italic}
+.recap-card.problem{border-left:4px solid #c18b65}.recap-card.problem .lesson-diagram{max-width:520px}

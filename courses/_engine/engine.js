@@ -356,7 +356,7 @@ function homeView() {
                 h('strong', { class: 'card-title' }, l.title),
                 l.description ? h('span', { class: 'card-desc' }, l.description) : null,
                 h('span', { class: 'card-foot' }, progress().done[l.id] ? t.undone : t.start),
-                data.teacher && l.number > data.state.releasedThrough ? h('span', { class: 'badge' }, t.notReleased) : null)))),
+                data.teacher && !data.state.released.includes(l.number) ? h('span', { class: 'badge' }, t.notReleased) : null)))),
           data.upcoming.length ? h('ul', { class: 'cards upcoming' }, data.upcoming.map((u) =>
             h('li', { class: 'card is-locked' }, h('span', { class: 'card-num' }, `${t.lesson} ${u.number}`), h('strong', { class: 'card-title' }, u.title), h('span', { class: 'card-foot' }, t.locked)))) : null)
       : h('p', { class: 'notice' }, t.noLessons),
@@ -373,7 +373,7 @@ function lessonView(l) {
   return h('article', { class: 'lesson' },
     h('p', { class: 'eyebrow' }, `${t.lesson} ${l.number}`),
     h('h1', {}, l.title),
-    data.teacher && l.number > data.state.releasedThrough ? h('p', { class: 'notice' }, t.notReleased) : null,
+    data.teacher && !data.state.released.includes(l.number) ? h('p', { class: 'notice' }, t.notReleased) : null,
     l.description ? h('p', { class: 'lead' }, l.description) : null,
     l.objectives.length ? box(t.objectives, h('ul', {}, l.objectives.map((o) => h('li', {}, o)))) : null,
     mediaView(l),
@@ -489,16 +489,16 @@ function teacherView() {
   }
   const s = data.state;
   const msg = h('p', { class: 'feedback', role: 'status' });
-  const select = h('select', { id: 'released', name: 'released' },
-    h('option', { value: '0', selected: s.releasedThrough === 0 }, t.releasedNone),
-    data.lessons.map((l) => h('option', { value: String(l.number), selected: s.releasedThrough === l.number }, `1–${l.number} · ${l.shortTitle}`)));
+  // Una casilla por lección: se abre y se cierra cada una por separado.
+  const boxes = data.lessons.map((l) => h('label', { class: 'option' }, h('input', { type: 'checkbox', name: 'released', value: String(l.number), checked: s.released.includes(l.number) }), ` ${l.number} · ${l.shortTitle}`));
+  const select = h('div', { id: 'released', role: 'group', 'aria-label': t.released }, boxes);
   const meeting = h('input', { id: 'meeting', type: 'url', inputmode: 'url', pattern: 'https://.*', value: s.meetingUrl ?? '' });
   return h('section', { class: 'teacher' }, h('h1', {}, t.teacherTitle),
     h('form', { class: 'box', onsubmit: async (e) => {
       e.preventDefault();
       const res = await api(`/api/courses/${encodeURIComponent(SLUG)}/admin`, {
         method: 'PATCH',
-        body: { releasedThrough: Number(select.value), meetingUrl: meeting.value.trim(), revision: s.revision },
+        body: { released: [...select.querySelectorAll('input:checked')].map((i) => Number(i.value)), meetingUrl: meeting.value.trim(), revision: s.revision },
       }).catch(() => ({ ok: false }));
       if (res.status === 409) {
         data.state = res.json.state;
