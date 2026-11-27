@@ -338,7 +338,7 @@ function certificatePage() {
   if (req?.id) {
     const link = `${location.origin}${location.pathname}#attestato/${req.id}`;
     const body = req.status === 'approved'
-      ? `<p><strong>Il docente ha firmato il tuo attestato.</strong></p><div class="certificate-actions"><button type="button" class="btn btn-primary" data-cert-download>${icon('download')} Scarica l’attestato (PDF)</button></div>`
+      ? `<p><strong>Il docente ha firmato il tuo attestato.</strong></p><div class="certificate-actions"><button type="button" class="btn btn-primary" data-cert-download>${icon('download')} Scarica l’attestato (PDF)</button>${content.canManage ? ' <button type="button" class="btn btn-quiet" data-cert-reset>Fai una nuova richiesta</button>' : ''}</div>`
       : req.status === 'rejected'
         ? `<p>Il docente non ha confermato la richiesta. Puoi farne una nuova.</p><div class="certificate-actions"><button type="button" class="btn btn-secondary" data-cert-reset>Fai una nuova richiesta</button></div>`
         : `<p><strong>Richiesta inviata per ${esc(req.name || '')}.</strong> Il docente deve confermare la firma: appena lo fa, qui compare il pulsante per scaricare l’attestato.</p><div class="certificate-actions"><button type="button" class="btn btn-secondary" data-cert-check>Controlla ora</button> <button type="button" class="btn btn-quiet" data-cert-reset>Fai una nuova richiesta</button></div><p class="certificate-note-text">Puoi chiudere la pagina. Per tornare, salva questo link personale:</p><input class="form-field" readonly value="${esc(link)}" aria-label="Link personale per ritrovare il tuo attestato" onclick="this.select()">`;
@@ -375,7 +375,7 @@ function bindCertificate() {
       a.href = url; a.download = `Attestato - ${content.raw.course.title}.pdf`.replace(/[\\/:*?"<>|]/g, '');
       document.body.append(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 10000);
-    } catch { notify('Non è stato possibile scaricare il PDF. Riprova.'); }
+    } catch (e) { notify(`Non è stato possibile scaricare il PDF. Riprova.${e?.message && /^\d+$/.test(e.message) ? ` (errore ${e.message})` : ''}`); }
   });
   const form = document.getElementById('certificate-form');
   form?.addEventListener('submit', async (e) => {
