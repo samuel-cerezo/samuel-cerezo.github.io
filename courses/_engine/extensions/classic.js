@@ -3,6 +3,7 @@
 // Los textos propios del curso vienen de `look` en course.yaml. Contenido siempre escapado con esc().
 // Generado a partir del frontend antiguo; el estado del laboratorio y del promemoria se guarda en este dispositivo.
 const V = new URL(import.meta.url).search; // ?v= del motor (evita cachés antiguas)
+const { mountSheetLab } = await import(`./sheet-lab.js${V}`);
 const { newLab, openFolder, addFolder, rename, cut, paste, tasks, restoreLab, goUp } = await import(`./file-lab.js${V}`);
 
 const paths = {
@@ -42,7 +43,7 @@ let A;                 // api del motor
 let content, look = {}, current = { page: 'home' }, step = 0, toastTimer, main;
 let lab, labForm = null, labMessage = '', previewId = null, labMode = 'guided', largeText = false;
 const attempts = new Map();
-let labKey, memoKey, textKey;
+let labKey, memoKey, textKey, labKind = 'files';
 
 const assetUrl = (name) => A.apiUrl(`/api/courses/${encodeURIComponent(A.slug)}/assets/${encodeURIComponent(name)}`);
 const availableLesson = (id) => content.lessons.find((l) => l.id === id);
@@ -54,6 +55,8 @@ const br = (s) => esc(s).replace(/\n/g, '<br>');
 // ---------- adaptación de los datos del motor al modelo del diseño original ----------
 function adapt(data) {
   look = data.course.look || {};
+  labKind = look.lab_kind === 'sheet' ? 'sheet' : 'files';
+  storage.set(`pdf2course:${A.slug}:lab-kind`, labKind);
   const meeting = data.course.meetingUrl || null;
   const lessons = data.lessons.map((l) => {
     const lk = l.look || {};
@@ -106,6 +109,18 @@ function heroArt(){return `<svg class="hero-art" viewBox="0 0 350 275" fill="non
   </svg>`;}
 
 
+function sheetArt(){return `<svg class="hero-art" viewBox="0 0 350 275" fill="none" role="img" aria-label="Un foglio di calcolo con una tabella, una somma e un grafico a colonne">
+  <path d="M31 168c-20-65 9-132 84-134 50-2 65-28 118-7 66 26 89 105 54 167-38 65-210 69-256-26Z" fill="#E8EDE0"/>
+  <rect x="52" y="52" width="235" height="165" rx="11" fill="#D5DECC" stroke="#61785D" stroke-width="2"/>
+  <rect x="61" y="62" width="217" height="145" rx="5" fill="#FAFBF6"/>
+  <rect x="61" y="62" width="217" height="16" rx="5" fill="#52734F"/>
+  <rect x="61" y="86" width="217" height="12" fill="#EEF2E8"/><path d="M61 110h217M61 122h217M61 134h217M61 146h217M105 86v121M149 86v121M193 86v121" stroke="#D8E0CF"/>
+  <rect x="108" y="124" width="38" height="8" rx="2" fill="#F4E6C1"/><path d="M68 92h28m6 0h38m6 0h30m6 0h30M68 116h24m6 0h30m6 0h18" stroke="#98AD86" stroke-width="3" stroke-linecap="round"/>
+  <rect x="197" y="150" width="14" height="50" fill="#98AD86"/><rect x="215" y="136" width="14" height="64" fill="#52734F"/><rect x="233" y="158" width="14" height="42" fill="#C18B65"/><rect x="251" y="144" width="14" height="56" fill="#B6C29B"/>
+  <g transform="rotate(9 305 75)"><rect x="272" y="37" width="62" height="40" rx="7" fill="#F4E6C1" stroke="#AC9C72" stroke-width="1.5"/><text x="303" y="63" text-anchor="middle" font-size="18" font-weight="700" fill="#817C4E" font-family="Source Sans 3, Arial">=SOMMA</text></g>
+  <path d="m44 40 2-7 2 7 7 2-7 2-2 7-2-7-7-2Z" fill="#C1A36C"/><circle cx="318" cy="150" r="3" fill="#C6AA79"/><circle cx="33" cy="191" r="3" fill="#A9BA9B"/>
+  </svg>`;}
+
 // ---------- estructura de la página ----------
 function shell() {
   const logos = (look.logos || []).map((lg, i) => `${i ? '<span class="logo-divider" aria-hidden="true"></span>' : ''}<a href="${esc(lg.url || '#')}" target="_blank" rel="noopener noreferrer" aria-label="${esc(lg.label || lg.alt)}"><img src="${esc(assetUrl(lg.asset))}" alt="${esc(lg.alt)}" class="${esc(lg.cls || '')}" width="${Number(lg.width) || 100}" height="${Number(lg.height) || 60}"></a>`).join('');
@@ -141,7 +156,7 @@ function renderNavigation() {
   document.getElementById('lesson-navigation').innerHTML = content.lessons.map((l) => `<a class="nav-link ${current.page === 'lesson' && current.id === l.id ? 'active' : ''}" href="#lezione-${l.id}" ${current.page === 'lesson' && current.id === l.id ? 'aria-current="page"' : ''}><span class="nav-num">${String(l.id).padStart(2, '0')}</span><span>${esc(l.shortTitle)}</span>${isDone(l.id) ? `<span class="nav-done" aria-label="Completata">${icon('check')}</span>` : ''}</a>`).join('');
   let tools = document.getElementById('course-tools');
   if (!tools) { tools = document.createElement('div'); tools.id = 'course-tools'; document.querySelector('nav').append(tools); }
-  tools.innerHTML = `<a class="nav-link ${current.page === 'materials' ? 'active' : ''}" href="#materiali">${icon('download')} Materiali e PDF</a>${A.hasLab ? `<a class="nav-link ${current.page === 'lab' ? 'active' : ''}" href="#laboratorio">${icon('computer')} Laboratorio PC</a>` : ''}<a class="nav-link teacher-link ${current.page === 'admin' ? 'active' : ''}" href="#docente">${icon('pencil')} ${content.canManage ? 'Area docente' : 'Accesso docente'}</a>`;
+  tools.innerHTML = `<a class="nav-link ${current.page === 'materials' ? 'active' : ''}" href="#materiali">${icon('download')} Materiali e PDF</a>${A.hasLab ? `<a class="nav-link ${current.page === 'lab' ? 'active' : ''}" href="#laboratorio">${icon('computer')} ${esc(look.lab_nav||'Laboratorio PC')}</a>` : ''}<a class="nav-link teacher-link ${current.page === 'admin' ? 'active' : ''}" href="#docente">${icon('pencil')} ${content.canManage ? 'Area docente' : 'Accesso docente'}</a>`;
   for (const [selector, active] of [['.home-link', current.page === 'home'], ['.help-link', current.page === 'help']]) {
     const link = document.querySelector(selector);
     link.classList.toggle('active', active);
@@ -152,7 +167,7 @@ function renderNavigation() {
 // ---------- páginas ----------
 function home() {
   const n = doneCount(), tot = total(), hero = look.hero || {};
-  return `<section class="hero" aria-labelledby="home-title"><div><p class="eyebrow">${esc(hero.eyebrow || 'IL TUO PERCORSO COMINCIA QUI')}</p><h1 id="home-title">${br(hero.title || content.raw.course.title)}</h1><p class="intro">${esc(hero.intro || content.raw.course.description || '')}</p>${zoomEntry('hero-join')}<div class="course-facts">${(look.facts || []).map((f) => `<span>${icon(f.icon)} ${esc(f.text)}</span>`).join('')}</div></div>${heroArt()}</section>
+  return `<section class="hero" aria-labelledby="home-title"><div><p class="eyebrow">${esc(hero.eyebrow || 'IL TUO PERCORSO COMINCIA QUI')}</p><h1 id="home-title">${br(hero.title || content.raw.course.title)}</h1><p class="intro">${esc(hero.intro || content.raw.course.description || '')}</p>${zoomEntry('hero-join')}<div class="course-facts">${(look.facts || []).map((f) => `<span>${icon(f.icon)} ${esc(f.text)}</span>`).join('')}</div></div>${(look.hero?.art==='sheet'?sheetArt():heroArt())}</section>
  <section class="progress-panel" aria-label="I tuoi progressi"><div class="progress-copy"><strong>${n === 0 ? 'Ogni passo conta.' : n === tot ? 'Hai completato il percorso!' : 'Stai facendo progressi.'}</strong><span>${content.lessons.length} ${content.lessons.length === 1 ? 'lezione disponibile' : 'lezioni disponibili'} di ${tot}</span></div><div class="progress-right"><div class="progress-track" role="progressbar" aria-label="Lezioni segnate come completate" aria-valuenow="${n}" aria-valuemin="0" aria-valuemax="${tot}"><div class="progress-fill" style="width:${tot ? Math.round((n / tot) * 100) : 0}%"></div></div><span class="progress-amount">${n} di ${tot} completate</span></div></section>
  <section aria-labelledby="lessons-title"><div class="section-heading"><h2 id="lessons-title">Le lezioni, in ordine</h2><span>Un argomento alla volta</span></div>${roadmap()}<div class="lessons-grid ${content.lessons.length === 1 ? 'single' : ''}">${content.lessons.map((l) => `<article class="lesson-card lesson-theme-${themeOf(l)} ${l.id === 1 ? 'featured' : ''}"><div class="card-top"><span class="lesson-icon ${esc(l.color)}">${icon(l.icon)}</span><div class="lesson-meta">LEZIONE ${String(l.id).padStart(2, '0')} <span></span> 2 ORE</div></div><h3><span class="lesson-title-number">${l.id}.</span> ${esc(l.title)}</h3><p>${esc(l.description)}</p><div class="card-bottom"><span class="card-state">${isDone(l.id) ? icon('check') + ' Completata' : 'Disponibile'}</span><a class="card-action" href="#lezione-${l.id}" aria-label="Apri la lezione ${l.id}: ${esc(l.title)}">Apri la lezione ${icon('arrow')}</a></div></article>`).join('')}</div>${content.lessons.length === 0 ? '<div class="objective-box"><p>Le lezioni compariranno qui quando il docente le renderà disponibili.</p></div>' : ''}${content.lessons.length < tot ? '<p class="release-note">Le altre lezioni appariranno qui quando le affronteremo insieme. Quelle già aperte restano disponibili per ripassare.</p>' : ''}</section>
  <aside class="bottom-note">${icon('folder')}<div><strong>Porta i materiali con te.</strong><p>Scarica le schede PDF sul PC per rileggerle o stamparle quando vuoi.</p></div><a href="#materiali">Apri i materiali</a></aside>
@@ -168,13 +183,13 @@ function roadmap() {
   }).join('')}</nav>`;
 }
 
-function visual(type){const labels={bookmark:'La stella conserva il sito tra i preferiti',mouse:'Un clic seleziona, due clic aprono',keyboard:'Invio va a capo; Backspace cancella a sinistra',file:'Un nome descrittivo aiuta a riconoscere il documento',folder:'Una cartella raccoglie i documenti',browser:'La barra degli indirizzi e il comando indietro',search:'Una ricerca precisa indica servizio, luogo e informazione',mail:'Destinatario, oggetto, testo e allegato',shield:'Fermati, controlla e verifica da un canale conosciuto'};return `<figure class="lesson-diagram"><a href="${assetUrl('diagram-'+type+'.svg')}" target="_blank" rel="noopener noreferrer" aria-label="Ingrandisci lo schema: ${labels[type]}"><img src="${assetUrl('diagram-'+type+'.svg')}" alt="${labels[type]}" width="760" height="340"></a><figcaption>Schema della lezione · Tocca per ingrandire</figcaption></figure>`;}
+function visual(type,alt){if(/\.(png|jpe?g|webp|svg)$/i.test(type)){const u=assetUrl(type);return `<figure class="lesson-diagram"><a href="${u}" target="_blank" rel="noopener noreferrer" aria-label="Ingrandisci l’immagine: ${esc(alt||'schermata')}"><img src="${u}" alt="${esc(alt||'')}" loading="lazy"></a><figcaption>${esc(alt||'Schermata')} · Tocca per ingrandire</figcaption></figure>`;}const labels={bookmark:'La stella conserva il sito tra i preferiti',mouse:'Un clic seleziona, due clic aprono',keyboard:'Invio va a capo; Backspace cancella a sinistra',file:'Un nome descrittivo aiuta a riconoscere il documento',folder:'Una cartella raccoglie i documenti',browser:'La barra degli indirizzi e il comando indietro',search:'Una ricerca precisa indica servizio, luogo e informazione',mail:'Destinatario, oggetto, testo e allegato',shield:'Fermati, controlla e verifica da un canale conosciuto'};return `<figure class="lesson-diagram"><a href="${assetUrl('diagram-'+type+'.svg')}" target="_blank" rel="noopener noreferrer" aria-label="Ingrandisci lo schema: ${labels[type]}"><img src="${assetUrl('diagram-'+type+'.svg')}" alt="${labels[type]}" width="760" height="340"></a><figcaption>Schema della lezione · Tocca per ingrandire</figcaption></figure>`;}
 function wordBox(l){return `<aside><div class="word-box"><h3>Parole, in parole semplici.</h3><dl>${l.words.map(w=>`<div class="word-pair"><dt>${esc(w.term)}</dt><dd>${esc(w.meaning)}</dd></div>`).join('')}</dl></div><p class="side-tip">${icon('help')} Un passaggio non è chiaro? Fermati e chiedi al docente. Qui le domande sono benvenute.</p></aside>`;}
 function guide(l){
   const s=l.guide[Math.min(step,l.guide.length-1)];
-  return `<div class="objective-box"><h2>Alla fine saprai…</h2><ul class="check-list">${l.objectives.map(o=>`<li>${icon('check')}<span>${esc(o)}</span></li>`).join('')}</ul></div><section class="guide-card" aria-label="Guida passo a passo"><div class="guide-controls" role="group" aria-label="Scegli un passaggio">${l.guide.map((g,i)=>`<button class="step-dot ${step===i?'active':''}" type="button" data-step="${i}" aria-label="Passaggio ${i+1}: ${esc(g.title)}" ${step===i?'aria-current="step"':''}>${i+1}</button>`).join('')}</div><div class="guide-inner" id="guide-step" aria-live="polite"><p class="guide-kicker">PASSAGGIO ${step+1} DI ${l.guide.length}</p><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.visual?visual(s.visual):''}${s.tip?`<div class="tip">${icon('light')}<span>${esc(s.tip)}</span></div>`:''}</div><div class="guide-footer"><button class="btn btn-quiet" data-action="previous-step" type="button" ${step===0?'disabled':''}>${icon('back')} Indietro</button>${step>=l.guide.length-1?`<a class="btn btn-primary" href="#lezione-${l.id}/pratica">Ora prova tu ${icon('arrow')}</a>`:`<button class="btn btn-primary" data-action="next-step" type="button">Avanti ${icon('arrow')}</button>`}</div></section>`;
+  return `<div class="objective-box"><h2>Alla fine saprai…</h2><ul class="check-list">${l.objectives.map(o=>`<li>${icon('check')}<span>${esc(o)}</span></li>`).join('')}</ul></div><section class="guide-card" aria-label="Guida passo a passo"><div class="guide-controls" role="group" aria-label="Scegli un passaggio">${l.guide.map((g,i)=>`<button class="step-dot ${step===i?'active':''}" type="button" data-step="${i}" aria-label="Passaggio ${i+1}: ${esc(g.title)}" ${step===i?'aria-current="step"':''}>${i+1}</button>`).join('')}</div><div class="guide-inner" id="guide-step" aria-live="polite"><p class="guide-kicker">PASSAGGIO ${step+1} DI ${l.guide.length}</p><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>${s.visual?visual(s.visual,s.visual_alt):''}${s.tip?`<div class="tip">${icon('light')}<span>${esc(s.tip)}</span></div>`:''}</div><div class="guide-footer"><button class="btn btn-quiet" data-action="previous-step" type="button" ${step===0?'disabled':''}>${icon('back')} Indietro</button>${step>=l.guide.length-1?`<a class="btn btn-primary" href="#lezione-${l.id}/pratica">Ora prova tu ${icon('arrow')}</a>`:`<button class="btn btn-primary" data-action="next-step" type="button">Avanti ${icon('arrow')}</button>`}</div></section>`;
 }
-function practice(l){return `<section class="practice-card"><p class="eyebrow">ESERCIZIO GUIDATO · CIRCA 15 MINUTI</p><h2>${esc(l.activity.title)}</h2><p>${esc(l.activity.intro||'')}</p><ol class="numbered-steps">${l.activity.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol>${l.memo?`<form class="editor-box" id="memo-form"><label class="form-label" for="memo-text">Il tuo promemoria</label><textarea class="form-field" id="memo-text" name="memo" placeholder="Per esempio: Mercoledì partecipo al corso di informatica. Voglio imparare a organizzare le mie foto." maxlength="10000" required>${esc(storage.get('ppd-memo',''))}</textarea><div class="input-row"><label class="form-label" for="memo-name">Come vuoi chiamare il documento?</label><input class="form-field" id="memo-name" name="filename" value="Promemoria corso" maxlength="70" required><p class="field-hint">Il documento sarà un file di testo (.txt). La posizione dipende dalle impostazioni del tuo browser.</p></div><button class="btn btn-primary" type="submit">${icon('download')} Salva il promemoria</button><p class="form-message" id="memo-message" role="status" aria-live="polite"></p></form>`:''}${l.lab?`<div class="lab-launch"><strong>Prima di provare sul tuo PC</strong><p>Esercitati con cartelle e documenti in uno spazio guidato.</p><a class="btn btn-secondary" href="#laboratorio">${icon('computer')} Apri il laboratorio PC</a></div>`:''}${l.activity.success?`<div class="success-box">${icon('check')}<p><strong>Come sai di aver fatto bene?</strong>${esc(l.activity.success)}</p></div>`:''}</section>`;}
+function practice(l){return `<section class="practice-card"><p class="eyebrow">ESERCIZIO GUIDATO · CIRCA 15 MINUTI</p><h2>${esc(l.activity.title)}</h2><p>${esc(l.activity.intro||'')}</p><ol class="numbered-steps">${l.activity.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol>${l.memo?`<form class="editor-box" id="memo-form"><label class="form-label" for="memo-text">Il tuo promemoria</label><textarea class="form-field" id="memo-text" name="memo" placeholder="Per esempio: Mercoledì partecipo al corso di informatica. Voglio imparare a organizzare le mie foto." maxlength="10000" required>${esc(storage.get('ppd-memo',''))}</textarea><div class="input-row"><label class="form-label" for="memo-name">Come vuoi chiamare il documento?</label><input class="form-field" id="memo-name" name="filename" value="Promemoria corso" maxlength="70" required><p class="field-hint">Il documento sarà un file di testo (.txt). La posizione dipende dalle impostazioni del tuo browser.</p></div><button class="btn btn-primary" type="submit">${icon('download')} Salva il promemoria</button><p class="form-message" id="memo-message" role="status" aria-live="polite"></p></form>`:''}${l.lab?`<div class="lab-launch"><strong>${esc(look.lab_cta_title||'Prima di provare sul tuo PC')}</strong><p>${esc(look.lab_cta_text||'Esercitati con cartelle e documenti in uno spazio guidato.')}</p><a class="btn btn-secondary" href="#laboratorio">${icon('computer')} ${esc(look.lab_cta||'Apri il laboratorio PC')}</a></div>`:''}${l.activity.success?`<div class="success-box">${icon('check')}<p><strong>Come sai di aver fatto bene?</strong>${esc(l.activity.success)}</p></div>`:''}</section>`;}
 function recap(l){return `<section class="recap-sheet"><p class="eyebrow">DA TENERE A PORTATA DI MANO</p><h2>Le cose da ricordare</h2><p class="intro">Gli stessi schemi visivi della lezione, con i passaggi e l’esercizio: da conservare o stampare.</p><ul>${l.recap.map(r=>`<li>${esc(r)}</li>`).join('')}</ul><div class="download-row"><a href="${esc(l.pdfUrl||'#')}" download class="btn btn-primary">${icon('download')} Scarica la scheda PDF</a><button class="btn btn-secondary" type="button" data-action="print">${icon('print')} Stampa questa pagina</button></div></section>`;}
 function completion(l){let done=isDone(l.id);return `<div class="completion-box"><p>Quando hai finito, puoi segnare la lezione come completata. Puoi comunque riaprirla e riprovare.</p><button type="button" class="btn ${done?'completed-button':'btn-secondary'}" data-action="complete" aria-pressed="${done}">${icon('check')} ${done?'Completata · Annulla':'Ho completato questa lezione'}</button></div>`;}
 function lesson(l){
@@ -238,7 +253,8 @@ function route(isFirst = false) {
   renderNavigation();
   const lessonPage = () => (availableLesson(current.id) ? lesson(availableLesson(current.id)) : '<div class="objective-box"><h1>Un passo alla volta.</h1><p>Questa lezione non è ancora disponibile. Il docente la aprirà durante il corso.</p><a class="btn btn-primary" href="#home">Torna al corso</a></div>');
   main.innerHTML = current.page === 'lab' ? labPage() : current.page === 'help' ? help() : current.page === 'materials' ? materialsPage() : current.page === 'admin' ? adminPage() : current.page === 'lesson' ? lessonPage() : home();
-  const names = { lab: 'Laboratorio PC', help: 'Hai bisogno di aiuto?', materials: 'Materiali e PDF', admin: 'Area docente' };
+  if (current.page === 'lab' && labKind === 'sheet') mountSheetLab(document.getElementById('sheet-root'), { storage, key: labKey + '-sheet', icon: { back: icon('back') } });
+  const names = { lab: look.lab_nav || 'Laboratorio PC', help: 'Hai bisogno di aiuto?', materials: 'Materiali e PDF', admin: 'Area docente' };
   document.title = `${current.page === 'lesson' ? `Lezione ${current.id} · ${availableLesson(current.id)?.shortTitle || 'Lezione non disponibile'}` : names[current.page] || content.raw.course.title} · ${content.raw.course.organization || content.raw.course.title}`;
   if (!isFirst) {
     if (previous.page === 'lesson' && current.page === 'lesson' && previous.id === current.id && previous.tab !== current.tab) document.querySelector(`[data-tab="${current.tab}"]`)?.focus({ preventScroll: true });
@@ -268,6 +284,7 @@ function quizPage(lesson){
 }
 
 function labPage(){
+  if(labKind==='sheet')return '<div id="sheet-root"></div>';
   const progress=tasks(lab),next=progress.findIndex(t=>!t.done),count=progress.filter(t=>t.done).length;
  const selected=lab.nodes.find(n=>n.id===lab.selected),folder=lab.nodes.find(n=>n.id===lab.location);
  const visible=lab.nodes.filter(n=>n.parent===lab.location);
@@ -396,6 +413,7 @@ function boot(api) {
   A.hasLab = true;
   const k = (n) => `pdf2course:${A.slug}:${n}`;
   labKey = k('lab'); memoKey = k('memo'); textKey = k('large-text');
+  labKind = storage.get(k('lab-kind'), 'files') === 'sheet' ? 'sheet' : 'files';
   lab = restoreLab(storage.get(labKey, null) ?? storage.get('ppd-lab', null));
   largeText = (storage.get(textKey, null) ?? storage.get('ppd-large-text', false)) === true;
   if (!storage.get(labKey, null) && localStorage.getItem('ppd-memo') !== null && localStorage.getItem(memoKey) === null) storage.set(memoKey, storage.get('ppd-memo', ''));
@@ -405,6 +423,11 @@ function boot(api) {
   if (!document.getElementById('classic-css')) {
     const link = document.createElement('link');
     link.id = 'classic-css'; link.rel = 'stylesheet'; link.href = new URL(`./classic.css${V}`, import.meta.url).href;
+    document.head.append(link);
+  }
+  if (!document.getElementById('sheet-lab-css')) {
+    const link = document.createElement('link');
+    link.id = 'sheet-lab-css'; link.rel = 'stylesheet'; link.href = new URL(`./sheet-lab.css${V}`, import.meta.url).href;
     document.head.append(link);
   }
 }
@@ -425,6 +448,7 @@ export async function mountOffline(api, retry) {
   route = (isFirst) => {
     current = parseRoute(); renderNavigation();
     main.innerHTML = current.page === 'lab' ? labPage() : '<div class="objective-box"><h1>Le lezioni torneranno tra poco.</h1><p>Il collegamento ai materiali non risponde. Puoi intanto esercitarti nel laboratorio PC.</p><a class="btn btn-primary" href="#laboratorio">Apri il laboratorio PC</a> <button class="btn btn-secondary" id="reload" type="button">Riprova</button></div>';
+    if (current.page === 'lab' && labKind === 'sheet') mountSheetLab(document.getElementById('sheet-root'), { storage, key: labKey + '-sheet', icon: { back: icon('back') } });
     document.getElementById('reload')?.addEventListener('click', () => location.reload());
   };
   route(true);
