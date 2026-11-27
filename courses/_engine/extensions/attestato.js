@@ -67,7 +67,7 @@ const FONT = '"Source Sans 3", system-ui, "Segoe UI", sans-serif';
 const C = { paper: '#fcfaf3', ink: '#27332b', soft: '#5d6b61', green: '#4f7a5a', gold: '#b48a3a', line: '#d9d2bd' };
 
 /** Dibuja el certificado en `canvas`. `logos` = imágenes ya cargadas (ImageBitmap o HTMLImageElement). */
-export function drawCertificate(canvas, { name, courseTitle, subtitle, organization, bullets, meta, dateText, logos = [] }) {
+export function drawCertificate(canvas, { name, courseTitle, subtitle, organization, bullets, meta, dateText, logos = [], signature = null, teacher = '' }) {
   const { w, h } = PAGE;
   canvas.width = w; canvas.height = h;
   const g = canvas.getContext('2d');
@@ -130,7 +130,10 @@ export function drawCertificate(canvas, { name, courseTitle, subtitle, organizat
   g.textAlign = 'center'; g.fillStyle = C.ink; g.font = `600 34px ${FONT}`;
   g.fillText(dateText, 520, fy - 14);
   g.fillStyle = C.soft; g.font = `400 28px ${FONT}`;
-  g.fillText('Data', 520, fy + 40); g.fillText('Il docente', w - 520, fy + 40);
+  g.fillText('Data', 520, fy + 40);
+  if (signature) { const k = Math.min(150 / signature.height, 480 / signature.width); g.drawImage(signature, w - 520 - (signature.width * k) / 2, fy - 12 - signature.height * k, signature.width * k, signature.height * k); }
+  if (teacher) { g.fillStyle = C.ink; g.font = `600 32px ${FONT}`; g.fillText(teacher, w - 520, fy + 38); g.fillStyle = C.soft; g.font = `400 28px ${FONT}`; g.fillText('Il docente', w - 520, fy + 78); }
+  else g.fillText('Il docente', w - 520, fy + 40);
   g.textAlign = 'center'; g.fillStyle = C.soft; g.font = `400 26px ${FONT}`;
   g.fillText('Quiz di ripasso e laboratori del corso completati.', w / 2, h - 135);
 }
