@@ -333,11 +333,14 @@ async function drawCertificateFor(name, canvas) {
   const hours = look.attestato?.hours;
   const meta = [`${content.lessons.length} ${content.lessons.length === 1 ? 'incontro' : 'incontri'}`, hours ? String(hours) : (course.duration || '')].filter(Boolean).join(' · ');
   await attestato.ensureFonts();
+  const sigName = look.attestato?.signature;
   const logos = await attestato.loadLogos((look.logos || []).map((lg) => assetUrl(lg.asset)));
+  const signature = sigName ? (await attestato.loadLogos([assetUrl(sigName)]))[0] || null : null;
   attestato.drawCertificate(canvas, {
     name, courseTitle: course.title, subtitle: course.subtitle || '', organization: look.org || course.organization || '',
     bullets: attestato.bulletsOf(look, content.lessons), meta,
     dateText: new Date().toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }), logos,
+    signature, teacher: String(look.attestato?.teacher || ''),
   });
 }
 function bindCertificate() {
