@@ -24,6 +24,7 @@ const I18N = {
     signOut: 'Esci', code: 'Codice di Google Authenticator (6 cifre)', badLogin: 'Codice non corretto. Se il codice era giusto, attendi il successivo.', tooMany: 'Troppi tentativi. Riprova tra 15 minuti.', loginOff: 'Accesso docente non configurato sul server.', released: 'Lezioni disponibili agli studenti',
     releasedNone: 'Nessuna', meeting: 'Link della lezione online (https://…)', save: 'Salva', saved: 'Salvato.',
     conflict: 'I dati sono stati modificati altrove: ho ricaricato lo stato. Ripeti la modifica.', saveError: 'Errore nel salvataggio.',
+    teachMaterials: 'Materiali per il docente (diapositive ed esercizi Excel)', teachMaterialsNote: 'Visibili solo a te: gli studenti non li vedono.', teachLesson: (n) => `Incontro ${n}`, teachOther: 'Altri materiali',
     notReleased: 'non visibile agli studenti', teacherMode: 'Modalità docente: vedi tutte le lezioni.', noLessons: 'Le lezioni saranno disponibili a breve.',
   },
   es: {
@@ -40,6 +41,7 @@ const I18N = {
     signOut: 'Salir', code: 'Código de Google Authenticator (6 cifras)', badLogin: 'Código incorrecto. Si el código era correcto, espera al siguiente.', tooMany: 'Demasiados intentos. Vuelve a probar en 15 minutos.', loginOff: 'El acceso docente no está configurado en el servidor.', released: 'Lecciones visibles para el alumnado',
     releasedNone: 'Ninguna', meeting: 'Enlace de la clase en línea (https://…)', save: 'Guardar', saved: 'Guardado.',
     conflict: 'Los datos cambiaron en otro sitio: he recargado el estado. Repite el cambio.', saveError: 'Error al guardar.',
+    teachMaterials: 'Materiales para el docente (presentaciones y ejercicios de Excel)', teachMaterialsNote: 'Solo los ves tú: el alumnado no los ve.', teachLesson: (n) => `Incontro ${n}`, teachOther: 'Otros materiales',
     notReleased: 'no visible para el alumnado', teacherMode: 'Modo docente: ves todas las lecciones.', noLessons: 'Las lecciones estarán disponibles pronto.',
   },
   en: {
@@ -56,6 +58,7 @@ const I18N = {
     signOut: 'Sign out', code: 'Google Authenticator code (6 digits)', badLogin: 'Wrong code. If the code was right, wait for the next one.', tooMany: 'Too many attempts. Try again in 15 minutes.', loginOff: 'Teacher sign-in is not configured on the server.', released: 'Lessons visible to students',
     releasedNone: 'None', meeting: 'Online lesson link (https://…)', save: 'Save', saved: 'Saved.',
     conflict: 'The data changed elsewhere; the state was reloaded. Please repeat the change.', saveError: 'Could not save.',
+    teachMaterials: 'Teacher materials (slides and Excel exercises)', teachMaterialsNote: 'Only you can see these.', teachLesson: (n) => `Session ${n}`, teachOther: 'Other materials',
     notReleased: 'hidden from students', teacherMode: 'Teacher mode: you see every lesson.', noLessons: 'Lessons will be available soon.',
   },
 };
@@ -451,6 +454,27 @@ function quizView(l) {
 }
 
 // ---------- docente ----------
+function teacherMaterials() {
+  const files = data.teacherAssets ?? [];
+  if (!files.length) return null;
+  const download = (f) => h('button', { type: 'button', class: 'btn', onclick: async () => {
+    // Hace falta la cabecera Authorization: no se puede abrir con un enlace normal.
+    const res = await fetch(apiUrl(f.url), { headers: { Authorization: `Bearer ${token()}` } }).catch(() => null);
+    if (!res || !res.ok) return;
+    const url = URL.createObjectURL(await res.blob());
+    const a = h('a', { href: url, download: f.name });
+    document.body.append(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+  } }, f.name);
+  const groups = new Map();
+  for (const f of files) groups.set(f.lesson ?? 0, [...(groups.get(f.lesson ?? 0) ?? []), f]);
+  return box(t.teachMaterials, h('div', {}, h('p', { class: 'notice' }, t.teachMaterialsNote),
+    [...groups.entries()].sort((a, b) => (a[0] || 99) - (b[0] || 99)).map(([n, list]) =>
+      h('div', { class: 'teacher-files' }, h('h3', {}, n ? t.teachLesson(n) : t.teachOther), h('div', { class: 'actions' }, list.map(download))))));
+}
+
 function teacherView() {
   if (!data.teacher) {
     const msg = h('p', { class: 'feedback ko', role: 'alert' });
@@ -494,6 +518,7 @@ function teacherView() {
   const select = h('div', { id: 'released', role: 'group', 'aria-label': t.released }, boxes);
   const meeting = h('input', { id: 'meeting', type: 'url', inputmode: 'url', pattern: 'https://.*', value: s.meetingUrl ?? '' });
   return h('section', { class: 'teacher' }, h('h1', {}, t.teacherTitle),
+    teacherMaterials(),
     h('form', { class: 'box', onsubmit: async (e) => {
       e.preventDefault();
       const res = await api(`/api/courses/${encodeURIComponent(SLUG)}/admin`, {
